@@ -25,12 +25,12 @@ namespace RS.Widgets.Models
         /// <summary>
         /// 数据主键
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// 父级
         /// </summary>
-        public string ParentId { get; set; }
+        public string? ParentId { get; set; }
 
         /// <summary>
         /// 级别
@@ -82,11 +82,11 @@ namespace RS.Widgets.Models
         }
 
 
-        private string navName;
+        private string? navName;
         /// <summary>
         /// 菜单名称
         /// </summary>
-        public string NavName
+        public string? NavName
         {
             get { return navName; }
             set
@@ -122,11 +122,11 @@ namespace RS.Widgets.Models
         }
 
 
-        private string viewModelKey;
+        private string? viewModelKey;
         /// <summary>
         /// 视图主键
         /// </summary>
-        public string ViewModelKey
+        public string? ViewModelKey
         {
             get { return viewModelKey; }
             set
@@ -137,11 +137,11 @@ namespace RS.Widgets.Models
 
 
 
-        private INotifyPropertyChanged viewMoel;
+        private INotifyPropertyChanged? viewMoel;
         /// <summary>
         /// 绑定的ViewModel 有了ViewModel 就有视图了
         /// </summary>
-        public INotifyPropertyChanged ViewMoel
+        public INotifyPropertyChanged? ViewMoel
         {
             get { return viewMoel; }
             set

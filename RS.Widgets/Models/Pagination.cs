@@ -11,9 +11,8 @@ namespace RS.Widgets.Models
     /// </summary>
     public  class Pagination : NotifyBase
     {
-
-        public event Action<Pagination> OnRowsChanged;
-        public event Action<Pagination> OnPageChanged;
+        public event Action<Pagination>? OnRowsChanged;
+        public event Action<Pagination>? OnPageChanged;
 
         private int _Rows;
         /// <summary>

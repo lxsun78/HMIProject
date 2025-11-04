@@ -56,13 +56,5 @@ namespace RS.Widgets.Models
                 this.SetProperty(ref isGetSessionModelSuccess, value);
             }
         }
-
-
-    
-
-
-
-
-
     }
 }

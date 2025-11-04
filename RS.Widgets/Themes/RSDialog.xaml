@@ -15,7 +15,9 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
-                            <ContentPresenter />
+                            <AdornerDecorator>
+                                <ContentPresenter />
+                            </AdornerDecorator>
                             <rs:RSModal x:Name="PART_Modal" />
                             <rs:RSLoading x:Name="PART_Loading" />
                             <rs:RSMessage x:Name="PART_Message" />

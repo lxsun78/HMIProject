@@ -29,7 +29,6 @@ namespace RS.Widgets.Controls
         private Frame PART_Frame;
         private Button? PART_BrowseBack;
         private Button? PART_BrowseForward;
-        private IViewModelManager ViewModelManager;
         private Dictionary<object, NavigateModel> NavViewDic;
         private bool IsNeedReNav;
 
@@ -93,10 +92,6 @@ namespace RS.Widgets.Controls
             this.NavViewDic = new Dictionary<object, NavigateModel>();
             this.Unloaded += RSNavigate_Unloaded;
             this.DataContextChanged += RSNavigate_DataContextChanged;
-            if (ApplicationBase.ServiceProvider != null)
-            {
-                this.ViewModelManager = new ViewModelManager(ApplicationBase.ServiceProvider);
-            }
             this.CommandBindings.Add(new CommandBinding(NavigationCommands.BrowseBack, BrowseBack, CanBrowseBack));
             this.CommandBindings.Add(new CommandBinding(NavigationCommands.BrowseForward, BrowseForward, CanBrowseForward));
         }
@@ -358,12 +353,12 @@ namespace RS.Widgets.Controls
         {
             if (!string.IsNullOrEmpty(navigateModel.ViewModelKey))
             {
-                var viewModel = this.ViewModelManager.GetViewModel<INotifyPropertyChanged>(navigateModel.ViewModelKey);
-                if (viewModel != null)
-                {
-                    this.Content = viewModel;
-                    this.NavViewDic[viewModel] = navigateModel;
-                }
+                //var viewModel = this.ViewModelManager.GetViewModel<INotifyPropertyChanged>(navigateModel.ViewModelKey);
+                //if (viewModel != null)
+                //{
+                //    this.Content = viewModel;
+                //    this.NavViewDic[viewModel] = navigateModel;
+                //}
             }
         }
 

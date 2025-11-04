@@ -1,0 +1,19 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using RS.Server.Entity;
+
+namespace RS.Server.DAL.Mapping
+{
+    /// <summary>
+    /// 列权限表配置映射
+    /// </summary>
+    internal class ColPermissionMapping : IEntityTypeConfiguration<ColPermissionEntity>
+    {
+        public void Configure(EntityTypeBuilder<ColPermissionEntity> builder)
+        {
+            builder.ToTable("ColPermission").HasKey(t => t.Id);
+            //设置不自动增长
+            builder.Property(t => t.Id).ValueGeneratedNever();
+        }
+    }
+}

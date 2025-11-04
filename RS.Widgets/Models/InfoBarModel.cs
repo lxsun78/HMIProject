@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace RS.Widgets.Models
 {
-    public  class InfoBarModel:NotifyBase
+    public class InfoBarModel : NotifyBase
     {
 
 

@@ -29,8 +29,8 @@ namespace RS.Widgets.Controls
             if (rsWindow != null)
             {
                 rsWindow.LocationChanged -= RsWindow_LocationChanged;
-                rsWindow.SizeChanged -= RsWindow_SizeChanged;
                 rsWindow.LocationChanged += RsWindow_LocationChanged;
+                rsWindow.SizeChanged -= RsWindow_SizeChanged;
                 rsWindow.SizeChanged += RsWindow_SizeChanged;
             }
         }
@@ -50,17 +50,15 @@ namespace RS.Widgets.Controls
 
         private void UpdatePopupPosition()
         {
-            try
+            if (this.IsOpen)
             {
-                var updatePosition = typeof(Popup).GetMethod("UpdatePosition", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (this.IsOpen)
+                try
                 {
-                    updatePosition?.Invoke(this, null);
+                    typeof(Popup).ReflectionCall("UpdatePosition");
                 }
-            }
-            catch
-            {
-                return;
+                catch
+                {
+                }
             }
         }
 

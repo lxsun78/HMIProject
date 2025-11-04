@@ -34,7 +34,7 @@ namespace HslCommunication.Algorithms.ConnectPool
             hybirdLock = new HslCommunication.Core.SimpleHybirdLock( );
             connectors = new List<TConnector>( );
 
-            timerCheck = new System.Threading.Timer( TimerCheckBackground, null, 10000, 30000 );
+            timerCheck = new System.Threading.Timer(TimerCheckBackground, null, 10000, 30000 );
         }
 
         #endregion

@@ -93,6 +93,8 @@
         </Setter>
     </Style>
 
+
+
     <Style x:Key="RSApp.Styles.ToggleSwitchStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Center" />

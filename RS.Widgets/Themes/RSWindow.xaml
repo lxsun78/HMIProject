@@ -256,7 +256,7 @@
                             <Setter TargetName="PART_Caption" Property="Background" Value="{StaticResource RSApp.Styles.Info}" />
                             <Setter TargetName="PART_TxtInfo" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=InfoBarModel.Message}" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Source={x:Static rs:ApplicationBase.ViewModel}, Path=IsServerConnectSuccess}" Value="False">
+                        <!--<DataTrigger Binding="{Binding Source={x:Static rs:ApplicationBase.ViewModel}, Path=IsServerConnectSuccess}" Value="False">
                             <Setter TargetName="PART_Caption" Property="Background" Value="{StaticResource RSApp.Styles.Warning}" />
                             <Setter TargetName="PART_InfoBorder" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_TxtInfo" Property="Text" Value="与服务器连接失败，服务不可用!" />
@@ -265,7 +265,7 @@
                             <Setter TargetName="PART_Caption" Property="Background" Value="{StaticResource RSApp.Styles.Warning}" />
                             <Setter TargetName="PART_InfoBorder" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_TxtInfo" Property="Text" Value="与服务器连接失败,请检查你的网络!" />
-                        </DataTrigger>
+                        </DataTrigger>-->
                         <Trigger Property="IsShowWinBtnCommands" Value="False">
                             <Setter TargetName="PART_WinBtnCommands" Property="Visibility" Value="Collapsed" />
                         </Trigger>

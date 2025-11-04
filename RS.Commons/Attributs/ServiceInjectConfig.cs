@@ -1,10 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RS.Commons.Attributs
 {
@@ -17,7 +11,7 @@ namespace RS.Commons.Attributs
         /// <summary>
         /// 服务主键
         /// </summary>
-        public string ServiceKey { get; set; }
+        public string? ServiceKey { get; set; }
 
         /// <summary>
         /// 是否需要进行拦截
@@ -27,7 +21,7 @@ namespace RS.Commons.Attributs
         /// <summary>
         /// 接口类型
         /// </summary>
-        public Type ServiceType { get; set; }
+        public Type? ServiceType { get; set; }
 
         /// <summary>
         /// 依赖注入服务类型

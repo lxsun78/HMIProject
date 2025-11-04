@@ -407,9 +407,6 @@ namespace RS.Widgets.Controls
                 NativeMethods.GetWindowPlacement(new HandleRef(null, this.HwndSource.Handle), ref wINDOWPLACEMENT);
                 ConfigHelpler.SaveAppConfigAsync(this.WINDOWPLACEMENTConfigKey, wINDOWPLACEMENT);
             }
-
-            ApplicationBase.RSWinInfoBar?.Close();
-
         }
 
         private void RSWindowBase_Loaded(object sender, RoutedEventArgs e)

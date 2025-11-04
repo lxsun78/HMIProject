@@ -20,12 +20,12 @@ namespace RS.Widgets.Models
         /// <summary>
         /// 通信唯一识别码
         /// </summary>
-        public string Token { get; set; }
+        public string? Token { get; set; }
 
         /// <summary>
         /// 二维码内容
         /// </summary>
-        public string QRCodeContent { get; set; }
+        public string? QRCodeContent { get; set; }
 
         /// <summary>
         /// 时间戳 单位毫秒

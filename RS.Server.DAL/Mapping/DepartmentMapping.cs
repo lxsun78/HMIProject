@@ -1,0 +1,19 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using RS.Server.Entity;
+
+namespace RS.Server.DAL.Mapping
+{
+    /// <summary>
+    /// 部门表配置映射
+    /// </summary>
+    internal class DepartmentMapping : IEntityTypeConfiguration<DepartmentEntity>
+    {
+        public void Configure(EntityTypeBuilder<DepartmentEntity> builder)
+        {
+            builder.ToTable("Department").HasKey(t => t.Id);
+            //设置不自动增长
+            builder.Property(t => t.Id).ValueGeneratedNever();
+        }
+    }
+}

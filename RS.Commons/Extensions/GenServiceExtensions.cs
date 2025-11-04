@@ -32,7 +32,7 @@ namespace RS.Commons.Extensions
                 foreach (var serviceInject in serviceInjectList)
                 {
                     //处理依赖注入
-                    ServiceDescriptor serviceDescriptor = null;
+                    ServiceDescriptor? serviceDescriptor = null;
                     if (serviceInject.ServiceKey != null && serviceInject.ServiceType != null)
                     {
                         serviceDescriptor = new ServiceDescriptor(serviceInject.ServiceType ?? type, serviceInject.ServiceKey, type, serviceInject.Lifetime);

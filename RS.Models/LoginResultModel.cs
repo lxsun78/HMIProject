@@ -15,17 +15,17 @@ namespace RS.Models
         /// <summary>
         /// 新的会话Model
         /// </summary>
-        public SessionModel SessionModel { get; set; }
+        public SessionModel? SessionModel { get; set; }
 
         /// <summary>
         /// 返回昵称
         /// </summary>
-        public string NickName { get; set; }
+        public string? NickName { get; set; }
 
         /// <summary>
         /// 返回用户的头像
         /// </summary>
-        public byte[] UserImgUrl { get; set; }
+        public byte[]? UserImgUrl { get; set; }
 
 
     }

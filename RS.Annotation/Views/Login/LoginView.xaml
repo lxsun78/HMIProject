@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:RS.Annotation.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:rs="https://github.com/luo-ross/Widgets"
+    xmlns:rs="https://github.com/luo-ross/MultiVerseKit"
     Title="LoginView"
     Width="720"
     Height="500"
@@ -382,9 +382,9 @@
                                 <Border Grid.Row="1" Padding="0,10,0,0">
                                     <rs:RSQRCodeLogin
                                         x:Name="QRCodeLogin"
+                                        CancelQRCodeLoginAction="QRCodeLogin_OnCancelQRCodeLogin"
+                                        GetLoginQRCodeAction="QRCodeLogin_OnGetLoginQRCode"
                                         IsQRCodeLogin="{Binding ElementName=TogBtnQRCode, Path=IsChecked}"
-                                        OnCancelQRCodeLoginEvent="QRCodeLogin_OnCancelQRCodeLogin"
-                                        OnGetLoginQRCodeEvent="QRCodeLogin_OnGetLoginQRCode"
                                         OnQRCodeAuthLoginSuccessEvent="QRCodeLogin_OnQRCodeAuthLoginSuccess"
                                         OnQueryQRCodeLoginStatusEvent="QRCodeLogin_OnQueryQRCodeLoginStatus"
                                         QRCodeHeight="200"

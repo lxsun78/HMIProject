@@ -1,0 +1,34 @@
+﻿<Application
+    x:Class="RS.WPFClient.Client.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:RS.WPFClient.Client"
+    xmlns:rs="https://github.com/luo-ross/MultiVerseKit"
+    xmlns:view="clr-namespace:RS.WPFClient.Client.Views"
+    xmlns:viewModel="clr-namespace:RS.WPFClient.Client.ViewModels">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type viewModel:SecurityViewModel}">
+                <view:SecurityView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:RegisterViewModel}">
+                <view:RegisterView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:UserViewModel}">
+                <view:UserView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:RoleViewModel}">
+                <view:RoleView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:QRLoginViewModel}">
+                <view:QRLoginView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:PasswordLoginViewModel}">
+                <view:PasswordLoginView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

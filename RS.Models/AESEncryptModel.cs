@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,6 @@ namespace RS.Models
         /// <summary>
         /// 加密后的数据
         /// </summary>
-        public string Encrypt { get; set; }
+        public  string Encrypt { get; set; }
     }
 }

@@ -26,6 +26,6 @@ namespace RS.Widgets.Models
         /// <summary>
         /// 二维码登录状态的描述
         /// </summary>
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 }

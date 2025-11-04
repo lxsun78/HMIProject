@@ -12,12 +12,12 @@ namespace RS.Models
         /// <summary>
         /// 验证会话Id
         /// </summary>
-        public string VerifySessionId { get; set; }
+        public  string VerifySessionId { get; set; }
 
         /// <summary>
         /// 验证图像数据二合一
         /// </summary>
-        public byte[] ImgBuffer { get; set; }
+        public  byte[] ImgBuffer { get; set; }
 
         /// <summary>
         /// 背景图宽度

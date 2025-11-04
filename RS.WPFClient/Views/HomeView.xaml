@@ -1,0 +1,267 @@
+﻿<rs:RSWindow
+    x:Class="RS.WPFClient.Client.Views.HomeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:controls="clr-namespace:RS.WPFClient.Client.Controls"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RS.WPFClient.Client.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:RS.WPFClient.Client.Models"
+       xmlns:view="clr-namespace:RS.WPFClient.Client.Views"
+    xmlns:rs="https://github.com/luo-ross/MultiVerseKit"
+    xmlns:viewModel="clr-namespace:RS.WPFClient.Client.ViewModels"
+    x:Name="this"
+    Title="上位机客户端"
+    MinWidth="500"
+    MinHeight="500"
+    d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel}"
+    CornerRadius="5"
+    Icon="/Assets/login-bg.jpg"
+    IsFitSystem="False"
+    IsMaxsizedFullScreen="{Binding ElementName=CkIsFullScreen, Path=IsChecked}"
+    IsShowIcon="False"
+    IsShowTitle="False"
+    IsUseCornerRadius="False"
+    Left="150"
+    ResizeMode="CanResizeWithGrip"
+    Top="50"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <rs:RSWindow.Resources>
+        <ResourceDictionary>
+            <rs:ForegroundColorConverter x:Key="ForegroundColorConverter" />
+            <rs:ClipConverter x:Key="ClipConverter" />
+            <rs:IconKeyConverter x:Key="IconKeyConverter" />
+            <rs:EnumConverter x:Key="EnumConverter" />
+            <SolidColorBrush x:Key="RSApp.SolidColorBrush.EBEBEB">#EBEBEB</SolidColorBrush>
+      
+
+
+
+        </ResourceDictionary>
+    </rs:RSWindow.Resources>
+    <rs:RSWindow.MidCaptionContent>
+        <Grid Margin="5,0,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.Setting}" Style="{StaticResource RSApp.Styles.IconButtonStyle}" />
+            </StackPanel>
+        </Grid>
+    </rs:RSWindow.MidCaptionContent>
+
+
+    <Grid>
+
+        <rs:RSNotifyIcon Icon="/Assets/logo.ico">
+            <rs:RSNotifyIcon.ContextMenu>
+                <ContextMenu StaysOpen="False">
+                    <MenuItem Header="测试" />
+                </ContextMenu>
+            </rs:RSNotifyIcon.ContextMenu>
+        </rs:RSNotifyIcon>
+        <!--<rs:RSNavigate
+            x:Name="PART_Navigate"
+            IsAllowNavDragSort="True"
+            ItemsSource="{Binding NavigateModelList}"
+            NavItemClickCommand="{Binding NavClickCommand}" />-->
+
+        <!--<TextBlock Text="{Binding DateTimeNow, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss fff}'}" />-->
+
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+
+            <!--<StackPanel rs:DragDropHelper.IsDropTarget="True">
+                <Button
+                    Width="200"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="Test_Click"
+                    Content="Hello World" />
+
+
+
+
+
+            -->
+            <!--<ListBox
+                    Height="200"
+                    ItemsSource="{Binding GroupedPersonsView}"
+                    ScrollViewer.CanContentScroll="True"
+                    VirtualizingPanel.IsVirtualizing="True"
+                    VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                    VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ListBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="GroupItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="GroupItem">
+                                                <Expander Header="{Binding Name}" IsExpanded="True">
+                                                    <ItemsPresenter />
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="20,0,0,0" Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>-->
+
+
+            <!--<ListBox
+                    Height="100"
+                    rs:DragDropHelper.IsDragTarget="True"
+                    rs:DragDropHelper.IsDropTarget="True"
+                    ItemsSource="{Binding Test1List}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding NavName}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>-->
+
+            <!--<TreeView
+                    rs:DragDropHelper.IsDragTarget="True"
+                    rs:DragDropHelper.IsDropTarget="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <TreeViewItem Header="测试1" />
+                    <TreeViewItem Header="测试2" />
+                    <TreeViewItem Header="测试3" />
+                </TreeView>-->
+            <!--
+
+
+            </StackPanel>-->
+
+            <!--<DockPanel
+                x:Name="PART_DockPanel"
+                Grid.Column="1"
+                Height="500"
+                rs:DragDropHelper.IsDragTarget="True"
+                rs:DragDropHelper.IsDropTarget="True"
+                Background="SeaGreen"
+                Visibility="Visible">
+
+
+            -->
+            <!--<rs:RSHwndHost
+                    x:Name="DockTop"
+                    Height="100"
+                    Child="{Binding TestView}"
+                    DockPanel.Dock="Top"
+                    Focusable="True"
+                    SizeChanged="DockTop_GotFocus" />-->
+
+
+            <!--<rs:RSHwndHost
+                    x:Name="DockBottom"
+                    Height="100"
+                    DockPanel.Dock="Bottom"
+                    Focusable="True" />-->
+            <!--
+                <rs:RSDockPanel
+                    Width="100"
+                    Background="Wheat"
+                    DockPanel.Dock="Bottom" />
+
+
+                <rs:RSDockPanel
+                    Width="100"
+                    Background="GreenYellow"
+                    DockPanel.Dock="Top" />
+
+                <rs:RSDockPanel
+                    Width="100"
+                    Background="BlueViolet"
+                    DockPanel.Dock="Right" />
+                <rs:RSDockPanel
+                    x:Name="DockLeft"
+                    Width="100"
+                    Background="PeachPuff"
+                    DockPanel.Dock="Left" />
+
+                <rs:RSDockPanel x:Name="DockCenter" Title="DockCenter">
+                    <areas:UserView />
+                </rs:RSDockPanel>
+            </DockPanel>-->
+
+
+
+
+
+
+
+            <!--<rs:RSNavList
+                Grid.Column="0"
+                IsAllowDragSort="True"
+                ItemsSource="{Binding Test1List}">
+                <rs:RSNavList.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NavName}" />
+                    </DataTemplate>
+                </rs:RSNavList.ItemTemplate>
+            </rs:RSNavList>-->
+
+            <!--<rs:RSNavList
+                Grid.Column="1"
+                IsAllowDragSort="True"
+                ItemsSource="{Binding Test2List}">
+                <rs:RSNavList.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NavName}" />
+                    </DataTemplate>
+                </rs:RSNavList.ItemTemplate>
+            </rs:RSNavList>-->
+
+            <!--<rs:RSNavList
+                Grid.Column="2"
+                IsAllowDragSort="True"
+                ItemsSource="{Binding Test3List}">
+                <rs:RSNavList.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NavName}" />
+                    </DataTemplate>
+                </rs:RSNavList.ItemTemplate>
+            </rs:RSNavList>-->
+
+            <!--<rs:RSNavList
+                Grid.Column="3"
+                IsAllowDragSort="True"
+                ItemsSource="{Binding Test4List}">
+                <rs:RSNavList.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NavName}" />
+                    </DataTemplate>
+                </rs:RSNavList.ItemTemplate>
+            </rs:RSNavList>-->
+
+        </Grid>
+
+        <Grid>
+            <controls:RSModBusRTU Grid.Row="1" />
+        </Grid>
+    </Grid>
+</rs:RSWindow>

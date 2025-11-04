@@ -15,12 +15,12 @@ namespace RS.Models
         /// <summary>
         /// 邮箱地址
         /// </summary>
-        public virtual string Email { get; set; }
+        public virtual  string Email { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
-        public virtual string Password { get; set; }
+        public virtual  string Password { get; set; }
 
     }
 }

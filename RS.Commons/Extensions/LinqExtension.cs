@@ -26,7 +26,7 @@ namespace RS.Commons.Extensions
 
 
 
-        public static int GetHashCode<T>(this T obj, List<string> propertyList = null)
+        public static int GetHashCode<T>(this T obj, List<string>? propertyList = null)
         {
             if (obj == null)
             {

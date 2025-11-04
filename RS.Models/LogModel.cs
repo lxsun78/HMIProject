@@ -17,11 +17,11 @@ namespace RS.Models
         /// <summary>
         /// 异常
         /// </summary>
-        public Exception Exception { get; set; }
+        public Exception? Exception { get; set; }
 
         /// <summary>
         /// 日志消息
         /// </summary>
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 }

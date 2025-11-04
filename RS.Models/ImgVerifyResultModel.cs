@@ -12,12 +12,12 @@ namespace RS.Models
         /// <summary>
         /// 验证矩形框
         /// </summary>
-        public RectModel Verify { get; set; }
+        public RectModel? Verify { get; set; }
 
         /// <summary>
         /// 验证会话Id
         /// </summary>
-        public string VerifySessionId { get; set; }
+        public string? VerifySessionId { get; set; }
 
     }
 }

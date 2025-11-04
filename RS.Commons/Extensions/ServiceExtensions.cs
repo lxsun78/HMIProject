@@ -19,15 +19,15 @@ namespace RS.Commons.Extensions
         /// <summary>
         /// 服务宿主
         /// </summary>
-        private static IHost AppHost { get; set; }
+        private static IServiceProvider? ServiceProvider { get; set; }
 
         /// <summary>
         /// 配置服务
         /// </summary>
         /// <param name="appHost"></param>
-        public static void ConfigServices(IHost appHost)
+        public static void ConfigServices(IServiceProvider serviceProvider)
         {
-            AppHost = appHost;
+            ServiceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -37,12 +37,12 @@ namespace RS.Commons.Extensions
         /// <returns></returns>
         public static TResult GetService<TResult>()
         {
-            if (AppHost == null)
+            if (ServiceProvider == null)
             {
                 return default(TResult);
             }
 
-            return AppHost.Services.GetService<TResult>();
+            return ServiceProvider.GetService<TResult>();
         }
 
         public static HttpClient GetHttpClient(string clientName,string token)
