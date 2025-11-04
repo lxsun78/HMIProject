@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01、服务端", "01、服�
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02、客户端WPF", "02、客户端WPF", "{78E472E8-3D61-47E1-9FD3-C172062B5482}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "09、通用类库", "09、通用类库", "{F3FACD39-FED1-4163-8078-4DA985C463BA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "12、通用类库", "12、通用类库", "{F3FACD39-FED1-4163-8078-4DA985C463BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99、项目文档", "99、项目文档", "{5863101C-E3FC-4B08-85D4-CF46685D5986}"
 EndProject
@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HslCommunication", "HslComm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS.ConfigDoc", "RS.ConfigDoc\RS.ConfigDoc.csproj", "{EE2F7FC7-002B-438B-A020-EB2FCD0F012D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10、安装程序", "10、安装程序", "{51FDEC41-3BB0-4F5E-AC34-AC845AC68A41}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "13、安装程序", "13、安装程序", "{51FDEC41-3BB0-4F5E-AC34-AC845AC68A41}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "11、标注软件", "11、标注软件", "{95312252-6118-4A15-877E-B22C6556AA0B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "14、标注软件", "14、标注软件", "{95312252-6118-4A15-877E-B22C6556AA0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "98、胡工科技", "98、胡工科技", "{C75FBDA5-9493-436A-B2E2-C5456B78B174}"
 EndProject
@@ -86,6 +86,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "07、客户端MacOS", "07、客户端MacOS", "{64F2E9EE-BCB1-4DB3-99ED-57BBD4E1D92E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "08、客户端Harmony", "08、客户端Harmony", "{E7D3A744-778E-4775-8E4F-7C5D401D0B9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "09、小程序WeChat", "09、小程序WeChat", "{0041B26D-A69F-4020-A512-15EF1620F3FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10、小程序Alipay", "10、小程序Alipay", "{E36E6C8F-DFDD-4107-8F9E-EB910F426282}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "11、小程序Douyin", "11、小程序Douyin", "{F2EA44E3-D075-458A-915D-8374B0AA8CFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
