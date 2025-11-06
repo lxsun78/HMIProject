@@ -2,14 +2,14 @@
     x:Class="RS.WPFClient.Client.Views.HomeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="clr-namespace:RS.WPFClient.Client.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RS.WPFClient.Client.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:RS.WPFClient.Client.Models"
-       xmlns:view="clr-namespace:RS.WPFClient.Client.Views"
     xmlns:rs="https://github.com/luo-ross/MultiVerseKit"
+    xmlns:view="clr-namespace:RS.WPFClient.Client.Views"
     xmlns:viewModel="clr-namespace:RS.WPFClient.Client.ViewModels"
     x:Name="this"
     Title="上位机客户端"
@@ -35,7 +35,7 @@
             <rs:IconKeyConverter x:Key="IconKeyConverter" />
             <rs:EnumConverter x:Key="EnumConverter" />
             <SolidColorBrush x:Key="RSApp.SolidColorBrush.EBEBEB">#EBEBEB</SolidColorBrush>
-      
+
 
 
 

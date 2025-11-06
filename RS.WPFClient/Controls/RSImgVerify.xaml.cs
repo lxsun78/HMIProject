@@ -1,7 +1,11 @@
-﻿using RS.Commons;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RS.Commons;
+using RS.Commons.Attributs;
 using RS.Models;
+using RS.WPFClient.Client.IServices;
 using System.ComponentModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -11,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace RS.WPFClient.Client.Controls
 {
-    public partial class RSImgVerify : UserControl
+    public partial class RSImgVerify : UserControl, IImgVerifyService
     {
         private Thumb PART_BtnSlider { get; set; }
         private Thumb PART_BtnImgSlider { get; set; }
@@ -23,20 +27,71 @@ namespace RS.WPFClient.Client.Controls
         private string VerifySessionId;
         private List<Point> MouseMovingTrack = new List<Point>();
 
+        public RSImgVerify()
+        {
+            InitializeComponent();
+            this.Loaded += RSImgVerify_Loaded;
+        }
+
+        private void RSImgVerify_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.ImgVerifyService = this;
+        }
+
+        public event Func<Task<OperateResult<ImgVerifyModel>>> InitVerifyControlAsync;
+
+        public event Func<OperateResult> SliderDragStarted;
+
+
+        public IImgVerifyService ImgVerifyService
+        {
+            get { return (IImgVerifyService)GetValue(ImgVerifyServiceProperty); }
+            set { SetValue(ImgVerifyServiceProperty, value); }
+        }
+
+        public static readonly DependencyProperty ImgVerifyServiceProperty =
+            DependencyProperty.Register("ImgVerifyService", typeof(IImgVerifyService), typeof(RSImgVerify), new PropertyMetadata(null));
+
+
+
         /// <summary>
         /// 初始化验证码事件
         /// </summary>
-        public event Func<Task<OperateResult<ImgVerifyModel>>> InitVerifyControlAsyncEvent;
+        public Func<Task<OperateResult<ImgVerifyModel>>> InitVerifyControlAsyncFunc
+        {
+            get { return (Func<Task<OperateResult<ImgVerifyModel>>>)GetValue(InitVerifyControlAsyncFuncProperty); }
+            set { SetValue(InitVerifyControlAsyncFuncProperty, value); }
+        }
+
+        public static readonly DependencyProperty InitVerifyControlAsyncFuncProperty =
+            DependencyProperty.Register("InitVerifyControlAsyncFunc", typeof(Func<Task<OperateResult<ImgVerifyModel>>>), typeof(RSImgVerify), new PropertyMetadata(null, OnInitVerifyControlAsyncFuncPropertyChanged));
+
+        private static void OnInitVerifyControlAsyncFuncPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var imgVerify = d as RSImgVerify;
+            imgVerify.InitVerifyControlAsync -= imgVerify.InitVerifyControlAsyncFunc;
+            imgVerify.InitVerifyControlAsync += imgVerify.InitVerifyControlAsyncFunc;
+        }
+
+
 
         /// <summary>
         /// 验证码拖拽开始事件
         /// </summary>
-        public event Func<OperateResult> BtnSliderDragStartedEvent;
-
-
-        public RSImgVerify()
+        public Func<OperateResult> SliderDragStartedFunc
         {
-            InitializeComponent();
+            get { return (Func<OperateResult>)GetValue(SliderDragStartedFuncProperty); }
+            set { SetValue(SliderDragStartedFuncProperty, value); }
+        }
+
+        public static readonly DependencyProperty SliderDragStartedFuncProperty =
+            DependencyProperty.Register("SliderDragStartedFunc", typeof(Func<OperateResult>), typeof(RSImgVerify), new PropertyMetadata(null, OnSliderDragStartedFuncPropertyChanged));
+
+        private static void OnSliderDragStartedFuncPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var imgVerify = d as RSImgVerify;
+            imgVerify.SliderDragStarted -= imgVerify.SliderDragStartedFunc;
+            imgVerify.SliderDragStarted += imgVerify.SliderDragStartedFunc;
         }
 
 
@@ -133,6 +188,7 @@ namespace RS.WPFClient.Client.Controls
         public static readonly DependencyProperty SliderHostCanvasTopProperty =
             DependencyProperty.Register("SliderHostCanvasTop", typeof(double), typeof(RSImgVerify), new PropertyMetadata(150D));
 
+
         public async Task<OperateResult<ImgVerifyResultModel>> GetImgVerifyResultAsync()
         {
             if (string.IsNullOrEmpty(this.VerifySessionId)
@@ -141,6 +197,7 @@ namespace RS.WPFClient.Client.Controls
                 await this.ResetImgVerifyAsync();
                 return OperateResult.CreateFailResult<ImgVerifyResultModel>("获取验证码失败");
             }
+
             double imgBtnWidth = 0D;
             double imgBtnHeight = 0D;
             double hostCanvasLeft = 0D;
@@ -206,9 +263,9 @@ namespace RS.WPFClient.Client.Controls
             this.IsCanDrag = false;
         }
 
-        private void PART_BtnSlider_DragStarted(object sender, DragStartedEventArgs e)
+        private async void PART_BtnSlider_DragStarted(object sender, DragStartedEventArgs e)
         {
-            OperateResult? operateResult = BtnSliderDragStartedEvent?.Invoke();
+            OperateResult? operateResult = SliderDragStarted?.Invoke();
             if (operateResult == null || !operateResult.IsSuccess)
             {
                 return;
@@ -299,14 +356,14 @@ namespace RS.WPFClient.Client.Controls
                 this.IsShowVerifyImg = true;
 
                 OperateResult<ImgVerifyModel>? initVerifyControlResult = null;
-                if (InitVerifyControlAsyncEvent != null)
+                if (InitVerifyControlAsync != null)
                 {
-                    initVerifyControlResult = await InitVerifyControlAsyncEvent.Invoke();
+                    initVerifyControlResult = await InitVerifyControlAsync.Invoke();
                 }
-
                 if (initVerifyControlResult == null
                     || !initVerifyControlResult.IsSuccess)
                 {
+                    await this.ResetImgVerifyAsync();
                     return;
                 }
                 var imgVerifyModel = initVerifyControlResult.Data;
@@ -372,8 +429,13 @@ namespace RS.WPFClient.Client.Controls
 
             await this.Dispatcher.InvokeAsync(() =>
             {
+                this.PART_BtnSlider.ReleaseMouseCapture();
+                this.PART_BtnSlider.ReleaseStylusCapture();
                 Canvas.SetLeft(this.PART_BtnImgSlider, 0);
                 Canvas.SetTop(this.PART_BtnImgSlider, 0);
+                Canvas.SetLeft(this.PART_BtnSlider, 0);
+                Canvas.SetTop(this.PART_BtnSlider, 0);
+                this.SliderMaskWidth = 0;
             });
 
             return OperateResult.CreateSuccessResult();

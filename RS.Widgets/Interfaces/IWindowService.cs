@@ -9,15 +9,15 @@ namespace RS.Widgets.Interfaces
 {
     public interface IWindowService
     {
-        void Show<TViewModel, TView>()
+        void ShowAsync<TViewModel, TView>()
           where TViewModel : class
           where TView : Window;
 
-        bool? ShowDialog<TViewModel, TView>(TViewModel viewModel)
+        bool? ShowDialogAsync<TViewModel, TView>(TViewModel viewModel)
           where TViewModel : class
           where TView : Window;
 
-        void Close<TViewModel>(TViewModel viewModel)
+        void CloseAsync<TViewModel>(TViewModel viewModel)
            where TViewModel : class;
     }
 }

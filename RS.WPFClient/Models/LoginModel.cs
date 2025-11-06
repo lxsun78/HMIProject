@@ -2,7 +2,7 @@
 
 namespace RS.WPFClient.Client.Models
 {
-    public  class LoginModel : UserBaseModel
+    public class LoginModel : UserBaseModel
     {
 
         private bool isAutoLogin;
@@ -37,5 +37,9 @@ namespace RS.WPFClient.Client.Models
                 }
             }
         }
+
+
+
+      
     }
 }

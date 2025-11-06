@@ -15,7 +15,7 @@ namespace RS.Commons.Enums
         WaitScanQRCode=1,
         ScanQRCodeSuccess = 2,
         QRCodeAuthLogin = 3,
-        CancelQRCodeLogin = 4,
+        CancelQRCodeLoginAction = 4,
         QRCodeLoginTimeOut = 5,
     }
 }

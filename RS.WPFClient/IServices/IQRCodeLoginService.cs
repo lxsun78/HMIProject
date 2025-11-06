@@ -11,21 +11,21 @@ namespace RS.WPFClient.Client.IServices
         /// <summary>
         /// 获取登录二维码
         /// </summary>
-        event Func<Task<QRCodeLoginResultModel>>? GetLoginQRCode;
+        event Func<Task<QRCodeLoginResultModel>>? GetLoginQRCodeAsyncFunc;
 
         /// <summary>
         /// 查询二维码登录状态
         /// </summary>
-        event Func<Task<QRCodeLoginStatusModel>>? QueryQRCodeLoginStatus;
+        event Func<Task<QRCodeLoginStatusModel>>? QueryQRCodeLoginStatusAsyncFunc;
 
         /// <summary>
         /// 二维码授权登录成功
         /// </summary>
-        event Action<QRCodeLoginResultModel>? QRCodeAuthLoginSuccess;
+        event Action<QRCodeLoginResultModel>? QRCodeAuthLoginSuccessAction;
 
         /// <summary>
         /// 取消二维码登录
         /// </summary>
-        event Action<QRCodeLoginResultModel>? CancelQRCodeLogin;
+        event Action<QRCodeLoginResultModel>? CancelQRCodeLoginAction;
     }
 }

@@ -130,7 +130,7 @@
                             <Setter TargetName="PART_ScanQRCodeSuccess" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="QRCodeLoginStatus" Value="QRCodeAuthLogin" />
-                        <Trigger Property="QRCodeLoginStatus" Value="CancelQRCodeLogin" />
+                        <Trigger Property="QRCodeLoginStatus" Value="CancelQRCodeLoginAction" />
                         <Trigger Property="QRCodeLoginStatus" Value="QRCodeLoginTimeOut">
                             <Setter TargetName="PART_QRCodeLoginTimeOut" Property="Visibility" Value="Visible" />
                         </Trigger>

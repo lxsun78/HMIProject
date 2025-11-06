@@ -197,8 +197,6 @@ namespace RS.Widgets.Controls
             element.SetValue(IsShowValueProperty, value);
         }
 
-
-
         #region 选中颜色
 
         public static readonly DependencyProperty SelectedBackgroundProperty = DependencyProperty.RegisterAttached(
@@ -217,8 +215,6 @@ namespace RS.Widgets.Controls
             element.SetValue(SelectedBackgroundProperty, value);
         }
         #endregion
-
-
 
 
         public static readonly DependencyProperty DescriptionProperty = DependencyProperty.RegisterAttached(
@@ -272,5 +268,9 @@ namespace RS.Widgets.Controls
         {
             return (double)element.GetValue(BlendRatioProperty);
         }
+
+
+
+
     }
 }

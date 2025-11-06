@@ -20,7 +20,24 @@ namespace RS.Widgets.Models
         {
 
         }
-    
+
+        private string errorMessage;
+        /// <summary>
+        /// 错误提示
+        /// </summary>
+        public string ErrorMessage
+        {
+            get
+            {
+                return errorMessage;
+            }
+            set
+            {
+                SetProperty(ref errorMessage, value);
+            }
+        }
+
+
 
         /// <summary>
         /// 对话层

@@ -23,13 +23,12 @@
                 <rs:RSQRCodeLogin
                     x:Name="QRCodeLogin"
                     Margin="0,25,0,0"
-                    IsQRCodeLogin="{Binding ElementName=TogBtnQRCode, Path=IsChecked}"
+                    CancelQRCodeLoginAction="{Binding CancelQRCodeLoginAction}"
+                    GetLoginQRCodeAsyncFunc="{Binding GetLoginQRCodeAsyncFunc}"
+                    QRCodeAuthLoginSuccessAction="{Binding QRCodeAuthLoginSuccessAction}"
                     QRCodeHeight="200"
-                    QRCodeWidth="200">
-                    <i:Interaction.Behaviors>
-                        <behavior:QRCodeLoginBehavior ServiceProvider="{Binding QRCodeLoginService, Mode=OneWayToSource}" />
-                    </i:Interaction.Behaviors>
-                </rs:RSQRCodeLogin>
+                    QRCodeWidth="200"
+                    QueryQRCodeLoginStatusAsyncFunc="{Binding QueryQRCodeLoginStatusAsyncFunc}" />
             </Border>
         </Grid>
         <Button

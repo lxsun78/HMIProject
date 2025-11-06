@@ -17,7 +17,7 @@ namespace RS.WPFClient.Client.ViewModels
     public class SecurityViewModel : ViewModelBase
     {
         #region 自定义事件
-        public event Action OnReturnExcute;
+        public event Action OnReturn;
         #endregion
 
         public ICommand ReturnCommand { get; }
@@ -26,12 +26,12 @@ namespace RS.WPFClient.Client.ViewModels
 
         public SecurityViewModel()
         {
-            this.ReturnCommand = new RelayCommand(ReturnExcute);
-            this.ReturnLoginCommand = new RelayCommand(ReturnLoginExcute);
-            this.SendEmailPasswordResetCommand = new RelayCommand(SendEmailPasswordResetExcute);
+            this.ReturnCommand = new RelayCommand(Return);
+            this.ReturnLoginCommand = new RelayCommand(ReturnLogin);
+            this.SendEmailPasswordResetCommand = new RelayCommand(SendEmailPasswordReset);
         }
 
-        private async void SendEmailPasswordResetExcute()
+        private async void SendEmailPasswordReset()
         {
             // 验证用户名和输入密码是否符合要求
             var validResult = this.ValidObject();
@@ -71,14 +71,14 @@ namespace RS.WPFClient.Client.ViewModels
             this.TaskStatus = SecurityTaskStatus.EmailSendSuccess;
         }
 
-        private void ReturnLoginExcute()
+        private void ReturnLogin()
         {
-            this.OnReturnExcute?.Invoke();
+            this.OnReturn?.Invoke();
         }
 
-        private void ReturnExcute()
+        private void Return()
         {
-            this.OnReturnExcute?.Invoke();
+            this.OnReturn?.Invoke();
         }
 
         private SecurityTaskStatus taskStatus;

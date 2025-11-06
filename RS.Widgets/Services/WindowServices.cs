@@ -10,21 +10,20 @@ using System.Windows;
 
 namespace RS.Widgets.Services
 {
-    [ServiceInjectConfig(ServiceLifetime.Singleton,ServiceType =typeof(IWindowService))]
+    [ServiceInjectConfig(ServiceLifetime.Singleton, ServiceType = typeof(IWindowService))]
     public class WindowService : IWindowService
     {
         private readonly IServiceProvider ServiceProvider;
-        
+
         private readonly Dictionary<Type, Type> ViewMappings = new();
-    
+
         private readonly Dictionary<object, Window> ViewModelInstances = new();
 
-       
         public WindowService(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
         }
-  
+
         private void RegisterMapping<TViewModel, TView>()
             where TViewModel : class
             where TView : Window
@@ -36,7 +35,7 @@ namespace RS.Widgets.Services
             }
         }
 
-        public void Show<TViewModel, TView>()
+        public void ShowAsync<TViewModel, TView>()
           where TViewModel : class
           where TView : Window
         {
@@ -44,24 +43,35 @@ namespace RS.Widgets.Services
             RegisterMapping<TViewModel, TView>();
             var window = CreateWindow(viewModel);
             ViewModelInstances[viewModel] = window;
-            window.Show();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                window.Show();
+            });
         }
 
-        public bool? ShowDialog<TViewModel, TView>(TViewModel viewModel)
+        public bool? ShowDialogAsync<TViewModel, TView>(TViewModel viewModel)
             where TViewModel : class
             where TView : Window
         {
             RegisterMapping<TViewModel, TView>();
             var window = CreateWindow(viewModel);
             ViewModelInstances[viewModel] = window;
-            return window.ShowDialog();
+
+            return Application.Current.Dispatcher.Invoke(() =>
+              {
+                  return window.ShowDialog();
+              });
         }
 
-        public void Close<TViewModel>(TViewModel viewModel) where TViewModel : class
+        public void CloseAsync<TViewModel>(TViewModel viewModel) where TViewModel : class
         {
             if (ViewModelInstances.TryGetValue(viewModel, out var window))
             {
-                window.Close();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    window.Close();
+                });
+
                 ViewModelInstances.Remove(viewModel);
             }
         }
@@ -82,6 +92,6 @@ namespace RS.Widgets.Services
             return window;
         }
 
-      
+
     }
 }

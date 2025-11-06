@@ -56,7 +56,7 @@ namespace RS.Annotation.Views
             return verifyResultModel;
         }
 
-        private async Task<QRCodeLoginResultModel> QRCodeLogin_OnGetLoginQRCode()
+        private async Task<QRCodeLoginResultModel> QRCodeLogin_OnGetLoginQRCodeAsyncFunc()
         {
             return await Task.Factory.StartNew(() =>
             {
@@ -75,7 +75,7 @@ namespace RS.Annotation.Views
             });
         }
 
-        private async Task<QRCodeLoginStatusModel> QRCodeLogin_OnQueryQRCodeLoginStatus()
+        private async Task<QRCodeLoginStatusModel> QRCodeLogin_OnQueryQRCodeLoginStatusAsyncFunc()
         {
             QRCodeLoginStatusModel qRCodeLoginStatusModel = new QRCodeLoginStatusModel()
             {
@@ -102,13 +102,13 @@ namespace RS.Annotation.Views
             return qRCodeLoginStatusModel;
         }
 
-        private void QRCodeLogin_OnQRCodeAuthLoginSuccess(QRCodeLoginResultModel loginQRCodeResult)
+        private void QRCodeLogin_OnQRCodeAuthLoginSuccessAction(QRCodeLoginResultModel loginQRCodeResult)
         {
             //出发授权登录成功回调 自己再去重新请求获取服务端用户的信息
             var sdf = 1;
         }
 
-        private void QRCodeLogin_OnCancelQRCodeLogin(QRCodeLoginResultModel loginQRCodeResult)
+        private void QRCodeLogin_OnCancelQRCodeLoginAction(QRCodeLoginResultModel loginQRCodeResult)
         {
             //加入取消二维码登录 向服务发送信息 取消二维码登录 主动删除服务端数据
             var sdf = 1;

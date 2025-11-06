@@ -382,11 +382,11 @@
                                 <Border Grid.Row="1" Padding="0,10,0,0">
                                     <rs:RSQRCodeLogin
                                         x:Name="QRCodeLogin"
-                                        CancelQRCodeLoginAction="QRCodeLogin_OnCancelQRCodeLogin"
-                                        GetLoginQRCodeAction="QRCodeLogin_OnGetLoginQRCode"
+                                        CancelQRCodeLoginActionAction="QRCodeLogin_OnCancelQRCodeLoginAction"
+                                        GetLoginQRCodeAsyncFuncAction="QRCodeLogin_OnGetLoginQRCodeAsyncFunc"
                                         IsQRCodeLogin="{Binding ElementName=TogBtnQRCode, Path=IsChecked}"
-                                        OnQRCodeAuthLoginSuccessEvent="QRCodeLogin_OnQRCodeAuthLoginSuccess"
-                                        OnQueryQRCodeLoginStatusEvent="QRCodeLogin_OnQueryQRCodeLoginStatus"
+                                        OnQRCodeAuthLoginSuccessActionEvent="QRCodeLogin_OnQRCodeAuthLoginSuccessAction"
+                                        OnQueryQRCodeLoginStatusAsyncFuncEvent="QRCodeLogin_OnQueryQRCodeLoginStatusAsyncFunc"
                                         QRCodeHeight="200"
                                         QRCodeWidth="200" />
                                 </Border>

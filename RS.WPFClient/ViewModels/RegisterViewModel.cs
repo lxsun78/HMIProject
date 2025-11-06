@@ -20,29 +20,33 @@ namespace RS.WPFClient.Client.ViewModels
     [ServiceInjectConfig(ServiceLifetime.Transient)]
     public class RegisterViewModel : ViewModelBase
     {
+        #region 依赖注入服务
         private readonly ICryptographyBLL CryptographyBLL;
+        #endregion
+
         private RegisterVerifyModel RegisterVerifyModel;
         private DispatcherTimer DispatcherTimer;
 
 
         #region 自定义事件
-        public event Action OnReturnExcute;
+        public event Action OnReturn;
         #endregion
 
-
+        #region 命令
         public ICommand SignUpRequestCommand { get; }
         public ICommand VerifyConfirmCommand { get; }
         public ICommand ReturnCommand { get; }
         public ICommand ReturnLoginCommand { get; }
 
+        #endregion
 
         public RegisterViewModel(ICryptographyBLL cryptographyBLL)
         {
-            CryptographyBLL = cryptographyBLL;
-            this.SignUpRequestCommand = new RelayCommand(SignUpRequestExcute);
-            this.VerifyConfirmCommand = new RelayCommand(VerifyConfirmExcute);
-            this.ReturnCommand = new RelayCommand(ReturnExcute);
-            this.ReturnLoginCommand = new RelayCommand(ReturnLoginExcute);
+            this.CryptographyBLL = cryptographyBLL;
+            this.SignUpRequestCommand = new RelayCommand(SignUpRequest);
+            this.VerifyConfirmCommand = new RelayCommand(VerifyConfirm);
+            this.ReturnCommand = new RelayCommand(Return);
+            this.ReturnLoginCommand = new RelayCommand(ReturnLogin);
 
             this.VerifyCodeModelList = new ObservableCollection<VerifyCodeModel>();
 
@@ -103,17 +107,17 @@ namespace RS.WPFClient.Client.ViewModels
             }
         }
 
-        private void ReturnLoginExcute()
+        private void ReturnLogin()
         {
-            this.OnReturnExcute?.Invoke();
+            this.OnReturn?.Invoke();
         }
 
-        private void ReturnExcute()
+        private void Return()
         {
             switch (this.TaskStatus)
             {
                 case RegisterTaskStatus.RegisterForm:
-                    this.OnReturnExcute?.Invoke();
+                    this.OnReturn?.Invoke();
                     break;
                 case RegisterTaskStatus.EmailVerify:
                     //停止定时器
@@ -134,7 +138,7 @@ namespace RS.WPFClient.Client.ViewModels
             }
         }
 
-        private async void VerifyConfirmExcute()
+        private async void VerifyConfirm()
         {
             var textList = VerifyCodeModelList.Select(t => t.Text).ToList();
             var verify = string.Join("", textList);
@@ -182,7 +186,7 @@ namespace RS.WPFClient.Client.ViewModels
             this.TaskStatus = RegisterTaskStatus.RegisterSuccess;
         }
 
-        private async void SignUpRequestExcute()
+        private async void SignUpRequest()
         {
             //注册信息验证
             var validResult = this.SignUpModel.ValidObject();
@@ -241,7 +245,7 @@ namespace RS.WPFClient.Client.ViewModels
                 }
                 else
                 {
-                    this.ReturnExcute();
+                    this.Return();
                 }
             };
             this.DispatcherTimer.Start();

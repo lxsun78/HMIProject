@@ -113,12 +113,8 @@
                     </Border.RenderTransform>
                 </Border>
             </ControlTemplate>
-
         </ResourceDictionary>
     </rs:RSWindow.Resources>
-    <i:Interaction.Behaviors>
-        <behavior:LoginViewBehavior ServiceProvider="{Binding LoginViewService, Mode=OneWayToSource}" />
-    </i:Interaction.Behaviors>
     <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />

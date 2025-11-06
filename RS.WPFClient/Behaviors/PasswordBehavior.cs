@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace RS.WPFClient.Client.Behaviors
 {
-    public class TextBoxBehavior : ControlBehavior
+    public class PasswordBehavior : ControlBehavior
     {
         public override void OnFocusedChanged()
         {

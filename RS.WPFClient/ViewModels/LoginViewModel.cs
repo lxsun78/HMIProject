@@ -19,177 +19,6 @@ namespace RS.WPFClient.Client.ViewModels
             this.SetPasswordLoginView();
         }
 
-        private void LoginViewModel_PropertyChanging(object? sender, System.ComponentModel.PropertyChangingEventArgs e)
-        {
-            //switch (e.PropertyName)
-            //{
-            //    case nameof(QRCodeLoginService):
-            //        UnRegisterQRCodeLoginServiceCallbacks(QRCodeLoginService);
-            //        break;
-            //    case nameof(ImgVerifyService):
-            //        UnRegisterImgVerifyServiceCallbacks(ImgVerifyService);
-            //        break;
-            //}
-        }
-
-        private void LoginViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            //switch (e.PropertyName)
-            //{
-            //    case nameof(QRCodeLoginService):
-            //        RegisterQRCodeLoginServiceCallbacks(QRCodeLoginService);
-            //        break;
-            //    case nameof(ImgVerifyService):
-            //        RegisterImgVerifyServiceCallbacks(ImgVerifyService);
-            //        break;
-            //}
-        }
-
-
-        private void RegisterImgVerifyServiceCallbacks(IImgVerifyService? imgVerifyService)
-        {
-            if (imgVerifyService == null)
-            {
-                return;
-            }
-
-            imgVerifyService.BtnSliderDragStartedEvent += ImgVerifyService_BtnSliderDragStartedEvent;
-            imgVerifyService.InitVerifyControlAsyncEvent += ImgVerifyService_InitVerifyControlAsyncEvent;
-        }
-
-        private void UnRegisterImgVerifyServiceCallbacks(IImgVerifyService? imgVerifyService)
-        {
-            if (imgVerifyService == null)
-            {
-                return;
-            }
-            imgVerifyService.BtnSliderDragStartedEvent -= ImgVerifyService_BtnSliderDragStartedEvent;
-            imgVerifyService.InitVerifyControlAsyncEvent -= ImgVerifyService_InitVerifyControlAsyncEvent;
-        }
-
-
-        private void RegisterQRCodeLoginServiceCallbacks(IQRCodeLoginService? qrCodeLoginService)
-        {
-            if (qrCodeLoginService == null)
-            {
-                return;
-            }
-            qrCodeLoginService.QRCodeAuthLoginSuccess += QrCodeLoginService_QRCodeAuthLoginSuccess;
-            qrCodeLoginService.CancelQRCodeLogin += QrCodeLoginService_CancelQRCodeLogin;
-            qrCodeLoginService.GetLoginQRCode += QrCodeLoginService_GetLoginQRCode;
-            qrCodeLoginService.QueryQRCodeLoginStatus += QrCodeLoginService_QueryQRCodeLoginStatus;
-        }
-
-
-        private void UnRegisterQRCodeLoginServiceCallbacks(IQRCodeLoginService? qrCodeLoginService)
-        {
-            if (qrCodeLoginService == null)
-            {
-                return;
-            }
-            qrCodeLoginService.QRCodeAuthLoginSuccess -= QrCodeLoginService_QRCodeAuthLoginSuccess;
-            qrCodeLoginService.CancelQRCodeLogin -= QrCodeLoginService_CancelQRCodeLogin;
-            qrCodeLoginService.GetLoginQRCode -= QrCodeLoginService_GetLoginQRCode;
-            qrCodeLoginService.QueryQRCodeLoginStatus -= QrCodeLoginService_QueryQRCodeLoginStatus;
-
-        }
-
-
-        /// <summary>
-        /// 请求获取滑动图像验证数据
-        /// </summary>
-        /// <returns></returns>
-        private async Task<OperateResult<ImgVerifyModel>> ImgVerifyService_InitVerifyControlAsyncEvent()
-        {
-            var loadingConfig = new LoadingConfig()
-            {
-                LoadingType = LoadingType.ProgressBar,
-                //Minimum = 0,
-                Maximum = 100,
-                Value = 0,
-                IsIndeterminate = true,
-            };
-
-            var getImgVerifyModelResult = await Loading.InvokeAsync(async (cancellationToken) =>
-            {
-                return await HMIWebAPI.Security.GetImgVerifyModel.AESHttpGetAsync<ImgVerifyModel>(nameof(HMIWebAPI));
-            }, loadingConfig);
-
-            if (!getImgVerifyModelResult.IsSuccess)
-            {
-                ParentWin.ShowInfoAsync(getImgVerifyModelResult.Message, InfoType.Error);
-            }
-
-            return getImgVerifyModelResult;
-        }
-
-        private OperateResult ImgVerifyService_BtnSliderDragStartedEvent()
-        {
-            //// 验证用户名和输入密码是否符合要求
-            //var validResult = LoginModel.ValidObject();
-            //if (!validResult)
-            //{
-            //    return OperateResult.CreateFailResult();
-            //}
-            return OperateResult.CreateSuccessResult();
-        }
-
-
-
-        private async Task<QRCodeLoginStatusModel> QrCodeLoginService_QueryQRCodeLoginStatus()
-        {
-            var operateResult = await Loading.InvokeAsync(async (cancellationToken) =>
-            {
-                return OperateResult.CreateSuccessResult(new QRCodeLoginStatusModel());
-            });
-
-            if (!operateResult.IsSuccess)
-            {
-                ParentWin.ShowInfoAsync(operateResult.Message, InfoType.Error);
-            }
-            return operateResult.Data;
-        }
-
-        private async Task<QRCodeLoginResultModel> QrCodeLoginService_GetLoginQRCode()
-        {
-            var operateResult = await Loading.InvokeAsync(async (cancellationToken) =>
-            {
-                //用户就在这里去往服务端发起请求获取验证码
-                var expireTime = new DateTimeOffset(DateTime.Now.AddSeconds(120)).ToUnixTimeMilliseconds();
-                //https://passport.iqiyi.com/apis/qrcode/token_login.action?token=7a068e22fe923ea273bcf76242db4bfba
-                string token = $"{Guid.NewGuid().ToString()}";
-                QRCodeLoginResultModel loginQRCodeResultModel = new QRCodeLoginResultModel()
-                {
-                    IsSuccess = true,
-                    Token = token,
-                    QRCodeContent = $"https://passport.myweb.com/apis/qrcode/token_login?token={token}",
-                    ExpireTime = expireTime
-                };
-                return OperateResult.CreateSuccessResult(loginQRCodeResultModel);
-            });
-
-            if (!operateResult.IsSuccess)
-            {
-                ParentWin.ShowInfoAsync(operateResult.Message, InfoType.Error);
-            }
-            return operateResult.Data;
-        }
-
-        private void QrCodeLoginService_CancelQRCodeLogin(QRCodeLoginResultModel obj)
-        {
-
-        }
-
-        private void QrCodeLoginService_QRCodeAuthLoginSuccess(QRCodeLoginResultModel obj)
-        {
-            Loading.InvokeAsync(async (cancellationToken) =>
-            {
-                //待实现
-                return OperateResult.CreateSuccessResult();
-            });
-        }
-
-
         #region 密码登录
 
         private void SetPasswordLoginView()
@@ -199,13 +28,13 @@ namespace RS.WPFClient.Client.ViewModels
             {
                 return;
             }
-            this.PasswordLoginViewModel.OnForgetPasswordExcute += PasswordLoginViewModel_OnForgetPasswordExcute;
-            this.PasswordLoginViewModel.OnRegisterExcute += PasswordLoginViewModel_OnRegisterExcute;
-            this.PasswordLoginViewModel.OnQRLoginExcute += PasswordLoginViewModel_OnQRLoginExcute;
+            this.PasswordLoginViewModel.OnForgetPassword+= PasswordLoginViewModel_OnForgetPassword;
+            this.PasswordLoginViewModel.OnRegister += PasswordLoginViewModel_OnRegister;
+            this.PasswordLoginViewModel.OnQRLogin += PasswordLoginViewModel_OnQRLogin;
             this.SetLoginContent(this.PasswordLoginViewModel);
         }
 
-        private void PasswordLoginViewModel_OnQRLoginExcute()
+        private void PasswordLoginViewModel_OnQRLogin()
         {
             this.RemovePasswordLoginView();
             this.SetQRLoginView();
@@ -217,18 +46,18 @@ namespace RS.WPFClient.Client.ViewModels
             {
                 return;
             }
-            this.PasswordLoginViewModel.OnForgetPasswordExcute -= PasswordLoginViewModel_OnForgetPasswordExcute;
-            this.PasswordLoginViewModel.OnRegisterExcute -= PasswordLoginViewModel_OnRegisterExcute;
+            this.PasswordLoginViewModel.OnForgetPassword -= PasswordLoginViewModel_OnForgetPassword;
+            this.PasswordLoginViewModel.OnRegister -= PasswordLoginViewModel_OnRegister;
             this.PasswordLoginViewModel = null;
             this.SetLoginContent(this.PasswordLoginViewModel);
         }
 
-        private void PasswordLoginViewModel_OnForgetPasswordExcute()
+        private void PasswordLoginViewModel_OnForgetPassword()
         {
             SetSecurityView();
         }
 
-        private void PasswordLoginViewModel_OnRegisterExcute()
+        private void PasswordLoginViewModel_OnRegister()
         {
             this.SetRegisterView();
         }
@@ -243,7 +72,7 @@ namespace RS.WPFClient.Client.ViewModels
             {
                 return;
             }
-            this.QRLoginViewModel.OnPasswordLoginExcute += QRLoginViewModel_OnPasswordLoginExcute;
+            this.QRLoginViewModel.OnPasswordLogin += QRLoginViewModel_OnPasswordLogin;
             this.SetLoginContent(this.QRLoginViewModel);
         }
 
@@ -253,12 +82,12 @@ namespace RS.WPFClient.Client.ViewModels
             {
                 return;
             }
-            this.QRLoginViewModel.OnPasswordLoginExcute -= QRLoginViewModel_OnPasswordLoginExcute;
+            this.QRLoginViewModel.OnPasswordLogin -= QRLoginViewModel_OnPasswordLogin;
             this.QRLoginViewModel = null;
             this.SetLoginContent(this.QRLoginViewModel);
         }
 
-        private void QRLoginViewModel_OnPasswordLoginExcute()
+        private void QRLoginViewModel_OnPasswordLogin()
         {
             this.RemoveQRLoginView();
             this.SetPasswordLoginView();
@@ -276,7 +105,7 @@ namespace RS.WPFClient.Client.ViewModels
             {
                 return;
             }
-            this.SecurityViewModel.OnReturnExcute += SecurityViewModel_OnReturnExcute;
+            this.SecurityViewModel.OnReturn += SecurityViewModel_OnReturn;
             this.SetLoginContent(this.SecurityViewModel);
         }
 
@@ -286,7 +115,7 @@ namespace RS.WPFClient.Client.ViewModels
             {
                 return;
             }
-            this.SecurityViewModel.OnReturnExcute -= SecurityViewModel_OnReturnExcute;
+            this.SecurityViewModel.OnReturn -= SecurityViewModel_OnReturn;
             this.SecurityViewModel = null;
             this.SetLoginContent(this.SecurityViewModel);
         }
@@ -295,7 +124,7 @@ namespace RS.WPFClient.Client.ViewModels
         /// <summary>
         /// 更改密码返回按钮点击事件
         /// </summary>
-        private void SecurityViewModel_OnReturnExcute()
+        private void SecurityViewModel_OnReturn()
         {
             this.RemoveSecurityView();
             this.SetPasswordLoginView();
@@ -314,7 +143,7 @@ namespace RS.WPFClient.Client.ViewModels
                 return;
             }
 
-            this.RegisterViewModel.OnReturnExcute += RegisterViewModel_OnReturnExcute;
+            this.RegisterViewModel.OnReturn += RegisterViewModel_OnReturn;
             this.SetLoginContent(this.RegisterViewModel);
         }
 
@@ -324,19 +153,18 @@ namespace RS.WPFClient.Client.ViewModels
             {
                 return;
             }
-            this.RegisterViewModel.OnReturnExcute -= RegisterViewModel_OnReturnExcute;
+            this.RegisterViewModel.OnReturn -= RegisterViewModel_OnReturn;
             this.RegisterViewModel = null;
             this.LoginContent = null;
             this.SetLoginContent(this.RegisterViewModel);
         }
 
-        private void RegisterViewModel_OnReturnExcute()
+        private void RegisterViewModel_OnReturn()
         {
             this.RemoveRegisterView();
             this.SetPasswordLoginView();
         }
         #endregion
-
 
 
         private void SetLoginContent(INotifyPropertyChanged? notifyPropertyChanged)

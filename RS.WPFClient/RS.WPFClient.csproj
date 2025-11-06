@@ -33,7 +33,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AutoMapper" Version="15.0.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Compent.Shared.ConfigurationProvider.Json" Version="0.2.2" />
 		<PackageReference Include="SkiaSharp.Views.WPF" Version="2.88.9" />
@@ -42,14 +41,10 @@
 
 		<PackageReference Include="Castle.Core" Version="5.2.1" />
 		<PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="9.0.9" />
-		<PackageReference Include="libphonenumber-csharp" Version="8.13.32" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.21" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.9" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="8.0.0" />
-		<PackageReference Include="Microsoft.ML" Version="4.0.2" />
-		<PackageReference Include="Microsoft.ML.Vision" Version="4.0.2" />
-		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 		<PackageReference Include="OpenCV" Version="2.4.11" />
 		<PackageReference Include="OpenCvSharp4" Version="4.11.0.20250507" />
 		<PackageReference Include="OpenCvSharp4.runtime.win" Version="4.11.0.20250507" />

@@ -2,9 +2,9 @@
 
 namespace RS.WPFClient.Client.Models
 {
-    public  class UserBaseModel : ModelBase
+    public class UserBaseModel : ModelBase
     {
-       
+
         private string? email;
         /// <summary>
         /// 用户昵称
@@ -24,5 +24,8 @@ namespace RS.WPFClient.Client.Models
 
 
        
+
+
+
     }
 }
