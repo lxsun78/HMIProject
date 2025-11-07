@@ -199,6 +199,7 @@ namespace RS.WPFClient.Client.ViewModels
                    var validResult = this.ValidForm();
                    if (!validResult.IsSuccess)
                    {
+                      
                        return validResult;
                    }
 
@@ -275,6 +276,14 @@ namespace RS.WPFClient.Client.ViewModels
         {
             if (!this.LoginModel.ValidObject())
             {
+                if (this.LoginModel.HasError(nameof(this.LoginModel.Email)))
+                {
+                    this.IsEmailFocused = true;
+                }
+                else if (this.LoginModel.HasError(nameof(this.LoginModel.Password)))
+                {
+                    this.IsPasswordFocused = true;
+                }
                 return OperateResult.CreateFailResult();
             }
             return OperateResult.CreateSuccessResult();

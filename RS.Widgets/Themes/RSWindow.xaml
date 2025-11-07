@@ -116,7 +116,7 @@
                                                 WindowChrome.IsHitTestVisibleInChrome="True" />
                                             <Button
                                                 x:Name="PART_BtnClose"
-                                                Margin="8,3,8,3"
+                                                Margin="8,3,5,3"
                                                 rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.Close}"
                                                 Command="{x:Static SystemCommands.CloseWindowCommand}"
                                                 Foreground="{Binding ElementName=PART_Caption, Path=Background, Converter={StaticResource ForegroundColorConverter}}"

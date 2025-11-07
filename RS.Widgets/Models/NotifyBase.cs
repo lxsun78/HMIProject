@@ -61,6 +61,15 @@ namespace RS.Widgets.Models
             yield break;
         }
 
+        public bool HasError(string? propertyName)
+        {
+            if (string.IsNullOrWhiteSpace(propertyName))
+            {
+                throw new ArgumentNullException(nameof(propertyName));
+            }
+            return ErrorsDic.ContainsKey(propertyName);
+        }
+
         /// <summary>
         /// 调用这个方法来验证某一单独的属性
         /// </summary>
@@ -116,7 +125,7 @@ namespace RS.Widgets.Models
         public void AddErrors(string? propertyName, ICollection<ValidationResult> validationResults)
         {
             //获取已有错误
-            
+
             RemoveErrors(propertyName);
 
             //创建新错误
