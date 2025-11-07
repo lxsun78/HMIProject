@@ -341,7 +341,7 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                     <i:InvokeCommandAction
-                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type rs:RSNavigate}}, Path=NavItemInernalClickCommand}"
+                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type rs:RSNavigate}}, Path=NavItemInernalCommand}"
                         EventArgsConverter="{StaticResource EventArgsConverter}"
                         EventArgsConverterParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
                         PassEventArgsToCommand="True" />

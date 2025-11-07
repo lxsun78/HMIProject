@@ -57,28 +57,28 @@ namespace RS.Widgets.Controls
             remove { RemoveHandler(NavItemDoubleClickEvent, value); }
         }
 
-        public static readonly DependencyProperty NavItemClickCommandProperty =
-            DependencyProperty.Register(nameof(NavItemClickCommand),
+        public static readonly DependencyProperty NavItemCommandProperty =
+            DependencyProperty.Register(nameof(NavItemCommand),
             typeof(RelayCommand<NavigateModel>),
             typeof(RSNavigate),
             new PropertyMetadata(null));
 
-        public RelayCommand<NavigateModel> NavItemClickCommand
+        public RelayCommand<NavigateModel> NavItemCommand
         {
-            get { return (RelayCommand<NavigateModel>)GetValue(NavItemClickCommandProperty); }
-            set { SetValue(NavItemClickCommandProperty, value); }
+            get { return (RelayCommand<NavigateModel>)GetValue(NavItemCommandProperty); }
+            set { SetValue(NavItemCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty NavItemDoubleClickCommandProperty =
-            DependencyProperty.Register(nameof(NavItemDoubleClickCommand),
+        public static readonly DependencyProperty NavItemDoubleCommandProperty =
+            DependencyProperty.Register(nameof(NavItemDoubleCommand),
             typeof(RelayCommand<NavigateModel>),
             typeof(RSNavigate),
             new PropertyMetadata(null));
 
-        public RelayCommand<NavigateModel> NavItemDoubleClickCommand
+        public RelayCommand<NavigateModel> NavItemDoubleCommand
         {
-            get { return (RelayCommand<NavigateModel>)GetValue(NavItemDoubleClickCommandProperty); }
-            set { SetValue(NavItemDoubleClickCommandProperty, value); }
+            get { return (RelayCommand<NavigateModel>)GetValue(NavItemDoubleCommandProperty); }
+            set { SetValue(NavItemDoubleCommandProperty, value); }
         }
 
         static RSNavigate()

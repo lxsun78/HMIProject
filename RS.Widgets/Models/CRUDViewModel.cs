@@ -20,42 +20,42 @@ namespace RS.Widgets.Models
         /// <summary>
         /// 获取或设置搜索按钮点击时执行的命令
         /// </summary>
-        public ICommand SearchClickCommand { get; }
+        public ICommand SearchCommand { get; }
 
         /// <summary>
         /// 获取或设置清除搜索条件按钮点击时执行的命令
         /// </summary>
-        public ICommand SearchClearClickCommand { get; }
+        public ICommand SearchClearCommand { get; }
 
         /// <summary>
         /// 获取或设置添加新项按钮点击时执行的命令
         /// </summary>
-        public ICommand AddClickCommand { get; }
+        public ICommand AddCommand { get; }
 
         /// <summary>
         /// 获取或设置删除选中项按钮点击时执行的命令
         /// </summary>
-        public ICommand DeleteClickCommand { get; }
+        public ICommand DeleteCommand { get; }
 
         /// <summary>
         /// 获取或设置更新选中项按钮点击时执行的命令
         /// </summary>
-        public ICommand UpdateClickCommand { get; }
+        public ICommand UpdateCommand { get; }
 
         /// <summary>
         /// 获取或设置查看详情按钮点击时执行的命令
         /// </summary>
-        public ICommand DetailsClickCommand { get; }
+        public ICommand DetailsCommand { get; }
 
         /// <summary>
         /// 获取或设置导出数据按钮点击时执行的命令
         /// </summary>
-        public ICommand ExportClickCommand { get; }
+        public ICommand ExportCommand { get; }
 
         /// <summary>
         /// 获取或设置关闭当前视图/窗口按钮点击时执行的命令
         /// </summary>
-        public ICommand CloseClickCommand { get; }
+        public ICommand CloseCommand { get; }
 
         /// <summary>
         /// 获取或设置分页操作时执行的异步命令
@@ -74,14 +74,14 @@ namespace RS.Widgets.Models
         /// </summary>
         public CRUDViewModel()
         {
-            this.SearchClickCommand = new RelayCommand(SearchClick);
-            this.SearchClearClickCommand = new RelayCommand(SearchClearClick);
-            this.AddClickCommand = new RelayCommand(AddClick);
-            this.DeleteClickCommand = new RelayCommand<T>(DeleteClick, CanDeleteClick);
-            this.UpdateClickCommand = new RelayCommand<T>(UpdateClick, CanUpdateClick);
-            this.DetailsClickCommand = new RelayCommand<T>(DetailsClick, CanDetailsClick);
-            this.ExportClickCommand = new RelayCommand<ObservableCollection<T>>(ExportClick, CanExportClick);
-            this.CloseClickCommand = new RelayCommand(CloseClick);
+            this.SearchCommand = new RelayCommand(SearchClick);
+            this.SearchClearCommand = new RelayCommand(SearchClearClick);
+            this.AddCommand = new RelayCommand(AddClick);
+            this.DeleteCommand = new RelayCommand<T>(DeleteClick, CanDeleteClick);
+            this.UpdateCommand = new RelayCommand<T>(UpdateClick, CanUpdateClick);
+            this.DetailsCommand = new RelayCommand<T>(DetailsClick, CanDetailsClick);
+            this.ExportCommand = new RelayCommand<ObservableCollection<T>>(ExportClick, CanExportClick);
+            this.CloseCommand = new RelayCommand(CloseClick);
             this.PaginationCommand = new AsyncRelayCommand<Pagination>(PaginationAsync, CanPaginationAsync);
             this.FormSubmitCommand = new AsyncRelayCommand(FormSubmitAsync);
         }

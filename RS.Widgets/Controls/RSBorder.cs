@@ -40,17 +40,17 @@ namespace RS.Widgets.Controls
         //}
 
         //// 第二个命令
-        //public static readonly DependencyProperty DoubleClickCommandProperty =
+        //public static readonly DependencyProperty DoubleCommandProperty =
         //    DependencyProperty.Register(
-        //        nameof(DoubleClickCommand),
+        //        nameof(DoubleCommand),
         //        typeof(ICommand),
         //        typeof(RSBorder),
         //        new PropertyMetadata(null));
 
-        //public ICommand DoubleClickCommand
+        //public ICommand DoubleCommand
         //{
-        //    get { return (ICommand)GetValue(DoubleClickCommandProperty); }
-        //    set { SetValue(DoubleClickCommandProperty, value); }
+        //    get { return (ICommand)GetValue(DoubleCommandProperty); }
+        //    set { SetValue(DoubleCommandProperty, value); }
         //}
 
 
@@ -64,11 +64,11 @@ namespace RS.Widgets.Controls
         //}
 
         //// 触发第二个命令
-        //public void ExecuteDoubleClickCommand()
+        //public void ExecuteDoubleCommand()
         //{
-        //    if (DoubleClickCommand != null && DoubleClickCommand.CanExecute(null))
+        //    if (DoubleCommand != null && DoubleCommand.CanExecute(null))
         //    {
-        //        DoubleClickCommand.Execute(null);
+        //        DoubleCommand.Execute(null);
         //    }
         //}
 
@@ -101,7 +101,7 @@ namespace RS.Widgets.Controls
         //    //{
         //    //    Command.Execute(CommandParameter);
         //    //}
-        //    ExecuteDoubleClickCommand();
+        //    ExecuteDoubleCommand();
         //}
 
 

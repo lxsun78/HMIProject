@@ -20,30 +20,26 @@ namespace RS.WPFClient.Client.ViewModels
         /// <summary>
         /// 获取或设置搜索按钮点击时执行的命令
         /// </summary>
-        public ICommand NavClickCommand { get; }
-
+        public ICommand NavCommand { get; }
 
         private DispatcherTimer DispatcherTimer;
 
         public HomeViewModel()
         {
-            this.NavClickCommand = new RelayCommand<NavigateModel>(NavClick);
+            this.NavCommand = new RelayCommand<NavigateModel>(Nav);
             var dataList = GenerateMenu(1, 5);
             dataList = this.SortMenu(dataList);
             this.NavigateModelList = dataList;
-            //TimeSpan interval, DispatcherPriority priority, EventHandler callback, Dispatcher dispatcher
-            DispatcherTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(30),
-                DispatcherPriority.Background, (s, e) =>
-                {
-                    this.DateTimeNow = DateTime.Now;
-                }, Application.Current.Dispatcher);
 
+            DispatcherTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(30), DispatcherPriority.Background, (s, e) =>
+            {
+                this.DateTimeNow = DateTime.Now;
+            }, Application.Current.Dispatcher);
 
             PersonModelList = new ObservableCollection<PersonModel>();
             this.GenerateTestData(100000);
             this.ChangeSource(PersonModelList);
         }
-
 
         public void GenerateTestData(int n)
         {
@@ -59,7 +55,7 @@ namespace RS.WPFClient.Client.ViewModels
         }
 
 
-        private void NavClick(NavigateModel? model)
+        private void Nav(NavigateModel? model)
         {
             //this.ViewModelSelect = model?.ViewMoel;
             //先做测试
@@ -323,9 +319,7 @@ namespace RS.WPFClient.Client.ViewModels
         }
 
 
-
         private bool isEnglish;
-
         public bool IsEnglish
         {
             get { return isEnglish; }
@@ -350,8 +344,6 @@ namespace RS.WPFClient.Client.ViewModels
         }
 
 
-
-
         private bool isFullScreen;
         public bool IsFullScreen
         {
@@ -364,7 +356,6 @@ namespace RS.WPFClient.Client.ViewModels
 
 
         private ObservableCollection<TreeModel> treeModelList;
-
         public ObservableCollection<TreeModel> TreeModelList
         {
             get
@@ -394,13 +385,12 @@ namespace RS.WPFClient.Client.ViewModels
                         Children = new ObservableCollection<TreeModel>()
                 {
                     new TreeModel()
-            {
+                    {
                 TreeName = "3D对象",
                 TreeIcon = "/Assets/test.png",
                 Children= new ObservableCollection<TreeModel>()
                 {
-                    new TreeModel()
-            {
+                    new TreeModel() {
                 TreeName = "OneDrive-Personal",
                 TreeIcon = "/Assets/test.png",
             }

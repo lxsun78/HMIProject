@@ -2,11 +2,14 @@
 using RS.Commons;
 using RS.Commons.Attributs;
 using RS.Commons.Extensions;
-using RS.WPFClient.Client.IServices;
 using RS.Models;
 using RS.Server.WebAPI;
 using RS.Widgets.Enums;
+using RS.Widgets.Interfaces;
 using RS.Widgets.Models;
+using RS.Widgets.Services;
+using RS.WPFClient.Client.IServices;
+using RS.WPFClient.Client.Views;
 using System.ComponentModel;
 
 namespace RS.WPFClient.Client.ViewModels
@@ -14,13 +17,14 @@ namespace RS.WPFClient.Client.ViewModels
     [ServiceInjectConfig(ServiceLifetime.Transient)]
     public class LoginViewModel : ViewModelBase
     {
-        public LoginViewModel()
+        private readonly IWindowService WindowService;
+        public LoginViewModel(IWindowService windowService)
         {
+            this.WindowService = windowService;
             this.SetPasswordLoginView();
         }
 
         #region 密码登录
-
         private void SetPasswordLoginView()
         {
             this.PasswordLoginViewModel = App.ServiceProvider.GetRequiredService<PasswordLoginViewModel>();
@@ -31,7 +35,14 @@ namespace RS.WPFClient.Client.ViewModels
             this.PasswordLoginViewModel.OnForgetPassword+= PasswordLoginViewModel_OnForgetPassword;
             this.PasswordLoginViewModel.OnRegister += PasswordLoginViewModel_OnRegister;
             this.PasswordLoginViewModel.OnQRLogin += PasswordLoginViewModel_OnQRLogin;
+            this.passwordLoginViewModel.OnLoinSuccess += PasswordLoginViewModel_OnLoinSuccess;
             this.SetLoginContent(this.PasswordLoginViewModel);
+        }
+
+        private void PasswordLoginViewModel_OnLoinSuccess()
+        {
+            WindowService.ShowAsync<HomeViewModel, HomeView>();
+            WindowService.CloseAsync(this);
         }
 
         private void PasswordLoginViewModel_OnQRLogin()
@@ -48,6 +59,8 @@ namespace RS.WPFClient.Client.ViewModels
             }
             this.PasswordLoginViewModel.OnForgetPassword -= PasswordLoginViewModel_OnForgetPassword;
             this.PasswordLoginViewModel.OnRegister -= PasswordLoginViewModel_OnRegister;
+            this.PasswordLoginViewModel.OnQRLogin -= PasswordLoginViewModel_OnQRLogin;
+            this.passwordLoginViewModel.OnLoinSuccess -= PasswordLoginViewModel_OnLoinSuccess;
             this.PasswordLoginViewModel = null;
             this.SetLoginContent(this.PasswordLoginViewModel);
         }

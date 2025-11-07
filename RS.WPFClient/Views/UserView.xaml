@@ -18,7 +18,6 @@
             <rs:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
         </ResourceDictionary>
     </rs:RSDialog.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -94,7 +93,7 @@
                     ItemsSource="{Binding ModelList, UpdateSourceTrigger=PropertyChanged}"
                     PaginationCommand="{Binding PaginationCommand}"
                     SelectedItem="{Binding ModelSelect}"
-                    UpdateClickCommand="{Binding UpdateClickCommand}"
+                    UpdateCommand="{Binding UpdateCommand}"
                     VirtualizingPanel.IsVirtualizing="True">
                     <rs:RSDataGrid.RowStyle>
                         <Style BasedOn="{StaticResource RSApp.Styles.DataGridRowStyle}" TargetType="{x:Type DataGridRow}">
@@ -103,43 +102,43 @@
                                     <ContextMenu DataContext="{Binding Data, Source={StaticResource BindingProxy}}">
                                         <MenuItem
                                             x:Name="PART_BtnAdd"
-                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.AddClickCommand}"
+                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.AddCommand}"
                                             Header="新增数据"
                                             InputGestureText="Alt+A" />
                                         <MenuItem
                                             x:Name="PART_BtnDelete"
-                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.DeleteClickCommand}"
+                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.DeleteCommand}"
                                             CommandParameter="{Binding Source={StaticResource BindingProxy}, Path=Data.ModelSelect}"
                                             Header="删除数据"
                                             InputGestureText="Alt+D" />
                                         <MenuItem
                                             x:Name="PART_BtnUpdate"
-                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.UpdateClickCommand}"
+                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.UpdateCommand}"
                                             CommandParameter="{Binding Source={StaticResource BindingProxy}, Path=Data.ModelSelect}"
                                             Header="修改数据"
                                             InputGestureText="Alt+U" />
                                         <MenuItem
                                             x:Name="PART_BtnDetails"
-                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.DetailsClickCommand}"
+                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.DetailsCommand}"
                                             CommandParameter="{Binding Source={StaticResource BindingProxy}, Path=Data.ModelSelect}"
                                             Header="查看详情"
                                             InputGestureText="Alt+V" />
 
                                         <MenuItem
                                             x:Name="PART_BtnEnable"
-                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.UserEnableClickCommand}"
+                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.UserEnableCommand}"
                                             CommandParameter="{Binding Source={StaticResource BindingProxy}, Path=Data.ModelSelect}"
                                             Header="启用用户" />
 
                                         <MenuItem
                                             x:Name="PART_BtnDisable"
-                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.UserDisableClickCommand}"
+                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.UserDisableCommand}"
                                             CommandParameter="{Binding Source={StaticResource BindingProxy}, Path=Data.ModelSelect}"
                                             Header="禁用用户" />
 
                                         <MenuItem
                                             x:Name="PART_BtnExport"
-                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.ExportClickCommand}"
+                                            Command="{Binding Source={StaticResource BindingProxy}, Path=Data.ExportCommand}"
                                             CommandParameter="{Binding Source={StaticResource BindingProxy}, Path=Data.ModelList}"
                                             Header="导出数据"
                                             InputGestureText="Alt+E" />
@@ -182,21 +181,21 @@
                 <StackPanel Grid.Row="0">
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding SearchClickCommand}"
+                        Command="{Binding SearchCommand}"
                         Style="{StaticResource RSApp.Styles.DefaultButton}"
                         ToolTip="查询">
                         <AccessText Text="查询(_H)" />
                     </Button>
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding SearchClearClickCommand}"
+                        Command="{Binding SearchClearCommand}"
                         Style="{StaticResource RSApp.Styles.DefaultButton}"
                         ToolTip="高级查询">
                         <AccessText Text="高级查询(_A)" />
                     </Button>
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding SearchClearClickCommand}"
+                        Command="{Binding SearchClearCommand}"
                         Style="{StaticResource RSApp.Styles.DefaultButton}"
                         ToolTip="清除条件">
                         <AccessText Text="清除条件(_R)" />
@@ -205,7 +204,7 @@
                     <Grid Margin="0,90,0,0">
                         <Button
                             HorizontalAlignment="Stretch"
-                            Command="{Binding AddClickCommand}"
+                            Command="{Binding AddCommand}"
                             Style="{StaticResource RSApp.Styles.DefaultButton}"
                             ToolTip="快捷键Alt+N">
                             <AccessText Text="新增数据(_N)" />
@@ -214,7 +213,7 @@
 
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding DeleteClickCommand}"
+                        Command="{Binding DeleteCommand}"
                         CommandParameter="{Binding ModelSelect}"
                         Style="{StaticResource RSApp.Styles.DefaultButton}"
                         ToolTip="快捷键Alt+D">
@@ -222,7 +221,7 @@
                     </Button>
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding UpdateClickCommand}"
+                        Command="{Binding UpdateCommand}"
                         CommandParameter="{Binding ModelSelect}"
                         Style="{StaticResource RSApp.Styles.DefaultButton}"
                         ToolTip="快捷键Alt+U">
@@ -232,7 +231,7 @@
 
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding DetailsClickCommand}"
+                        Command="{Binding DetailsCommand}"
                         CommandParameter="{Binding ModelSelect}"
                         Style="{StaticResource RSApp.Styles.DefaultButton}"
                         ToolTip="快捷键Alt+V">
@@ -241,21 +240,21 @@
 
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding UserEnableClickCommand}"
+                        Command="{Binding UserEnableCommand}"
                         CommandParameter="{Binding ModelSelect}"
                         Content="用户启用"
                         Style="{StaticResource RSApp.Styles.DefaultButton}" />
 
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding UserDisableClickCommand}"
+                        Command="{Binding UserDisableCommand}"
                         CommandParameter="{Binding ModelSelect}"
                         Content="用户禁用"
                         Style="{StaticResource RSApp.Styles.DefaultButton}" />
 
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding ExportClickCommand}"
+                        Command="{Binding ExportCommand}"
                         CommandParameter="{Binding ModelList}"
                         Content="数据导出"
                         Style="{StaticResource RSApp.Styles.DefaultButton}" />
@@ -265,7 +264,7 @@
                 <StackPanel Grid.Row="2">
                     <Button
                         HorizontalAlignment="Stretch"
-                        Command="{Binding CloseClickCommand}"
+                        Command="{Binding CloseCommand}"
                         Style="{StaticResource RSApp.Styles.DefaultButton}"
                         ToolTip="快捷键Alt+C">
                         <AccessText Text="关闭(_C)" />

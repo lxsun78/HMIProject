@@ -2,7 +2,6 @@
 
 namespace RS.WPFClient.Client.Views
 {
-  
     public partial class RegisterView : RSDialog
     {
         public RegisterView()
@@ -10,6 +9,4 @@ namespace RS.WPFClient.Client.Views
             InitializeComponent();
         }
     }
-
-
 }

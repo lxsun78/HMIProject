@@ -24,21 +24,20 @@ namespace RS.WPFClient.Client.ViewModels
         /// <summary>
         /// 用户启用
         /// </summary>
-        public ICommand UserEnableClickCommand { get; set; }
+        public ICommand UserEnableCommand { get; set; }
 
         /// <summary>
         /// 用户禁用
         /// </summary>
-        public ICommand UserDisableClickCommand { get; set; }
+        public ICommand UserDisableCommand { get; set; }
 
         /// <summary>
         /// 默认构造方法
         /// </summary>
-        /// <param name="idGenerator"></param>
         public UserViewModel()
         {
-            this.UserEnableClickCommand = new RelayCommand<UserModel>(UserEnableClick, CanUserEnableClick);
-            this.UserDisableClickCommand = new RelayCommand<UserModel>(UserDisableClick, CanUserDisableClick);
+            this.UserEnableCommand = new RelayCommand<UserModel>(UserEnable);
+            this.UserDisableCommand = new RelayCommand<UserModel>(UserDisable);
         }
 
 
@@ -173,24 +172,17 @@ namespace RS.WPFClient.Client.ViewModels
 
 
 
-        private bool CanUserEnableClick(UserModel? userModel)
-        {
-            return userModel == null ? false : true;
-        }
 
-        public async void UserEnableClick(UserModel userModel)
+        public async void UserEnable(UserModel userModel)
         {
             await Task.Delay(3000);
         }
 
 
-        private bool CanUserDisableClick(UserModel? userModel)
-        {
-            return userModel == null ? false : true;
-        }
+      
 
 
-        public async void UserDisableClick(UserModel userModel)
+        public async void UserDisable(UserModel userModel)
         {
             await Task.Delay(3000);
         }

@@ -141,7 +141,8 @@ namespace RS.WPFClient.Client
 
             // 获取Window服务
            var windowService = ServiceProvider.GetRequiredService<IWindowService>();
-            windowService.ShowAsync<LoginViewModel,LoginView>();
+            //windowService.ShowAsync<LoginViewModel,LoginView>();
+            windowService.ShowAsync<HomeViewModel,HomeView>();
         }
 
 

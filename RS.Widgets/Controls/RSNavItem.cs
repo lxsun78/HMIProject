@@ -83,9 +83,9 @@ namespace RS.Widgets.Controls
                 Source = navigateModel
             });
 
-            if (rsNavigate.NavItemClickCommand != null)
+            if (rsNavigate.NavItemCommand != null)
             {
-                rsNavigate.NavItemClickCommand.Execute(navigateModel);
+                rsNavigate.NavItemCommand.Execute(navigateModel);
             }
         }
 
@@ -191,9 +191,9 @@ namespace RS.Widgets.Controls
                 RoutedEvent = RSNavigate.NavItemDoubleClickEvent,
                 Source = navigateModel
             });
-            if (rsNavigate.NavItemDoubleClickCommand != null)
+            if (rsNavigate.NavItemDoubleCommand != null)
             {
-                rsNavigate.NavItemDoubleClickCommand.Execute(navigateModel);
+                rsNavigate.NavItemDoubleCommand.Execute(navigateModel);
             }
         }
 

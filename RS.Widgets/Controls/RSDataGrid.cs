@@ -127,7 +127,7 @@ namespace RS.Widgets.Controls
             if (dataGrid != null)
             {
                 dataGrid.RaiseEvent(new RoutedEventArgs(ExportClickEvent, dataGrid.ItemsSource));
-                dataGrid.ExportClickCommand?.Execute(dataGrid.ItemsSource);
+                dataGrid.ExportCommand?.Execute(dataGrid.ItemsSource);
             }
         }
 
@@ -142,7 +142,7 @@ namespace RS.Widgets.Controls
             if (dataGrid != null)
             {
                 dataGrid.RaiseEvent(new RoutedEventArgs(DetailsClickEvent, dataGrid.SelectedItem));
-                dataGrid.DetailsClickCommand?.Execute(dataGrid.SelectedItem);
+                dataGrid.DetailsCommand?.Execute(dataGrid.SelectedItem);
             }
         }
 
@@ -157,7 +157,7 @@ namespace RS.Widgets.Controls
             if (dataGrid != null)
             {
                 dataGrid.RaiseEvent(new RoutedEventArgs(UpdateClickEvent, dataGrid.SelectedItem));
-                dataGrid.UpdateClickCommand?.Execute(dataGrid.SelectedItem);
+                dataGrid.UpdateCommand?.Execute(dataGrid.SelectedItem);
             }
         }
 
@@ -172,7 +172,7 @@ namespace RS.Widgets.Controls
             if (dataGrid != null)
             {
                 dataGrid.RaiseEvent(new RoutedEventArgs(DeleteClickEvent, dataGrid.SelectedItem));
-                dataGrid.DeleteClickCommand?.Execute(dataGrid.SelectedItem);
+                dataGrid.DeleteCommand?.Execute(dataGrid.SelectedItem);
             }
         }
 
@@ -183,7 +183,7 @@ namespace RS.Widgets.Controls
             if (dataGrid != null)
             {
                 dataGrid.RaiseEvent(new RoutedEventArgs(AddClickEvent, dataGrid.ItemsSource));
-                dataGrid.AddClickCommand?.Execute(dataGrid.ItemsSource);
+                dataGrid.AddCommand?.Execute(dataGrid.ItemsSource);
             }
         }
 
@@ -275,66 +275,66 @@ namespace RS.Widgets.Controls
         #region 只读Command事件
 
         // 新增数据命令依赖属性
-        public ICommand AddClickCommand
+        public ICommand AddCommand
         {
             get { return (ICommand)GetValue(AddCommandProperty); }
             set { SetValue(AddCommandProperty, value); }
         }
 
         public static readonly DependencyProperty AddCommandProperty =
-            DependencyProperty.Register(nameof(AddClickCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(AddCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
 
 
 
         // 删除选中命令依赖属性
 
-        public ICommand DeleteClickCommand
+        public ICommand DeleteCommand
         {
-            get { return (ICommand)GetValue(DeleteClickCommandProperty); }
-            set { SetValue(DeleteClickCommandProperty, value); }
+            get { return (ICommand)GetValue(DeleteCommandProperty); }
+            set { SetValue(DeleteCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty DeleteClickCommandProperty =
-            DependencyProperty.Register(nameof(DeleteClickCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
+        public static readonly DependencyProperty DeleteCommandProperty =
+            DependencyProperty.Register(nameof(DeleteCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
 
 
 
 
         // 修改数据命令依赖属性
-        public ICommand UpdateClickCommand
+        public ICommand UpdateCommand
         {
-            get { return (ICommand)GetValue(UpdateClickCommandProperty); }
-            set { SetValue(UpdateClickCommandProperty, value); }
+            get { return (ICommand)GetValue(UpdateCommandProperty); }
+            set { SetValue(UpdateCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty UpdateClickCommandProperty =
-            DependencyProperty.Register(nameof(UpdateClickCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
+        public static readonly DependencyProperty UpdateCommandProperty =
+            DependencyProperty.Register(nameof(UpdateCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
 
 
 
 
         // 查看数据命令依赖属性
-        public ICommand DetailsClickCommand
+        public ICommand DetailsCommand
         {
-            get { return (ICommand)GetValue(DetailsClickCommandProperty); }
-            set { SetValue(DetailsClickCommandProperty, value); }
+            get { return (ICommand)GetValue(DetailsCommandProperty); }
+            set { SetValue(DetailsCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty DetailsClickCommandProperty =
-            DependencyProperty.Register(nameof(DetailsClickCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
+        public static readonly DependencyProperty DetailsCommandProperty =
+            DependencyProperty.Register(nameof(DetailsCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
 
 
 
 
         // 导出配置命令依赖属性
-        public ICommand ExportClickCommand
+        public ICommand ExportCommand
         {
-            get { return (ICommand)GetValue(ExportClickCommandProperty); }
-            set { SetValue(ExportClickCommandProperty, value); }
+            get { return (ICommand)GetValue(ExportCommandProperty); }
+            set { SetValue(ExportCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty ExportClickCommandProperty =
-            DependencyProperty.Register(nameof(ExportClickCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
+        public static readonly DependencyProperty ExportCommandProperty =
+            DependencyProperty.Register(nameof(ExportCommand), typeof(ICommand), typeof(RSDataGrid), new PropertyMetadata(null));
 
         #endregion
 
