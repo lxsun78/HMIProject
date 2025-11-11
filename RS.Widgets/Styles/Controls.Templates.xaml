@@ -51,19 +51,6 @@
                     TextBlock.Foreground="{TemplateBinding Foreground}" />
             </Grid>
         </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Cursor" Value="Hand" />
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Cursor" Value="Hand" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True" />
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" Value="#eee" />
-                <Setter TargetName="PART_Path" Property="Fill" Value="#949494" />
-            </Trigger>
-        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate x:Key="RSApp.Templates.EmptyData" TargetType="{x:Type ContentControl}">

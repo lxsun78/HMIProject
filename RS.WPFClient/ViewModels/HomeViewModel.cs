@@ -28,28 +28,28 @@ namespace RS.WPFClient.Client.ViewModels
         public HomeViewModel()
         {
             this.NavCommand = new RelayCommand<NavigateModel>(Nav);
-            var dataList = GenerateMenu(1, 5);
-            dataList = this.SortMenu(dataList);
-            this.NavigateModelList = dataList;
+            //var dataList = GenerateMenu(1, 5);
+            //dataList = this.SortMenu(dataList);
+            //this.NavigateModelList = dataList;
 
             DispatcherTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(30), DispatcherPriority.Background, (s, e) =>
             {
                 this.DateTimeNow = DateTime.Now;
             }, Application.Current.Dispatcher);
 
-            PersonModelList = new ObservableCollection<PersonModel>();
-            this.GenerateTestData(100000);
-            this.ChangeSource(PersonModelList);
+            //PersonModelList = new ObservableCollection<PersonModel>();
+            //this.GenerateTestData(100000);
+            //this.ChangeSource(PersonModelList);
 
 
-            TestList = new ObservableCollection<PersonModel>();
-            for (int i = 0; i < 1000000; i++)
-            {
-                TestList.Add(new PersonModel()
-                {
-                    Name=$"Ross{i}"
-                });
-            }
+            //TestList = new ObservableCollection<PersonModel>();
+            //for (int i = 0; i < 1000000; i++)
+            //{
+            //    TestList.Add(new PersonModel()
+            //    {
+            //        Name=$"Ross{i}"
+            //    });
+            //}
 
         }
 

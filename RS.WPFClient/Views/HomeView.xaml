@@ -110,16 +110,22 @@
 
 
 
-                    <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <ToggleButton x:Name="PART_TogBtnUserInfo">
-                            <ToggleButton.Style>
+                    <StackPanel
+                        Grid.Column="2"
+                        Height="40"
+                        Orientation="Horizontal">
+                        <ToggleButton
+                            x:Name="PART_TogBtnUserInfo"
+                            rs:ControlsHelper.MouseOverBackground="#DBE3ED"
+                            rs:ControlsHelper.MousePressBackground="#D1DAE4"
+                            Style="{StaticResource RSApp.Styles.ButtonBase}">
+                            <!--<ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}">
                                     <Setter Property="BorderThickness" Value="0" />
                                     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                                     <Setter Property="rs:ControlsHelper.CornerRadius" Value="5" />
-                                    <Setter Property="Padding" Value="5,3,5,3" />
+                                    <Setter Property="Padding" Value="5,0,5,0" />
                                     <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -145,7 +151,7 @@
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
-                            </ToggleButton.Style>
+                            </ToggleButton.Style>-->
                             <StackPanel Orientation="Horizontal">
                                 <Border
                                     Width="32"
@@ -168,16 +174,21 @@
                         </ToggleButton>
 
                         <Button
+                            Margin="0"
+                            Padding="12,0,12,0"
+                            VerticalAlignment="Stretch"
                             rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.Setting}"
                             rs:ControlsHelper.IconHeight="20"
                             rs:ControlsHelper.IconWidth="20"
+                            rs:ControlsHelper.MouseOverBackground="#DBE3ED"
+                            rs:ControlsHelper.MousePressBackground="#D1DAE4"
                             Content="设置"
                             FontSize="14"
                             Foreground="#707070"
                             Style="{StaticResource RSApp.Styles.IconButtonStyle}" />
                     </StackPanel>
 
-                    <Popup
+                    <rs:RSPopup
                         x:Name="PART_UserPopup"
                         AllowsTransparency="True"
                         Focusable="False"
@@ -209,7 +220,7 @@
                             </Border>
                         </Border>
 
-                    </Popup>
+                    </rs:RSPopup>
                 </Grid>
             </Grid>
         </Border>

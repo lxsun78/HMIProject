@@ -252,21 +252,74 @@ namespace RS.Widgets.Controls
 
 
       
-        public static readonly DependencyProperty MouseOverColorProperty =
+        public static readonly DependencyProperty MouseOverBackgroundProperty =
             DependencyProperty.RegisterAttached(
-                "MouseOverColor",
-                typeof(double),
+                "MouseOverBackground",
+                typeof(Brush),
                 typeof(ControlsHelper),
                 new PropertyMetadata(null));
 
-        public static void SetMouseOverColor(UIElement element, double value)
+        public static void SetMouseOverBackground(UIElement element, Brush value)
         {
-            element.SetValue(MouseOverColorProperty, value);
+            element.SetValue(MouseOverBackgroundProperty, value);
         }
 
-        public static double GetMouseOverColor(UIElement element)
+        public static Brush GetMouseOverBackground(UIElement element)
         {
-            return (double)element.GetValue(MouseOverColorProperty);
+            return (Brush)element.GetValue(MouseOverBackgroundProperty);
+        }
+
+        public static readonly DependencyProperty MousePressBackgroundProperty =
+            DependencyProperty.RegisterAttached(
+                "MousePressBackground",
+                typeof(Brush),
+                typeof(ControlsHelper),
+                new PropertyMetadata(null));
+
+        public static void SetMousePressBackground(UIElement element, Brush value)
+        {
+            element.SetValue(MousePressBackgroundProperty, value);
+        }
+
+        public static Brush GetMousePressBackground(UIElement element)
+        {
+            return (Brush)element.GetValue(MousePressBackgroundProperty);
+        }
+
+
+
+        public static readonly DependencyProperty MouseOverForegroundProperty =
+            DependencyProperty.RegisterAttached(
+                "MouseOverForeground",
+                typeof(Brush),
+                typeof(ControlsHelper),
+                new PropertyMetadata(null));
+
+        public static void SetMouseOverForeground(UIElement element, Brush value)
+        {
+            element.SetValue(MouseOverForegroundProperty, value);
+        }
+
+        public static Brush GetMouseOverForeground(UIElement element)
+        {
+            return (Brush)element.GetValue(MouseOverForegroundProperty);
+        }
+
+        public static readonly DependencyProperty MousePressForegroundProperty =
+            DependencyProperty.RegisterAttached(
+                "MousePressForeground",
+                typeof(Brush),
+                typeof(ControlsHelper),
+                new PropertyMetadata(null));
+
+        public static void SetMousePressForeground(UIElement element, Brush value)
+        {
+            element.SetValue(MousePressForegroundProperty, value);
+        }
+
+        public static Brush GetMousePressForeground(UIElement element)
+        {
+            return (Brush)element.GetValue(MousePressForegroundProperty);
         }
 
 

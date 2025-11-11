@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace RS.WPFClient.Client.ViewModels
 {
-    internal class SettingViewModel
+    public class SettingViewModel
     {
+
     }
 }

@@ -48,7 +48,7 @@
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Ellipse" Storyboard.TargetProperty="(Shape.Fill).                       (GradientBrush.GradientStops)[1].(GradientStop.Color)">
-                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource ControlMouseOverColor}" />
+                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource ControlMouseOverBackground}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -155,7 +155,7 @@
                                         <LinearGradientBrush.GradientStops>
                                             <GradientStopCollection>
                                                 <GradientStop Color="{DynamicResource ControlLightColor}" />
-                                                <GradientStop Offset="1.0" Color="{DynamicResource ControlMouseOverColor}" />
+                                                <GradientStop Offset="1.0" Color="{DynamicResource ControlMouseOverBackground}" />
                                             </GradientStopCollection>
                                         </LinearGradientBrush.GradientStops>
                                     </LinearGradientBrush>
@@ -261,7 +261,7 @@
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                         <GradientStop Offset="0" Color="Transparent" />
-                                        <GradientStop Offset="1" Color="{DynamicResource ControlMouseOverColor}" />
+                                        <GradientStop Offset="1" Color="{DynamicResource ControlMouseOverBackground}" />
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
