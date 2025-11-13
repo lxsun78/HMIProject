@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace RS.Widgets.Models
+namespace RS.Annotation.Models
 {
     /// <summary>
     /// 标签类别

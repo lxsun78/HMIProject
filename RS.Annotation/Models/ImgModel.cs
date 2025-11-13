@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace RS.Widgets.Models
+namespace RS.Annotation.Models
 {
     /// <summary>
     /// 图像资源

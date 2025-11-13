@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace RS.WPFClient.Client.Commons
+namespace RS.WPFClient.Commons
 {
     public class CvMatHelper
     {

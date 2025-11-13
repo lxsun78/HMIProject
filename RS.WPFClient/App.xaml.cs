@@ -7,8 +7,8 @@ using Microsoft.Extensions.Hosting;
 using RS.Commons;
 using RS.Commons.Extensions;
 using RS.WPFClient.BLL;
-using RS.WPFClient.Client.ViewModels;
-using RS.WPFClient.Client.Views;
+using RS.WPFClient.ViewModels;
+using RS.WPFClient.Views;
 using RS.Models;
 using RS.Server.WebAPI;
 using RS.Widgets;
@@ -18,7 +18,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
-namespace RS.WPFClient.Client
+namespace RS.WPFClient
 {
     public partial class App : Application
     {
@@ -99,8 +99,6 @@ namespace RS.WPFClient.Client
             .ProtectKeysWithDpapi()
             .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
 
-            //注册当前程序集服务
-            ApplicationBuilder.Services.RegisterService(Assembly.GetExecutingAssembly());
             ApplicationBuilder.Services.RegisterBLLService();
 
             ApplicationBuilder.Services.AddHttpClient(nameof(HMIWebAPI), (serviceProvider, configClient) =>
@@ -142,7 +140,8 @@ namespace RS.WPFClient.Client
             // 获取Window服务
            var windowService = ServiceProvider.GetRequiredService<IWindowService>();
             //windowService.ShowAsync<LoginViewModel,LoginView>();
-            windowService.ShowAsync<HomeViewModel,HomeView>();
+            windowService.ShowAsync<HomeViewModel, HomeView>();
+
         }
 
 

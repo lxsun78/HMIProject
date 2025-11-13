@@ -75,6 +75,8 @@ namespace RS.Widgets.Services
                 ViewModelInstances.Remove(viewModel);
             }
         }
+
+
         private Window CreateWindow<TViewModel>(TViewModel viewModel) where TViewModel : class
         {
             var viewModelType = typeof(TViewModel);

@@ -1,4 +1,4 @@
-﻿namespace RS.WPFClient.Client.Models
+﻿namespace RS.WPFClient.Models
 {
     public class PersonModel
     {

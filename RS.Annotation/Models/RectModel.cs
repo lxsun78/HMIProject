@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-namespace RS.Widgets.Models
+namespace RS.Annotation.Models
 {
     /// <summary>
     /// 标注矩形类

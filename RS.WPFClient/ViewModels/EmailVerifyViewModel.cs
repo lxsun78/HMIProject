@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using RS.Commons;
 using RS.Commons.Attributs;
-using RS.WPFClient.Client.IServices;
-using RS.WPFClient.Client.Models;
+using RS.WPFClient.IServices;
+using RS.WPFClient.Models;
 using RS.WPFClient.IBLL;
 using RS.Models;
 using RS.Server.WebAPI;
@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RS.WPFClient.Client.ViewModels
+namespace RS.WPFClient.ViewModels
 {
     [ServiceInjectConfig(ServiceLifetime.Transient)]
     public class EmailVerifyViewModel : ViewModelBase

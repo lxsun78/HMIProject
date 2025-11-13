@@ -1,6 +1,6 @@
 ﻿using RS.Widgets.Models;
 
-namespace RS.WPFClient.Client.IServices
+namespace RS.WPFClient.IServices
 {
     /// <summary>
     /// 此处只是一个示例 说明在应对第三方不支持MVVM事件绑定

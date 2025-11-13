@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace RS.WPFClient.Client.Behaviors
+namespace RS.WPFClient.Behaviors
 {
     public class PasswordBehavior : ControlBehavior
     {

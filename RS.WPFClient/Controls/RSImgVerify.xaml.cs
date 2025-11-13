@@ -2,7 +2,7 @@
 using RS.Commons;
 using RS.Commons.Attributs;
 using RS.Models;
-using RS.WPFClient.Client.IServices;
+using RS.WPFClient.IServices;
 using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace RS.WPFClient.Client.Controls
+namespace RS.WPFClient.Controls
 {
     public partial class RSImgVerify : UserControl, IImgVerifyService
     {

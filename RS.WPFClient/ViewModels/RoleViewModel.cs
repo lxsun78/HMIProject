@@ -3,14 +3,14 @@ using NPOI.Util;
 using RS.Commons;
 using RS.Commons.Attributs;
 using RS.Commons.Extensions;
-using RS.WPFClient.Client.Models;
+using RS.WPFClient.Models;
 using RS.Server.WebAPI;
 using RS.Widgets.Models;
 using RS.Widgets.Models.Form;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace RS.WPFClient.Client.ViewModels
+namespace RS.WPFClient.ViewModels
 {
     /// <summary>
     /// 角色管理视图模型

@@ -7,7 +7,6 @@ using RS.Models;
 using RS.Server.WebAPI;
 using RS.Widgets.Controls;
 using RS.Widgets.Models;
-using RS.Annotation.IBLL;
 using RS.Annotation.Views.Home;
 using System.Diagnostics;
 using System.Windows;
@@ -19,14 +18,11 @@ namespace RS.Annotation.Views
     public partial class LoginView : RSWindow
     {
         public RSDesktop RSDesktop { get; set; }
-        private readonly IGeneralBLL GeneralBLL;
         private readonly ICryptographyBLL CryptographyBLL;
         private readonly LoginViewModel ViewModel;
-        public LoginView(IGeneralBLL generalBLL, ICryptographyBLL cryptographyBLL)
+        public LoginView()
         {
             InitializeComponent();
-            this.GeneralBLL = generalBLL;
-            this.CryptographyBLL = cryptographyBLL;
             this.ViewModel = this.DataContext as LoginViewModel;
             this.Closed += LoginView_Closed;
             this.Loaded += RSWindow_Loaded;
@@ -36,7 +32,7 @@ namespace RS.Annotation.Views
         private async void RSWindow_Loaded(object sender, RoutedEventArgs e)
         {
             //this.LoadingBg.Visibility = Visibility.Visible;
-           
+
         }
 
         private void LoginView_Closed(object? sender, EventArgs e)
@@ -151,33 +147,9 @@ namespace RS.Annotation.Views
 
         private async void BtnPasswordLogin_Click(object sender, RoutedEventArgs e)
         {
-            //验证用户名和密码数据
-            var validResult = this.ViewModel.PasswordLoginModel.ValidObject();
-            if (!validResult)
-            {
-                return;
-            }
-
-            var validLoginResult = await this.Loading.InvokeAsync(async (cancellationToken) =>
-            {
-                //this.SetLoadingText("正在登录中...");
-                //验证用户登录
-                var validLoginResult = await RSAppAPI.Security.ValidLogin.AESHttpPostAsync(new LoginValidModel()
-                {
-                    Email = this.ViewModel.PasswordLoginModel.UserName,
-                    Password = this.CryptographyBLL.GetSHA256HashCode(this.ViewModel.PasswordLoginModel.Password),
-                }, nameof(RSAppAPI));
-
-                return validLoginResult;
-            });
-
-            //如果验证成功
-            if (validLoginResult.IsSuccess)
-            {
-                var homeView = App.ServiceProvider?.GetService<HomeView>();
-                homeView?.Show();
-                this.Close();
-            }
+            var homeView = App.ServiceProvider?.GetService<HomeView>();
+            homeView?.Show();
+            this.Close();
         }
 
         private async void BtnSMMLogin_Click(object sender, RoutedEventArgs e)
@@ -202,20 +174,14 @@ namespace RS.Annotation.Views
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
-            this.RegisterHostView.Visibility = Visibility.Visible;
-            RegisterViewModel registerViewModel = new RegisterViewModel();
-            this.RegisterView.DataContext = registerViewModel;
-            this.RegisterView.ViewModel = registerViewModel;
-            this.LoginHostView.Visibility = Visibility.Collapsed;
+           
         }
 
 
 
         private void RegisterView_RegisterEnd(bool isSuccess)
         {
-            this.RegisterHostView.Visibility = Visibility.Collapsed;
             this.LoginHostView.Visibility = Visibility.Visible;
-
             //如果注册成功
             if (isSuccess)
             {

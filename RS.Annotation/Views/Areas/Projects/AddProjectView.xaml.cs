@@ -1,12 +1,13 @@
 ﻿using Microsoft.Win32;
 using RS.Annotation.Views.Home;
-using RS.Annotation.Widgets.Controls;
-using RS.Annotation.Widgets.Enums;
+using RS.Annotation.Controls;
 using RS.Commons;
 using RS.Widgets.Controls;
 using RS.Widgets.Models;
 using System.IO;
 using System.Windows;
+using RS.Annotation.Models;
+using RS.Annotation.Enums;
 
 namespace RS.Annotation.Views.Areas
 {

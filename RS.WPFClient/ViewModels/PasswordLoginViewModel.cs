@@ -9,13 +9,13 @@ using RS.Widgets.Enums;
 using RS.Widgets.Interfaces;
 using RS.Widgets.Models;
 using RS.Widgets.Services;
-using RS.WPFClient.Client.IServices;
-using RS.WPFClient.Client.Models;
-using RS.WPFClient.Client.Views;
+using RS.WPFClient.IServices;
+using RS.WPFClient.Models;
+using RS.WPFClient.Views;
 using RS.WPFClient.IBLL;
 using System.Windows.Input;
 
-namespace RS.WPFClient.Client.ViewModels
+namespace RS.WPFClient.ViewModels
 {
     [ServiceInjectConfig(ServiceLifetime.Transient)]
     public class PasswordLoginViewModel : ViewModelBase

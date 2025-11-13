@@ -1,4 +1,4 @@
-﻿using RS.Annotation.Widgets.Enums;
+﻿using RS.Annotation.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RS.Annotation.Widgets.Controls
+namespace RS.Annotation.Controls
 {
     /// <summary>
     /// RSDLMethod.xaml 的交互逻辑

@@ -1,6 +1,6 @@
 ﻿using RS.Widgets.Controls;
 
-namespace RS.WPFClient.Client.Views
+namespace RS.WPFClient.Views
 {
     /// <summary>
     /// PasswordLoginView.xaml 的交互逻辑

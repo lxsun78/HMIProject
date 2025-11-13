@@ -1,7 +1,6 @@
 ﻿using RS.Commons.Enums;
 using RS.Models;
 using RS.Widgets.Models;
-using RS.Annotation.Widgets.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,8 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using RS.Annotation.Enums;
 
-namespace RS.Widgets.Models
+namespace RS.Annotation.Models
 {
     public class ProjectModel : ViewModelBase
     {

@@ -1,6 +1,6 @@
 ﻿using RS.Commons;
-using RS.WPFClient.Client.Controls;
-using RS.WPFClient.Client.Views;
+using RS.WPFClient.Controls;
+using RS.WPFClient.Views;
 using RS.Models;
 using RS.Widgets.Controls;
 using RS.Widgets.Interfaces;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RS.WPFClient.Client.IServices
+namespace RS.WPFClient.IServices
 {
     public interface IImgVerifyService
     {

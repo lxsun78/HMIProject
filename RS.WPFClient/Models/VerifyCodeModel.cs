@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RS.WPFClient.Client.Models
+namespace RS.WPFClient.Models
 {
     public class VerifyCodeModel: ObservableObject
     {

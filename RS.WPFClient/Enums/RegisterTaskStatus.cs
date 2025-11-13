@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RS.WPFClient.Client.Enums
+namespace RS.WPFClient.Enums
 {
     public enum RegisterTaskStatus
     {

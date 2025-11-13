@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xaml.Behaviors;
+using RS.Widgets.Controls;
 using RS.Widgets.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Design.Behavior;
 
-namespace RS.WPFClient.Client.Behaviors
+namespace RS.WPFClient.Behaviors
 {
     public class ControlBehavior : Behavior<Control>
     {
@@ -40,21 +41,28 @@ namespace RS.WPFClient.Client.Behaviors
             if (behavior.AssociatedObject != null && (bool)e.NewValue)
             {
                 behavior.AssociatedObject.Focus();
-               
-
+                Console.WriteLine("触发焦点");
                 if (behavior.AssociatedObject is TextBox textBox)
                 {
-                    textBox.SelectAll();
+                    textBox.CaretIndex = behavior.GetCaretIndex(textBox.Text);
                 }
                 else if (behavior.AssociatedObject is PasswordBox passwordBox)
                 {
-                    passwordBox.SelectAll();
+                    passwordBox.ReflectionCall("Select", passwordBox.Password.Length, 0 );
                 }
                 behavior.OnFocusedChanged();
-              
             }
         }
-    
+        private int GetCaretIndex(string text)
+        {
+            int caretIndex = 0;
+            if (!string.IsNullOrEmpty(text))
+            {
+                caretIndex = text.Length;
+            }
+            return caretIndex;
+        }
+
 
         public virtual void OnFocusedChanged()
         {

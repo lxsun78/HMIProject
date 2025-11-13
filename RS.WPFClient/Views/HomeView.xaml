@@ -1,19 +1,20 @@
 ﻿<rs:RSWindow
-    x:Class="RS.WPFClient.Client.Views.HomeView"
+    x:Class="RS.WPFClient.Views.HomeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:RS.WPFClient.Client.Controls"
+    xmlns:behavior="clr-namespace:RS.WPFClient.Behaviors"
+    xmlns:controls="clr-namespace:RS.WPFClient.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:local="clr-namespace:RS.WPFClient.Client.Views"
+    xmlns:local="clr-namespace:RS.WPFClient.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:RS.WPFClient.Client.Models"
+    xmlns:model="clr-namespace:RS.WPFClient.Models"
     xmlns:rs="https://github.com/luo-ross/MultiVerseKit"
-    xmlns:view="clr-namespace:RS.WPFClient.Client.Views"
-    xmlns:viewModel="clr-namespace:RS.WPFClient.Client.ViewModels"
+    xmlns:view="clr-namespace:RS.WPFClient.Views"
+    xmlns:viewModel="clr-namespace:RS.WPFClient.ViewModels"
     x:Name="this"
     Title="上位机客户端"
-    MinWidth="500"
+    MinWidth="800"
     MinHeight="500"
     d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel}"
     d:DesignHeight="1000"
@@ -39,6 +40,8 @@
             <SolidColorBrush x:Key="RSApp.SolidColorBrush.EBEBEB">#EBEBEB</SolidColorBrush>
         </ResourceDictionary>
     </rs:RSWindow.Resources>
+
+
 
     <Grid Background="#E6EDF5">
         <Grid.RowDefinitions>
@@ -72,86 +75,42 @@
 
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="*"
+                                MinWidth="230"
+                                MaxWidth="500" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
 
-                    <Border
-                        Height="36"
-                        Background="#D1DAE4"
-                        CornerRadius="6">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                        <local:SearchView Height="36" DataContext="{Binding SearchViewModel}" />
+                    </Grid>
 
-                            <Path
-                                Grid.Column="0"
-                                Width="15"
-                                Height="15"
-                                Margin="10,0,5,0"
-                                Data="{StaticResource RSApp.Icons.Search}"
-                                Fill="#515151"
-                                Stretch="Fill" />
-                            <TextBox
-                                Grid.Column="1"
-                                Width="250"
-                                Margin="0"
-                                rs:TextBoxHelper.Watermark="搜索"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="0"
-                                Text="{Binding SearchContent}" />
-                        </Grid>
-
-                    </Border>
-
-
-
-                    <StackPanel
-                        Grid.Column="2"
-                        Height="40"
-                        Orientation="Horizontal">
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <ToggleButton
                             x:Name="PART_TogBtnUserInfo"
-                            rs:ControlsHelper.MouseOverBackground="#DBE3ED"
-                            rs:ControlsHelper.MousePressBackground="#D1DAE4"
-                            Style="{StaticResource RSApp.Styles.ButtonBase}">
-                            <!--<ToggleButton.Style>
-                                <Style TargetType="{x:Type ToggleButton}">
-                                    <Setter Property="BorderThickness" Value="0" />
-                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                    <Setter Property="rs:ControlsHelper.CornerRadius" Value="5" />
-                                    <Setter Property="Padding" Value="5,0,5,0" />
-                                    <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                <Border
-                                                    x:Name="PART_Border"
-                                                    Padding="{TemplateBinding Padding}"
-                                                    Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
-                                                    <ContentPresenter />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Cursor" Value="Hand" />
-                                                        <Setter Property="Background" Value="#DBE3ED" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsChecked" Value="True">
-                                                        <Setter Property="Background" Value="#D1DAE4" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
+                            Height="40"
+                            Padding="5,0,5,0"
+                            VerticalAlignment="Stretch">
+                            <ToggleButton.Style>
+                                <Style BasedOn="{StaticResource RSApp.Styles.ButtonBase}" TargetType="{x:Type ToggleButton}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#DBE3ED" />
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Background" Value="#D1DAE4" />
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter Property="Background" Value="#D1DAE4" />
+                                        </Trigger>
+                                    </Style.Triggers>
                                 </Style>
-                            </ToggleButton.Style>-->
+                            </ToggleButton.Style>
                             <StackPanel Orientation="Horizontal">
                                 <Border
                                     Width="32"
@@ -174,18 +133,28 @@
                         </ToggleButton>
 
                         <Button
-                            Margin="0"
+                            Height="40"
                             Padding="12,0,12,0"
                             VerticalAlignment="Stretch"
                             rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.Setting}"
                             rs:ControlsHelper.IconHeight="20"
                             rs:ControlsHelper.IconWidth="20"
-                            rs:ControlsHelper.MouseOverBackground="#DBE3ED"
-                            rs:ControlsHelper.MousePressBackground="#D1DAE4"
                             Content="设置"
                             FontSize="14"
-                            Foreground="#707070"
-                            Style="{StaticResource RSApp.Styles.IconButtonStyle}" />
+                            Foreground="#707070">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource RSApp.Styles.IconButtonStyle}" TargetType="{x:Type Button}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#DBE3ED" />
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter Property="Background" Value="#D1DAE4" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
 
                     <rs:RSPopup
@@ -208,14 +177,6 @@
                                 Margin="5"
                                 Background="#FFF"
                                 CornerRadius="5">
-                                <Border.Clip>
-                                    <MultiBinding Converter="{StaticResource ClipConverter}">
-                                        <Binding ElementName="DropDownBorder" Path="CornerRadius" />
-                                        <Binding ElementName="DropDownBorder" Path="ActualWidth" />
-                                        <Binding ElementName="DropDownBorder" Path="ActualHeight" />
-                                        <Binding ElementName="DropDownBorder" Path="BorderThickness" />
-                                    </MultiBinding>
-                                </Border.Clip>
                                 <Grid />
                             </Border>
                         </Border>
@@ -239,19 +200,7 @@
                 <ScrollViewer>
                     <!--<ContentControl Height="5000" Content="{Binding}" />-->
                     <!--<rs:RSDateTimePicker />-->
-                    <rs:RSPicker
-                        HorizontalAlignment="Stretch"
-                        ItemsSource="{Binding TestList}"
-                        SearchPropertyName="Name"
-                        SelectedItem="{Binding TestSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <rs:RSPicker.ItemTemplate>
-                            <DataTemplate>
-                                <Border Padding="15,5,15,5">
-                                    <TextBlock FontSize="12" Text="{Binding Item.Name}" />
-                                </Border>
-                            </DataTemplate>
-                        </rs:RSPicker.ItemTemplate>
-                    </rs:RSPicker>
+
 
 
                 </ScrollViewer>

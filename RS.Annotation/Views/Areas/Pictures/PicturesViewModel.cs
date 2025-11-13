@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RS.Annotation.Models;
 
 namespace RS.Annotation.Views.Areas
 {

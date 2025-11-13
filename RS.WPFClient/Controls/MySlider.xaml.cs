@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RS.WPFClient.Client.Controls
+namespace RS.WPFClient.Controls
 {
     public partial class MySlider : UserControl
     {

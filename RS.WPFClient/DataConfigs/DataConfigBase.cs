@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RS.WPFClient.Client.DataConfigs
+namespace RS.WPFClient.DataConfigs
 {
     public abstract class DataConfigBase : NotifyBase
     {

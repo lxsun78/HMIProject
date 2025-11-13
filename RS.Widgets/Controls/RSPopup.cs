@@ -3,6 +3,7 @@ using RS.Win32API.Structs;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Interop;
 namespace RS.Widgets.Controls
 {
@@ -16,6 +17,21 @@ namespace RS.Widgets.Controls
         {
             this.Loaded += RSPopup_Loaded;
             this.Opened += RSPopup_Opened;
+            this.Closed += RSPopup_Closed;
+        }
+
+        private void RSPopup_Closed(object? sender, EventArgs e)
+        {
+            var directlyOver = Mouse.DirectlyOver as UIElement;
+            var placementTarget = this.PlacementTarget;
+            if (directlyOver == placementTarget)
+            {
+                return;
+            }
+            if (placementTarget is ToggleButton toggleButton&& toggleButton.IsChecked==true)
+            {
+                toggleButton.IsChecked = false;
+            }
         }
 
         private void RSPopup_Opened(object? sender, EventArgs e)

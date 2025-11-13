@@ -1,7 +1,7 @@
-﻿using RS.WPFClient.Client.Validation;
+﻿using RS.WPFClient.Validation;
 using System.ComponentModel.DataAnnotations;
 
-namespace RS.WPFClient.Client.Models
+namespace RS.WPFClient.Models
 {
     public class SignUpModel : UserBaseModel
     {

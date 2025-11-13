@@ -1,7 +1,7 @@
-﻿using RS.WPFClient.Client.Models;
+﻿using RS.WPFClient.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace RS.WPFClient.Client.Validation
+namespace RS.WPFClient.Validation
 {
     /// <summary>
     /// 密码确认验证类

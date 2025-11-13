@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RS.WPFClient.ClientData.Entities
+namespace RS.WPFClientData.Entities
 {
 
     /// <summary>

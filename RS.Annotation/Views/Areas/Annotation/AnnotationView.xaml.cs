@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Resources;
 using System.Windows.Shapes;
 using RS.Widgets.Controls;
+using RS.Annotation.Models;
 
 namespace RS.Annotation.Views.Areas
 {

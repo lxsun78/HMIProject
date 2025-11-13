@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace RS.WPFClient.Client.DataConfigs
+namespace RS.WPFClient.DataConfigs
 {
     /// <summary>
     /// Modbus数据配置

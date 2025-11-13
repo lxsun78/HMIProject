@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using RS.Commons.Attributs;
 using RS.Commons.Extensions;
-using RS.WPFClient.Client.Enums;
+using RS.WPFClient.Enums;
 using RS.Models;
 using RS.Server.WebAPI;
 using RS.Widgets.Controls;
@@ -11,7 +11,7 @@ using RS.Widgets.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
 
-namespace RS.WPFClient.Client.ViewModels
+namespace RS.WPFClient.ViewModels
 {
     [ServiceInjectConfig(ServiceLifetime.Transient)]
     public class SecurityViewModel : ViewModelBase

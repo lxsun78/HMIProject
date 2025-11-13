@@ -2,6 +2,7 @@
     x:Class="RS.Annotation.Views.Areas.ProjectsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:RS.Annotation.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:RS.Annotation.Views.Areas"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -63,7 +64,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Margin="3">
-                                    <rs:RSProject
+                                    <controls:RSProject
                                         Click="RadioBtnProject_Click"
                                         GroupName="DeepLearningProject"
                                         IsChecked="{Binding IsSelect}"

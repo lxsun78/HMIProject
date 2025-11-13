@@ -2,7 +2,7 @@
 using RS.Commons.Attributs;
 using RS.Widgets.Controls;
 
-namespace RS.WPFClient.Client.Views
+namespace RS.WPFClient.Views
 {
     [ServiceInjectConfig(ServiceLifetime.Singleton)]
     public partial class LoginView : RSWindow

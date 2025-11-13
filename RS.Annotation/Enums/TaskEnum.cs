@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RS.Annotation.Widgets.Enums
+namespace RS.Annotation.Enums
 {
     public enum TaskEnum
     {

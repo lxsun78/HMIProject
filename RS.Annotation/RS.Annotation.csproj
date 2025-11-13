@@ -44,15 +44,24 @@
 	<ItemGroup>
 		<ProjectReference Include="..\RS.Annotation.SQLite\RS.Annotation.SQLite.csproj" />
 		<ProjectReference Include="..\RS.Commons\RS.Commons.csproj" />
-		<ProjectReference Include="..\RS.Annotation.BLL\RS.Annotation.BLL.csproj" />
-		<ProjectReference Include="..\RS.Annotation.IBLL\RS.Annotation.IBLL.csproj" />
-		<ProjectReference Include="..\RS.Annotation.Widgets\RS.Annotation.Widgets.csproj" />
+		<ProjectReference Include="..\RS.Widgets\RS.Widgets.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Resource Include="Assets\BlueDrag.cur" />
 		<Resource Include="Assets\BlueDraw.cur" />
 		<Resource Include="Assets\BlueHand.cur" />
 		<Resource Include="Assets\Images\20240216200553.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Controls\RSDLMethod.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Controls\RSImg.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Controls\RSProject.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="Assets\Videos\girl.mp4">

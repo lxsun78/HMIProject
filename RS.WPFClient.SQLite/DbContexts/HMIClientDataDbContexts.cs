@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RS.Commons.Helper;
-using RS.WPFClient.ClientData.Entities;
+using RS.WPFClientData.Entities;
 using System.Data;
 using System.Reflection;
 
-namespace RS.WPFClient.ClientData.DbContexts
+namespace RS.WPFClientData.DbContexts
 {
     public sealed class HMIClientDataDbContexts : DbContext
     {
@@ -68,7 +68,7 @@ namespace RS.WPFClient.ClientData.DbContexts
             //获取所有要注册的类
             var typeToRegister = asm.ExportedTypes
                 .Where(type => string.IsNullOrEmpty(type.Namespace))
-                .Where(type => type.Namespace == "RS.WPFClient.ClientData.Mapping");
+                .Where(type => type.Namespace == "RS.WPFClientData.Mapping");
             foreach (var type in typeToRegister)
             {
                 dynamic configurationInstance = Activator.CreateInstance(type);

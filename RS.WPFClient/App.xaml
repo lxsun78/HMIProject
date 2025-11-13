@@ -1,11 +1,11 @@
 ﻿<Application
-    x:Class="RS.WPFClient.Client.App"
+    x:Class="RS.WPFClient.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:RS.WPFClient.Client"
+    xmlns:local="clr-namespace:RS.WPFClient"
     xmlns:rs="https://github.com/luo-ross/MultiVerseKit"
-    xmlns:view="clr-namespace:RS.WPFClient.Client.Views"
-    xmlns:viewModel="clr-namespace:RS.WPFClient.Client.ViewModels">
+    xmlns:view="clr-namespace:RS.WPFClient.Views"
+    xmlns:viewModel="clr-namespace:RS.WPFClient.ViewModels">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

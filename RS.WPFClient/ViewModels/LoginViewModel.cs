@@ -8,11 +8,11 @@ using RS.Widgets.Enums;
 using RS.Widgets.Interfaces;
 using RS.Widgets.Models;
 using RS.Widgets.Services;
-using RS.WPFClient.Client.IServices;
-using RS.WPFClient.Client.Views;
+using RS.WPFClient.IServices;
+using RS.WPFClient.Views;
 using System.ComponentModel;
 
-namespace RS.WPFClient.Client.ViewModels
+namespace RS.WPFClient.ViewModels
 {
     [ServiceInjectConfig(ServiceLifetime.Transient)]
     public class LoginViewModel : ViewModelBase

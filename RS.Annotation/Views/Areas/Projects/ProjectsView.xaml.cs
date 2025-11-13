@@ -5,7 +5,7 @@ using RS.Widgets.Controls;
 using RS.Widgets.Models;
 using RS.Annotation.Models;
 using RS.Annotation.Views.Home;
-using RS.Annotation.Widgets.Controls;
+using RS.Annotation.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

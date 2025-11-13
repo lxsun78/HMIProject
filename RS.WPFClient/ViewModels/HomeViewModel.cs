@@ -5,7 +5,7 @@ using RS.Commons.Attributs;
 using RS.Widgets.Enums;
 using RS.Widgets.Interfaces;
 using RS.Widgets.Models;
-using RS.WPFClient.Client.Models;
+using RS.WPFClient.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -13,455 +13,480 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace RS.WPFClient.Client.ViewModels
+namespace RS.WPFClient.ViewModels
 {
-    [ServiceInjectConfig(ServiceLifetime.Transient)]
-    public class HomeViewModel : ViewModelBase
-    {
-        /// <summary>
-        /// 获取或设置搜索按钮点击时执行的命令
-        /// </summary>
-        public ICommand NavCommand { get; }
-
-        private DispatcherTimer DispatcherTimer;
-
-        public HomeViewModel()
-        {
-            this.NavCommand = new RelayCommand<NavigateModel>(Nav);
-            //var dataList = GenerateMenu(1, 5);
-            //dataList = this.SortMenu(dataList);
-            //this.NavigateModelList = dataList;
-
-            DispatcherTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(30), DispatcherPriority.Background, (s, e) =>
-            {
-                this.DateTimeNow = DateTime.Now;
-            }, Application.Current.Dispatcher);
-
-            //PersonModelList = new ObservableCollection<PersonModel>();
-            //this.GenerateTestData(100000);
-            //this.ChangeSource(PersonModelList);
-
-
-            //TestList = new ObservableCollection<PersonModel>();
-            //for (int i = 0; i < 1000000; i++)
-            //{
-            //    TestList.Add(new PersonModel()
-            //    {
-            //        Name=$"Ross{i}"
-            //    });
-            //}
-
-        }
-
-
-
-        private ObservableCollection<PersonModel> testList;
-
-        public ObservableCollection<PersonModel> TestList
-        {
-            get { return testList; }
-            set
-            {
-                this.SetProperty(ref testList, value);
-            }
-        }
-
-
-        private PersonModel testSelected;
-
-        public PersonModel TestSelected
-        {
-            get { return testSelected; }
-            set
-            {
-                this.SetProperty(ref testSelected, value);
-            }
-        }
-
-
-        public void GenerateTestData(int n)
-        {
-            var groupNames = new[] { "A组", "B组", "C组", "D组", "E组" };
-            for (int i = 1; i <= n; i++)
-            {
-                PersonModelList.Add(new PersonModel
-                {
-                    Name = $"测试用户{i}",
-                    Group = groupNames[i % groupNames.Length]
-                });
-            }
-        }
-
-
-        private void Nav(NavigateModel? model)
-        {
-            //this.ViewModelSelect = model?.ViewMoel;
-            //先做测试
-            //this.ViewModelSelect = this.ViewModelManager.GetViewModel<INotifyPropertyChanged>(model.ViewModelKey);
-        }
-
-        public static List<NavigateModel> GenerateMenu(int maxLevel, int menuCountPerLevel, double groupProbability = 0.2)
-        {
-            var menuList = new List<NavigateModel>();
-            int idCounter = 1;
-            var rand = new Random();
-
-            void AddMenus(string parentId, int currentLevel)
-            {
-                if (currentLevel > maxLevel) return;
-
-                for (int i = 1; i <= menuCountPerLevel; i++)
-                {
-                    string id = (idCounter++).ToString();
-                    bool isGroup = rand.NextDouble() < groupProbability; // groupProbability 概率分组
-                    var menu = new NavigateModel
-                    {
-                        Id = id,
-                        ParentId = parentId,
-                        Level = currentLevel,
-                        Order = i,
-                        NavName = $"第{currentLevel}级菜舒服舒服sdf单-{i}" + (parentId != null ? $"(父:{parentId})" : ""),
-                        HasChildren = !isGroup && currentLevel < maxLevel, // 分组不再有下级
-                        IsGroupNav = isGroup,
-                        ViewModelKey = i % 2 == 0 ? $"RS.WPFClient.Client/Views.Areas.UserViewModel" : @"RS.WPFClient.Client/Views.Areas.RoleViewModel",
-                        IconKey = IconKey.Folder,
-                        IsExpand = false,
-                        IsSelect = false,
-                        ViewMoel = null
-                    };
-                    menuList.Add(menu);
-
-                    // 只有不是分组时才递归生成下级
-                    if (!isGroup)
-                    {
-                        AddMenus(id, currentLevel + 1);
-                    }
-                }
-            }
-
-            AddMenus(null, 0); // 层级从0开始
-
-            return menuList;
-        }
-
-        public List<NavigateModel> SortMenu(List<NavigateModel> menuList)
-        {
-            var result = new List<NavigateModel>();
-            // 先按Level、Order排序
-            var lookup = menuList
-                .OrderBy(m => m.Level)
-                .ThenBy(m => m.Order)
-                .ToLookup(m => m.ParentId);
-
-            void AddChildren(string parentId)
-            {
-                foreach (var menu in lookup[parentId])
-                {
-                    result.Add(menu);
-                    AddChildren(menu.Id); // 递归添加子节点
-                }
-            }
-
-            AddChildren(null); // 顶级菜单ParentId为null
-
-            return result;
-        }
-
-        public void ChangeSource(ObservableCollection<PersonModel> newSource)
-        {
-            GroupedPersonsView = CollectionViewSource.GetDefaultView(newSource);
-            GroupedPersonsView.GroupDescriptions.Clear();
-            GroupedPersonsView.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            OnPropertyChanged(nameof(GroupedPersonsView));
-        }
-
-        private ICollectionView groupedPersonsView;
-
-        public ICollectionView GroupedPersonsView
-        {
-            get
-            {
-                return groupedPersonsView;
-            }
-            set
-            {
-                this.SetProperty(ref groupedPersonsView, value);
-            }
-        }
-
-
-        private List<NavigateModel> navigateModelList;
-
-        public List<NavigateModel> NavigateModelList
-        {
-            get
-            {
-                if (navigateModelList == null)
-                {
-                    navigateModelList = new List<NavigateModel>();
-                }
-                return navigateModelList;
-            }
-            set
-            {
-                this.SetProperty(ref navigateModelList, value);
-            }
-        }
-
-        private ObservableCollection<PersonModel> personModelList;
-
-        public ObservableCollection<PersonModel> PersonModelList
-        {
-            get
-            {
-                if (personModelList == null)
-                {
-                    personModelList = new ObservableCollection<PersonModel>();
-                }
-                return personModelList;
-            }
-            set
-            {
-                this.SetProperty(ref personModelList, value);
-            }
-        }
-
-
-
-        private ObservableCollection<NavigateModel> test1List;
-        public ObservableCollection<NavigateModel> Test1List
-        {
-            get
-            {
-                if (test1List == null)
-                {
-                    test1List = new ObservableCollection<NavigateModel>();
-                    for (int i = 0; i < 20; i++)
-                    {
-                        test1List.Add(new NavigateModel()
-                        {
-                            NavName = $"数据集1_{i}"
-                        });
-                    }
-                }
-                return test1List;
-            }
-            set
-            {
-                this.SetProperty(ref test1List, value);
-            }
-        }
-
-
-
-        private ObservableCollection<NavigateModel> test2List;
-
-        public ObservableCollection<NavigateModel> Test2List
-        {
-            get
-            {
-                if (test2List == null)
-                {
-                    test2List = new ObservableCollection<NavigateModel>();
-                    for (int i = 0; i < 20; i++)
-                    {
-                        test2List.Add(new NavigateModel()
-                        {
-                            NavName = $"数据集2_{i}"
-                        });
-                    }
-                }
-                return test2List;
-            }
-            set
-            {
-                this.SetProperty(ref test2List, value);
-            }
-        }
-
-        private ObservableCollection<NavigateModel> test3List;
-
-        public ObservableCollection<NavigateModel> Test3List
-        {
-            get
-            {
-                if (test3List == null)
-                {
-                    test3List = new ObservableCollection<NavigateModel>();
-                    for (int i = 0; i < 20; i++)
-                    {
-                        test3List.Add(new NavigateModel()
-                        {
-                            NavName = $"数据集3_{i}"
-                        });
-                    }
-                }
-                return test3List;
-            }
-            set
-            {
-                this.SetProperty(ref test3List, value);
-            }
-        }
-
-
-        private ObservableCollection<NavigateModel> test4List;
-
-        public ObservableCollection<NavigateModel> Test4List
-        {
-            get
-            {
-                if (test4List == null)
-                {
-                    test4List = new ObservableCollection<NavigateModel>();
-                    for (int i = 0; i < 20; i++)
-                    {
-                        test4List.Add(new NavigateModel()
-                        {
-                            NavName = $"数据集4_{i}"
-                        });
-                    }
-                }
-                return test4List;
-            }
-            set
-            {
-                this.SetProperty(ref test4List, value);
-            }
-        }
-
-        private DateTime dateTimeNow;
-        /// <summary>
-        /// 当前时间
-        /// </summary>
-        public DateTime DateTimeNow
-        {
-            get { return dateTimeNow; }
-            set
-            {
-                this.SetProperty(ref dateTimeNow, value);
-            }
-        }
-
-
-
-        private INotifyPropertyChanged viewModelSelect;
-
-        public INotifyPropertyChanged ViewModelSelect
-        {
-            get { return viewModelSelect; }
-            set
-            {
-                this.SetProperty(ref viewModelSelect, value);
-            }
-        }
-
-
-        private bool isEnglish;
-        public bool IsEnglish
-        {
-            get { return isEnglish; }
-            set
-            {
-                this.SetProperty(ref isEnglish, value);
-            }
-        }
-
-
-        private string searchContent;
-        /// <summary>
-        /// 搜索内容
-        /// </summary>
-        public string SearchContent
-        {
-            get { return searchContent; }
-            set
-            {
-                this.SetProperty(ref searchContent, value);
-            }
-        }
-
-
-        private bool isFullScreen;
-        public bool IsFullScreen
-        {
-            get { return isFullScreen; }
-            set
-            {
-                this.SetProperty(ref isFullScreen, value);
-            }
-        }
-
-
-        private ObservableCollection<TreeModel> treeModelList;
-        public ObservableCollection<TreeModel> TreeModelList
-        {
-            get
-            {
-                if (treeModelList == null)
-                {
-                    treeModelList = new ObservableCollection<TreeModel>();
-                }
-
-                for (int i = 0; i < 1; i++)
-                {
-
-                    treeModelList.Add(new TreeModel()
-                    {
-                        TreeName = "快速访问",
-                        TreeIcon = "/Assets/test.png",
-                    });
-                    treeModelList.Add(new TreeModel()
-                    {
-                        TreeName = "OneDrive-Personal",
-                        TreeIcon = "/Assets/test.png",
-                    });
-                    treeModelList.Add(new TreeModel()
-                    {
-                        TreeName = "此电脑",
-                        TreeIcon = "/Assets/test.png",
-                        Children = new ObservableCollection<TreeModel>()
-                {
-                    new TreeModel()
-                    {
-                TreeName = "3D对象",
-                TreeIcon = "/Assets/test.png",
-                Children= new ObservableCollection<TreeModel>()
-                {
-                    new TreeModel() {
-                TreeName = "OneDrive-Personal",
-                TreeIcon = "/Assets/test.png",
-            }
-                }
-            },
-                           new TreeModel()
-            {
-                TreeName = "视频",
-                TreeIcon = "/Assets/test.png",
-            },
-                }
-                    });
-
-                    treeModelList.Add(new TreeModel()
-                    {
-                        TreeName = "网络",
-                        TreeIcon = "/Assets/test.png",
-                    });
-                    treeModelList.Add(new TreeModel()
-                    {
-                        TreeName = "Linux",
-                        TreeIcon = "/Assets/test.png",
-                    });
-
-                }
-
-
-                return treeModelList;
-            }
-            set { treeModelList = value; }
-        }
-
-
-
-    }
+	[ServiceInjectConfig(ServiceLifetime.Transient)]
+	public class HomeViewModel : ViewModelBase
+	{
+		/// <summary>
+		/// 获取或设置搜索按钮点击时执行的命令
+		/// </summary>
+		public ICommand NavCommand { get; }
+
+		private DispatcherTimer DispatcherTimer;
+
+		public HomeViewModel()
+		{
+			this.NavCommand = new RelayCommand<NavigateModel>(Nav);
+
+			DispatcherTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(30), DispatcherPriority.Background, (s, e) =>
+			{
+				this.DateTimeNow = DateTime.Now;
+			}, Application.Current.Dispatcher);
+
+			this.SearchViewModel = new SearchViewModel()
+			{
+				SearchTypeModelList = new ObservableCollection<SearchTypeModel>()
+				{
+					new SearchTypeModel(){
+						TypeDes="邮件"
+					},
+					new SearchTypeModel(){
+						TypeDes="文件"
+					},
+					new SearchTypeModel(){
+						TypeDes="发票"
+					},
+					new SearchTypeModel(){
+						TypeDes="通讯录"
+					},
+					new SearchTypeModel(){
+						TypeDes="记事本"
+					},
+				}
+			};
+		}
+
+
+
+
+
+        private SearchViewModel searchViewModel;
+
+		public SearchViewModel SearchViewModel
+		{
+			get
+			{
+				if (searchViewModel == null)
+				{
+					searchViewModel = new SearchViewModel();
+				}
+				return searchViewModel;
+			}
+			set
+			{
+				this.SetProperty(ref searchViewModel, value);
+			}
+		}
+
+
+		private ObservableCollection<PersonModel> testList;
+
+		public ObservableCollection<PersonModel> TestList
+		{
+			get { return testList; }
+			set
+			{
+				this.SetProperty(ref testList, value);
+			}
+		}
+
+
+		private PersonModel testSelected;
+
+		public PersonModel TestSelected
+		{
+			get { return testSelected; }
+			set
+			{
+				this.SetProperty(ref testSelected, value);
+			}
+		}
+
+
+		public void GenerateTestData(int n)
+		{
+			var groupNames = new[] { "A组", "B组", "C组", "D组", "E组" };
+			for (int i = 1; i <= n; i++)
+			{
+				PersonModelList.Add(new PersonModel
+				{
+					Name = $"测试用户{i}",
+					Group = groupNames[i % groupNames.Length]
+				});
+			}
+		}
+
+
+		private void Nav(NavigateModel? model)
+		{
+			//this.ViewModelSelect = model?.ViewMoel;
+			//先做测试
+			//this.ViewModelSelect = this.ViewModelManager.GetViewModel<INotifyPropertyChanged>(model.ViewModelKey);
+		}
+
+		public static List<NavigateModel> GenerateMenu(int maxLevel, int menuCountPerLevel, double groupProbability = 0.2)
+		{
+			var menuList = new List<NavigateModel>();
+			int idCounter = 1;
+			var rand = new Random();
+
+			void AddMenus(string parentId, int currentLevel)
+			{
+				if (currentLevel > maxLevel) return;
+
+				for (int i = 1; i <= menuCountPerLevel; i++)
+				{
+					string id = (idCounter++).ToString();
+					bool isGroup = rand.NextDouble() < groupProbability; // groupProbability 概率分组
+					var menu = new NavigateModel
+					{
+						Id = id,
+						ParentId = parentId,
+						Level = currentLevel,
+						Order = i,
+						NavName = $"第{currentLevel}级菜舒服舒服sdf单-{i}" + (parentId != null ? $"(父:{parentId})" : ""),
+						HasChildren = !isGroup && currentLevel < maxLevel, // 分组不再有下级
+						IsGroupNav = isGroup,
+						ViewModelKey = i % 2 == 0 ? $"RS.WPFClient/Views.Areas.UserViewModel" : @"RS.WPFClient/Views.Areas.RoleViewModel",
+						IconKey = IconKey.Folder,
+						IsExpand = false,
+						IsSelect = false,
+						ViewMoel = null
+					};
+					menuList.Add(menu);
+
+					// 只有不是分组时才递归生成下级
+					if (!isGroup)
+					{
+						AddMenus(id, currentLevel + 1);
+					}
+				}
+			}
+
+			AddMenus(null, 0); // 层级从0开始
+
+			return menuList;
+		}
+
+		public List<NavigateModel> SortMenu(List<NavigateModel> menuList)
+		{
+			var result = new List<NavigateModel>();
+			// 先按Level、Order排序
+			var lookup = menuList
+				.OrderBy(m => m.Level)
+				.ThenBy(m => m.Order)
+				.ToLookup(m => m.ParentId);
+
+			void AddChildren(string parentId)
+			{
+				foreach (var menu in lookup[parentId])
+				{
+					result.Add(menu);
+					AddChildren(menu.Id); // 递归添加子节点
+				}
+			}
+
+			AddChildren(null); // 顶级菜单ParentId为null
+
+			return result;
+		}
+
+		public void ChangeSource(ObservableCollection<PersonModel> newSource)
+		{
+			GroupedPersonsView = CollectionViewSource.GetDefaultView(newSource);
+			GroupedPersonsView.GroupDescriptions.Clear();
+			GroupedPersonsView.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+			OnPropertyChanged(nameof(GroupedPersonsView));
+		}
+
+		private ICollectionView groupedPersonsView;
+
+		public ICollectionView GroupedPersonsView
+		{
+			get
+			{
+				return groupedPersonsView;
+			}
+			set
+			{
+				this.SetProperty(ref groupedPersonsView, value);
+			}
+		}
+
+
+		private List<NavigateModel> navigateModelList;
+
+		public List<NavigateModel> NavigateModelList
+		{
+			get
+			{
+				if (navigateModelList == null)
+				{
+					navigateModelList = new List<NavigateModel>();
+				}
+				return navigateModelList;
+			}
+			set
+			{
+				this.SetProperty(ref navigateModelList, value);
+			}
+		}
+
+		private ObservableCollection<PersonModel> personModelList;
+
+		public ObservableCollection<PersonModel> PersonModelList
+		{
+			get
+			{
+				if (personModelList == null)
+				{
+					personModelList = new ObservableCollection<PersonModel>();
+				}
+				return personModelList;
+			}
+			set
+			{
+				this.SetProperty(ref personModelList, value);
+			}
+		}
+
+
+
+		private ObservableCollection<NavigateModel> test1List;
+		public ObservableCollection<NavigateModel> Test1List
+		{
+			get
+			{
+				if (test1List == null)
+				{
+					test1List = new ObservableCollection<NavigateModel>();
+					for (int i = 0; i < 20; i++)
+					{
+						test1List.Add(new NavigateModel()
+						{
+							NavName = $"数据集1_{i}"
+						});
+					}
+				}
+				return test1List;
+			}
+			set
+			{
+				this.SetProperty(ref test1List, value);
+			}
+		}
+
+
+
+		private ObservableCollection<NavigateModel> test2List;
+
+		public ObservableCollection<NavigateModel> Test2List
+		{
+			get
+			{
+				if (test2List == null)
+				{
+					test2List = new ObservableCollection<NavigateModel>();
+					for (int i = 0; i < 20; i++)
+					{
+						test2List.Add(new NavigateModel()
+						{
+							NavName = $"数据集2_{i}"
+						});
+					}
+				}
+				return test2List;
+			}
+			set
+			{
+				this.SetProperty(ref test2List, value);
+			}
+		}
+
+		private ObservableCollection<NavigateModel> test3List;
+
+		public ObservableCollection<NavigateModel> Test3List
+		{
+			get
+			{
+				if (test3List == null)
+				{
+					test3List = new ObservableCollection<NavigateModel>();
+					for (int i = 0; i < 20; i++)
+					{
+						test3List.Add(new NavigateModel()
+						{
+							NavName = $"数据集3_{i}"
+						});
+					}
+				}
+				return test3List;
+			}
+			set
+			{
+				this.SetProperty(ref test3List, value);
+			}
+		}
+
+
+		private ObservableCollection<NavigateModel> test4List;
+
+		public ObservableCollection<NavigateModel> Test4List
+		{
+			get
+			{
+				if (test4List == null)
+				{
+					test4List = new ObservableCollection<NavigateModel>();
+					for (int i = 0; i < 20; i++)
+					{
+						test4List.Add(new NavigateModel()
+						{
+							NavName = $"数据集4_{i}"
+						});
+					}
+				}
+				return test4List;
+			}
+			set
+			{
+				this.SetProperty(ref test4List, value);
+			}
+		}
+
+		private DateTime dateTimeNow;
+		/// <summary>
+		/// 当前时间
+		/// </summary>
+		public DateTime DateTimeNow
+		{
+			get { return dateTimeNow; }
+			set
+			{
+				this.SetProperty(ref dateTimeNow, value);
+			}
+		}
+
+
+
+		private INotifyPropertyChanged viewModelSelect;
+
+		public INotifyPropertyChanged ViewModelSelect
+		{
+			get { return viewModelSelect; }
+			set
+			{
+				this.SetProperty(ref viewModelSelect, value);
+			}
+		}
+
+
+		private bool isEnglish;
+		public bool IsEnglish
+		{
+			get { return isEnglish; }
+			set
+			{
+				this.SetProperty(ref isEnglish, value);
+			}
+		}
+
+
+		private string searchContent;
+		/// <summary>
+		/// 搜索内容
+		/// </summary>
+		public string SearchContent
+		{
+			get { return searchContent; }
+			set
+			{
+				this.SetProperty(ref searchContent, value);
+			}
+		}
+
+
+		private bool isFullScreen;
+		public bool IsFullScreen
+		{
+			get { return isFullScreen; }
+			set
+			{
+				this.SetProperty(ref isFullScreen, value);
+			}
+		}
+
+
+		private ObservableCollection<TreeModel> treeModelList;
+		public ObservableCollection<TreeModel> TreeModelList
+		{
+			get
+			{
+				if (treeModelList == null)
+				{
+					treeModelList = new ObservableCollection<TreeModel>();
+				}
+
+				for (int i = 0; i < 1; i++)
+				{
+
+					treeModelList.Add(new TreeModel()
+					{
+						TreeName = "快速访问",
+						TreeIcon = "/Assets/test.png",
+					});
+					treeModelList.Add(new TreeModel()
+					{
+						TreeName = "OneDrive-Personal",
+						TreeIcon = "/Assets/test.png",
+					});
+					treeModelList.Add(new TreeModel()
+					{
+						TreeName = "此电脑",
+						TreeIcon = "/Assets/test.png",
+						Children = new ObservableCollection<TreeModel>()
+				{
+					new TreeModel()
+					{
+				TreeName = "3D对象",
+				TreeIcon = "/Assets/test.png",
+				Children= new ObservableCollection<TreeModel>()
+				{
+					new TreeModel() {
+				TreeName = "OneDrive-Personal",
+				TreeIcon = "/Assets/test.png",
+			}
+				}
+			},
+						   new TreeModel()
+			{
+				TreeName = "视频",
+				TreeIcon = "/Assets/test.png",
+			},
+				}
+					});
+
+					treeModelList.Add(new TreeModel()
+					{
+						TreeName = "网络",
+						TreeIcon = "/Assets/test.png",
+					});
+					treeModelList.Add(new TreeModel()
+					{
+						TreeName = "Linux",
+						TreeIcon = "/Assets/test.png",
+					});
+
+				}
+
+
+				return treeModelList;
+			}
+			set { treeModelList = value; }
+		}
+
+
+
+	}
 }

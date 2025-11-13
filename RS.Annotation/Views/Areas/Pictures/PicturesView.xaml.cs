@@ -9,7 +9,7 @@ using RS.Widgets.Controls;
 using RS.Widgets.Models;
 using RS.Annotation.Views.Areas.Pictures;
 using RS.Annotation.Views.Home;
-using RS.Annotation.Widgets.Controls;
+using RS.Annotation.Controls;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -21,6 +21,7 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Reflection.Emit;
 using RS.Widgets.Commons;
+using RS.Annotation.Models;
 
 namespace RS.Annotation.Views.Areas
 {

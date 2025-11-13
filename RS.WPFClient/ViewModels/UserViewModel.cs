@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RS.Commons;
 using RS.Commons.Attributs;
 using RS.Commons.Extensions;
-using RS.WPFClient.Client.Models;
+using RS.WPFClient.Models;
 using RS.Server.WebAPI;
 using RS.Widgets.Interfaces;
 using RS.Widgets.Models;
@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
-namespace RS.WPFClient.Client.ViewModels
+namespace RS.WPFClient.ViewModels
 {
 
     /// <summary>

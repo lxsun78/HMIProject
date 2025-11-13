@@ -18,20 +18,18 @@
         <Setter Property="Margin" Value="3,3,3,3" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Padding" Value="2,3,2,3" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Foreground" Value="#333" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="rs:ControlsHelper.CornerRadius" Value="5" />
-        <Setter Property="rs:ControlsHelper.IconWidth" Value="15" />
-        <Setter Property="rs:ControlsHelper.IconHeight" Value="15" />
-        <Setter Property="rs:ControlsHelper.IconData" Value="{x:Null}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border
                         x:Name="PART_Border"
                         Padding="{TemplateBinding Padding}"
@@ -50,12 +48,7 @@
                 <Setter Property="Foreground" Value="#949494" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:ControlsHelper.MouseOverBackground)}" />
-                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:ControlsHelper.MouseOverForeground)}" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:ControlsHelper.MousePressBackground)}" />
-                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:ControlsHelper.MousePressForeground)}" />
+                <Setter Property="Cursor" Value="Hand" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -64,18 +57,11 @@
         x:Key="RSApp.Styles.IconButtonStyle"
         BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
         TargetType="{x:Type ButtonBase}">
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="5" />
+        <Setter Property="rs:ControlsHelper.IconWidth" Value="15" />
+        <Setter Property="rs:ControlsHelper.IconHeight" Value="15" />
+        <Setter Property="rs:ControlsHelper.IconData" Value="{x:Null}" />
         <Setter Property="Template" Value="{StaticResource RSApp.Templates.IconButton}" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Cursor" Value="Hand" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <Style
@@ -377,54 +363,6 @@
                 <Setter Property="Opacity" Value="0.6" />
             </Trigger>
         </Style.Triggers>
-    </Style>
-
-
-    <Style
-        x:Key="RSApp.Styles.LoginButtonStyle"
-        BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
-        TargetType="{x:Type Button}">
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="Background" Value="#198cff" />
-        <Setter Property="Foreground" Value="#fff" />
-        <Setter Property="Margin" Value="0,5,0,5" />
-        <Setter Property="Padding" Value="15,10,15,10" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border
-                        Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
-                        <Grid>
-                            <ContentControl
-                                x:Name="PART_Content"
-                                Grid.Column="1"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Content="{TemplateBinding Content}"
-                                FontSize="{TemplateBinding FontSize}" />
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Cursor" Value="Hand" />
-                            <Setter Property="Background" Value="#2d96ff" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="#0072ef" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="#949494" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
 

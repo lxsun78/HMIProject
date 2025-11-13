@@ -2,9 +2,9 @@
 
 namespace RS.WPFClient.Views
 {
-    public partial class UserFormView : UserControl
+    public partial class SearchView : UserControl
     {
-        public UserFormView()
+        public SearchView()
         {
             InitializeComponent();
         }

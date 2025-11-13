@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace RS.WPFClient.Client.Models
+namespace RS.WPFClient.Models
 {
     public class MenuItemViewModel
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RS.WPFClient.ClientData.DbContexts;
+using RS.WPFClientData.DbContexts;
 
 #nullable disable
 
@@ -16,7 +16,7 @@ namespace RS.WPFClient.SQLite.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
 
-            modelBuilder.Entity("RS.WPFClient.ClientData.Entities.CommuStation", b =>
+            modelBuilder.Entity("RS.WPFClientData.Entities.CommuStation", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,7 +31,7 @@ namespace RS.WPFClient.SQLite.Migrations
                     b.ToTable("CommuStation");
                 });
 
-            modelBuilder.Entity("RS.WPFClient.ClientData.Entities.ModbusCommuConfig", b =>
+            modelBuilder.Entity("RS.WPFClientData.Entities.ModbusCommuConfig", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -97,7 +97,7 @@ namespace RS.WPFClient.SQLite.Migrations
                     b.ToTable("ModbusCommuConfig");
                 });
 
-            modelBuilder.Entity("RS.WPFClient.ClientData.Entities.SerialPortConfig", b =>
+            modelBuilder.Entity("RS.WPFClientData.Entities.SerialPortConfig", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");

@@ -1,4 +1,4 @@
-﻿namespace RS.WPFClient.Client.Controls
+﻿namespace RS.WPFClient.Controls
 {
     public partial class RSModBusRTU : RSSerialPort
     {

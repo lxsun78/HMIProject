@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RS.WPFClient.ClientData.Entities;
+using RS.WPFClientData.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RS.WPFClient.ClientData.Mapping
+namespace RS.WPFClientData.Mapping
 {
     public sealed class SerialPortConfigMap : IEntityTypeConfiguration<SerialPortConfig>
     {

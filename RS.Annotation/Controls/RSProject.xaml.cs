@@ -1,4 +1,5 @@
-﻿using RS.Widgets.Models;
+﻿using RS.Annotation.Models;
+using RS.Widgets.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RS.Annotation.Widgets.Controls
+namespace RS.Annotation.Controls
 {
     /// <summary>
     /// RSProject.xaml 的交互逻辑

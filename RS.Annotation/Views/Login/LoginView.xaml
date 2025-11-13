@@ -167,6 +167,21 @@
 
 
 
+        <Style
+            x:Key="RSApp.Styles.LoginButtonStyle"
+            BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+            TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#198cff" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2d96ff" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#0072ef" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </rs:RSWindow.Resources>
     <Border Background="#FFF">
         <Grid>
@@ -317,13 +332,17 @@
                                                     rs:TextBoxHelper.Watermark="请输入密码"
                                                     MaxLength="50"
                                                     Style="{StaticResource RSApp.Styles.PasswordBoxTextBox}" />
+
                                                 <Button
-                                                    x:Name="BtnPasswordLogin"
+                                                    x:Name="BtnLogin"
                                                     Margin="5,30,5,0"
                                                     Click="BtnPasswordLogin_Click"
+                                                    Command="{Binding LoginCommand}"
                                                     Content="登录"
-                                                    IsEnabled="True"
-                                                    Style="{DynamicResource RSApp.Styles.LoginButtonStyle}" />
+                                                    Focusable="False"
+                                                    FontSize="14"
+                                                    Foreground="#FFF"
+                                                    Style="{StaticResource RSApp.Styles.LoginButtonStyle}" />
                                                 <ContentControl Margin="0,5,0,5" Template="{Binding Source={StaticResource ForgetPasswordAndSignUpTemplate}}" />
                                             </StackPanel>
                                         </Grid>
@@ -382,13 +401,12 @@
                                 <Border Grid.Row="1" Padding="0,10,0,0">
                                     <rs:RSQRCodeLogin
                                         x:Name="QRCodeLogin"
-                                        CancelQRCodeLoginActionAction="QRCodeLogin_OnCancelQRCodeLoginAction"
-                                        GetLoginQRCodeAsyncFuncAction="QRCodeLogin_OnGetLoginQRCodeAsyncFunc"
-                                        IsQRCodeLogin="{Binding ElementName=TogBtnQRCode, Path=IsChecked}"
-                                        OnQRCodeAuthLoginSuccessActionEvent="QRCodeLogin_OnQRCodeAuthLoginSuccessAction"
-                                        OnQueryQRCodeLoginStatusAsyncFuncEvent="QRCodeLogin_OnQueryQRCodeLoginStatusAsyncFunc"
+                                        CancelQRCodeLoginAction="QRCodeLogin_OnCancelQRCodeLoginAction"
+                                        GetLoginQRCodeAsyncFunc="QRCodeLogin_OnGetLoginQRCodeAsyncFunc"
+                                        QRCodeAuthLoginSuccessAction="QRCodeLogin_OnQRCodeAuthLoginSuccessAction"
                                         QRCodeHeight="200"
-                                        QRCodeWidth="200" />
+                                        QRCodeWidth="200"
+                                        QueryQRCodeLoginStatusAsyncFunc="QRCodeLogin_OnQueryQRCodeLoginStatusAsyncFunc" />
                                 </Border>
                             </Grid>
 
@@ -406,17 +424,6 @@
 
                 </Border>
 
-
-
-                <Border
-                    x:Name="RegisterHostView"
-                    Grid.Column="1"
-                    Background="#FFF"
-                    Visibility="Collapsed">
-                    <Grid>
-                        <local:RegisterView x:Name="RegisterView" RegisterEnd="RegisterView_RegisterEnd" />
-                    </Grid>
-                </Border>
 
             </Grid>
 

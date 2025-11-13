@@ -3,8 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using RS.Commons;
 using RS.Commons.Attributs;
 using RS.Commons.Extensions;
-using RS.WPFClient.Client.Enums;
-using RS.WPFClient.Client.Models;
+using RS.WPFClient.Enums;
+using RS.WPFClient.Models;
 using RS.Models;
 using RS.Server.WebAPI;
 using RS.Widgets.Controls;
@@ -15,7 +15,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace RS.WPFClient.Client.ViewModels
+namespace RS.WPFClient.ViewModels
 {
     [ServiceInjectConfig(ServiceLifetime.Transient)]
     public class RegisterViewModel : ViewModelBase

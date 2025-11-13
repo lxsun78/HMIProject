@@ -142,8 +142,6 @@
                                     ToolTip="清除输入框内容"
                                     Visibility="Visible" />
 
-
-
                                 <TextBox
                                     x:Name="PART_EditableTextBox"
                                     Margin="0"

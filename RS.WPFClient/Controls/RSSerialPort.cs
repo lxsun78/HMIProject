@@ -8,9 +8,9 @@ using RS.Commons;
 using RS.Commons.Enums;
 using RS.Commons.Extensions;
 using RS.Commons.Helper;
-using RS.WPFClient.Client.DataConfigs;
-using RS.WPFClient.ClientData.DbContexts;
-using RS.WPFClient.ClientData.Entities;
+using RS.WPFClient.DataConfigs;
+using RS.WPFClientData.DbContexts;
+using RS.WPFClientData.Entities;
 using RS.Widgets.Commons;
 using RS.Widgets.Controls;
 using RS.Widgets.Models;
@@ -25,7 +25,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace RS.WPFClient.Client.Controls
+namespace RS.WPFClient.Controls
 {
     public class RSSerialPort : UserControl
     {

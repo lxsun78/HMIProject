@@ -1,6 +1,6 @@
 ﻿using RS.Commons;
 
-namespace RS.WPFClient.Client.IServices
+namespace RS.WPFClient.IServices
 {
     public interface ILoginViewService
     {
