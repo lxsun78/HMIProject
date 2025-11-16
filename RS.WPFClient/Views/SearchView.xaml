@@ -196,6 +196,10 @@
         </DataTemplate>
 
 
+        <DataTemplate x:Key="ComboBoxSelectDataTemplate">
+            <ContentControl Content="{Binding}" />
+        </DataTemplate>
+
     </UserControl.Resources>
     <i:Interaction.Behaviors>
         <behavior:SearchViewBehavior HideSearchCommand="{Binding HideSearchCommand, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -432,6 +436,12 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
 
                                     <Grid.ColumnDefinitions>
@@ -451,35 +461,113 @@
                                         rs:TextBoxHelper.Watermark="请输入"
                                         Style="{StaticResource AdvancedSearchTextBoxStyle}" />
 
+
                                     <TextBlock
                                         Grid.Row="1"
+                                        Grid.Column="0"
+                                        Style="{StaticResource TextBlockDesStyle}"
+                                        Text="关键字位置" />
+
+                                    <ComboBox
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource ComboBoxSelectDataTemplate}"
+                                        rs:ControlsHelper.CornerRadius="5"
+                                        ItemContainerStyle="{StaticResource RSApp.Styles.ComboBoxItemBaseStyle}"
+                                        ItemTemplate="{StaticResource ComboxItemFilterDataTemplate}"
+                                        ItemsSource="{Binding LocationTypeList}"
+                                        SelectedItem="{Binding LocationType}" />
+
+                                    <TextBlock
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        Style="{StaticResource TextBlockDesStyle}"
+                                        Text="发件人" />
+
+                                    <TextBox
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        rs:TextBoxHelper.Watermark="请输入"
+                                        Style="{StaticResource AdvancedSearchTextBoxStyle}" />
+
+
+                                    <TextBlock
+                                        Grid.Row="3"
+                                        Grid.Column="0"
+                                        Style="{StaticResource TextBlockDesStyle}"
+                                        Text="收件人" />
+
+                                    <TextBox
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        rs:TextBoxHelper.Watermark="请输入"
+                                        Style="{StaticResource AdvancedSearchTextBoxStyle}" />
+
+
+                                    <TextBlock
+                                        Grid.Row="4"
                                         Grid.Column="0"
                                         Style="{StaticResource TextBlockDesStyle}"
                                         Text="时间" />
 
                                     <ComboBox
-                                        Grid.Row="1"
+                                        Grid.Row="4"
                                         Grid.Column="1"
+                                        rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource ComboBoxSelectDataTemplate}"
                                         rs:ControlsHelper.CornerRadius="5"
                                         ItemContainerStyle="{StaticResource RSApp.Styles.ComboBoxItemBaseStyle}"
                                         ItemTemplate="{StaticResource ComboxItemFilterDataTemplate}"
                                         ItemsSource="{Binding DateFilterTypeList}"
-                                        SelectedItem="{Binding DateFilterType}" />
+                                        SelectedItem="{Binding DateFilterTypeSelect}" />
 
                                     <TextBlock
-                                        Grid.Row="1"
+                                        Grid.Row="5"
                                         Grid.Column="0"
                                         Style="{StaticResource TextBlockDesStyle}"
                                         Text="所在文件夹" />
 
                                     <ComboBox
-                                        Grid.Row="1"
+                                        Grid.Row="5"
                                         Grid.Column="1"
+                                        rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource ComboBoxSelectDataTemplate}"
                                         rs:ControlsHelper.CornerRadius="5"
                                         ItemContainerStyle="{StaticResource RSApp.Styles.ComboBoxItemBaseStyle}"
                                         ItemTemplate="{StaticResource ComboxItemFilterDataTemplate}"
-                                        ItemsSource="{Binding DateFilterTypeList}"
-                                        SelectedItem="{Binding DateFilterType}" />
+                                        ItemsSource="{Binding FolderTypeList}"
+                                        SelectedItem="{Binding FolderTypeSelect}" />
+
+
+                                    <TextBlock
+                                        Grid.Row="6"
+                                        Grid.Column="0"
+                                        Style="{StaticResource TextBlockDesStyle}"
+                                        Text="是否包含附件" />
+
+                                    <ComboBox
+                                        Grid.Row="6"
+                                        Grid.Column="1"
+                                        rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource ComboBoxSelectDataTemplate}"
+                                        rs:ControlsHelper.CornerRadius="5"
+                                        ItemContainerStyle="{StaticResource RSApp.Styles.ComboBoxItemBaseStyle}"
+                                        ItemTemplate="{StaticResource ComboxItemFilterDataTemplate}"
+                                        ItemsSource="{Binding AttachmentTypeList}"
+                                        SelectedItem="{Binding AttachmentTypeSelect}" />
+
+                                    <TextBlock
+                                        Grid.Row="7"
+                                        Grid.Column="0"
+                                        Style="{StaticResource TextBlockDesStyle}"
+                                        Text="已读/未读" />
+
+                                    <ComboBox
+                                        Grid.Row="7"
+                                        Grid.Column="1"
+                                        rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource ComboBoxSelectDataTemplate}"
+                                        rs:ControlsHelper.CornerRadius="5"
+                                        ItemContainerStyle="{StaticResource RSApp.Styles.ComboBoxItemBaseStyle}"
+                                        ItemTemplate="{StaticResource ComboxItemFilterDataTemplate}"
+                                        ItemsSource="{Binding ReadUnReadTypeList}"
+                                        SelectedItem="{Binding ReadUnReadTypeSelect}" />
 
                                 </Grid>
                             </ScrollViewer>
