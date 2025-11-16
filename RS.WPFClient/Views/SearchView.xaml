@@ -19,6 +19,10 @@
     <UserControl.Resources>
         <converter:DateFilterTypeConverter x:Key="DateFilterTypeConverter" />
         <converter:SearchTypeConverter x:Key="SearchTypeConverter" />
+        <converter:LocationTypeConverter x:Key="LocationTypeConverter" />
+        <converter:FolderTypeConverter x:Key="FolderTypeConverter" />
+        <converter:AttachmentTypeConverter x:Key="AttachmentTypeConverter" />
+        <converter:ReadUnReadTypeConverter x:Key="ReadUnReadTypeConverter" />
         <SolidColorBrush x:Key="BorderBrush">#0F7AF5</SolidColorBrush>
 
         <Style
@@ -34,20 +38,38 @@
         </Style>
 
         <Style
-            x:Key="AdvancedSearchTextBlockStyle"
+            x:Key="TextBlockDesStyle"
             BasedOn="{StaticResource RSApp.Styles.FormTextBlockStyle}"
             TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Foreground" Value="#333333" />
         </Style>
 
+        <DataTemplate DataType="{x:Type enums:SearchType}">
+            <TextBlock Style="{StaticResource TextBlockDesStyle}" Text="{Binding Converter={StaticResource SearchTypeConverter}}" />
+        </DataTemplate>
 
+        <DataTemplate DataType="{x:Type enums:DateFilterType}">
+            <TextBlock Style="{StaticResource TextBlockDesStyle}" Text="{Binding Converter={StaticResource DateFilterTypeConverter}}" />
+        </DataTemplate>
 
+        <DataTemplate DataType="{x:Type enums:LocationType}">
+            <TextBlock Style="{StaticResource TextBlockDesStyle}" Text="{Binding Converter={StaticResource LocationTypeConverter}}" />
+        </DataTemplate>
 
+        <DataTemplate DataType="{x:Type enums:FolderType}">
+            <TextBlock Style="{StaticResource TextBlockDesStyle}" Text="{Binding Converter={StaticResource FolderTypeConverter}}" />
+        </DataTemplate>
 
+        <DataTemplate DataType="{x:Type enums:AttachmentType}">
+            <TextBlock Style="{StaticResource TextBlockDesStyle}" Text="{Binding Converter={StaticResource AttachmentTypeConverter}}" />
+        </DataTemplate>
 
+        <DataTemplate DataType="{x:Type enums:ReadUnReadType}">
+            <TextBlock Style="{StaticResource TextBlockDesStyle}" Text="{Binding Converter={StaticResource ReadUnReadTypeConverter}}" />
+        </DataTemplate>
 
-        <DataTemplate DataType="{x:Type model:SearchTypeModel}">
+        <!--<DataTemplate x:Key="ComboxItemDataTemplate">
             <Border
                 x:Name="PART_Border"
                 Margin="0,2,0,2"
@@ -59,12 +81,12 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock
-                        x:Name="PART_SearchTypeDes"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Foreground="#333333"
-                        Text="{Binding SearchType, Converter={StaticResource SearchTypeConverter}}" />
+
+                    <ContentControl
+                        Grid.Column="0"
+                        Content="{Binding BindsDirectlyToSource=True}"
+                        ContentTemplate="{Binding}" />
+
                     <Path
                         x:Name="PART_CheckIcon"
                         Grid.Column="2"
@@ -81,7 +103,7 @@
                 <Trigger Property="IsMouseOver" Value="False">
                     <Setter TargetName="PART_Border" Property="Background" Value="Transparent" />
                 </Trigger>
-                <DataTrigger Binding="{Binding IsSelect}" Value="True">
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}, Path=IsSelected}" Value="True">
                     <Setter TargetName="PART_CheckIcon" Property="Visibility" Value="Visible" />
                     <Setter TargetName="PART_Border" Property="Background" Value="#F3F4F6" />
                 </DataTrigger>
@@ -89,9 +111,9 @@
                     <Setter TargetName="PART_Border" Property="Background" Value="#F3F4F6" />
                 </Trigger>
             </DataTemplate.Triggers>
-        </DataTemplate>
+        </DataTemplate>-->
 
-        <DataTemplate x:Key="SearchTypeModelSelectDataTemplate" DataType="{x:Type model:SearchTypeModel}">
+        <DataTemplate x:Key="SearchTypeSelectDataTemplate" DataType="{x:Type enums:SearchType}">
             <StackPanel Orientation="Horizontal">
                 <Path
                     Grid.Column="0"
@@ -106,7 +128,7 @@
                     Margin="10,0,0,0"
                     FontSize="14"
                     Foreground="#333333"
-                    Text="{Binding SearchType, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource SearchTypeConverter}}" />
+                    Text="{Binding Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource SearchTypeConverter}}" />
                 <Path
                     Grid.Column="0"
                     Width="8"
@@ -119,7 +141,7 @@
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type model:DateFilterModel}">
+        <DataTemplate x:Key="ComboxItemFilterDataTemplate">
             <Border
                 x:Name="PART_Border"
                 Padding="5,2,5,2"
@@ -134,12 +156,8 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock
-                            x:Name="PART_DateFilterTypeDes"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#333333"
-                            Text="{Binding DateFilterType, Converter={StaticResource DateFilterTypeConverter}}" />
+
+                        <ContentControl Content="{Binding}" />
                         <Path
                             x:Name="PART_CheckIcon"
                             Grid.Column="2"
@@ -154,29 +172,27 @@
                 </Border>
             </Border>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding IsSelect}" Value="True">
+
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}, Path=IsSelected}" Value="True">
                     <Setter TargetName="PART_CheckIcon" Property="Visibility" Value="Visible" />
                     <Setter TargetName="PART_Bg" Property="Background" Value="#F3F4F6" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding DateFilterType}" Value="Any">
+
+                <DataTrigger Binding="{Binding}" Value="-1">
                     <Setter TargetName="PART_Border" Property="BorderThickness" Value="0,0,0,1" />
                     <Setter TargetName="PART_Border" Property="BorderBrush" Value="#eeeeee" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding DateFilterType}" Value="Customise">
+
+                <DataTrigger Binding="{Binding}" Value="-2">
                     <Setter TargetName="PART_Border" Property="BorderThickness" Value="0,1,0,0" />
                     <Setter TargetName="PART_Border" Property="BorderBrush" Value="#eeeeee" />
                 </DataTrigger>
+
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Cursor" Value="Hand" />
                     <Setter TargetName="PART_Bg" Property="Background" Value="#F3F4F6" />
                 </Trigger>
             </DataTemplate.Triggers>
-        </DataTemplate>
-
-        <DataTemplate x:Key="DateFilterModelSelectDataTemplate" DataType="{x:Type model:DateFilterModel}">
-            <Grid>
-                <TextBlock Foreground="#949494" Text="{Binding DateFilterType, Converter={StaticResource DateFilterTypeConverter}}" />
-            </Grid>
         </DataTemplate>
 
 
@@ -245,10 +261,10 @@
 
                 <ComboBox
                     x:Name="PART_SearchType"
-                    rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource SearchTypeModelSelectDataTemplate}"
+                    rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource SearchTypeSelectDataTemplate}"
                     IsDropDownOpen="{Binding IsSearchTypeChecked}"
-                    ItemsSource="{Binding SearchTypeModelList}"
-                    SelectedItem="{Binding SearchTypeModelSelect}">
+                    ItemsSource="{Binding SearchTypeList}"
+                    SelectedItem="{Binding SearchTypeSelect}">
                     <ComboBox.Style>
                         <Style TargetType="{x:Type ComboBox}">
                             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -417,6 +433,7 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
+
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="*" />
@@ -425,32 +442,44 @@
                                     <TextBlock
                                         Grid.Row="0"
                                         Grid.Column="0"
-                                        Style="{StaticResource AdvancedSearchTextBlockStyle}"
+                                        Style="{StaticResource TextBlockDesStyle}"
                                         Text="关键字" />
+
                                     <TextBox
                                         Grid.Row="0"
                                         Grid.Column="1"
                                         rs:TextBoxHelper.Watermark="请输入"
                                         Style="{StaticResource AdvancedSearchTextBoxStyle}" />
+
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        Style="{StaticResource AdvancedSearchTextBlockStyle}"
+                                        Style="{StaticResource TextBlockDesStyle}"
                                         Text="时间" />
 
                                     <ComboBox
                                         Grid.Row="1"
                                         Grid.Column="1"
-                                        rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource DateFilterModelSelectDataTemplate}"
                                         rs:ControlsHelper.CornerRadius="5"
-                                        ItemsSource="{Binding DateFilterList}"
-                                        SelectedItem="{Binding DateFilterModelSelect}">
-                                        <ComboBox.ItemContainerStyle>
-                                            <Style BasedOn="{StaticResource RSApp.Styles.ComboBoxItemBaseStyle}" TargetType="{x:Type ComboBoxItem}">
-                                                <Setter Property="IsSelected" Value="{Binding IsSelect, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                            </Style>
-                                        </ComboBox.ItemContainerStyle>
-                                    </ComboBox>
+                                        ItemContainerStyle="{StaticResource RSApp.Styles.ComboBoxItemBaseStyle}"
+                                        ItemTemplate="{StaticResource ComboxItemFilterDataTemplate}"
+                                        ItemsSource="{Binding DateFilterTypeList}"
+                                        SelectedItem="{Binding DateFilterType}" />
+
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Style="{StaticResource TextBlockDesStyle}"
+                                        Text="所在文件夹" />
+
+                                    <ComboBox
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        rs:ControlsHelper.CornerRadius="5"
+                                        ItemContainerStyle="{StaticResource RSApp.Styles.ComboBoxItemBaseStyle}"
+                                        ItemTemplate="{StaticResource ComboxItemFilterDataTemplate}"
+                                        ItemsSource="{Binding DateFilterTypeList}"
+                                        SelectedItem="{Binding DateFilterType}" />
 
                                 </Grid>
                             </ScrollViewer>
@@ -461,8 +490,14 @@
                                 BorderBrush="#EEE"
                                 BorderThickness="0,1,0,0">
                                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                    <Button Content="搜索" Style="{StaticResource RSApp.Styles.PrimaryButton}" />
-                                    <Button Content="取消" Style="{StaticResource RSApp.Styles.DefaultButton}" />
+                                    <Button
+                                        Command="{Binding SearchCommand}"
+                                        Content="搜索"
+                                        Style="{StaticResource RSApp.Styles.PrimaryButton}" />
+                                    <Button
+                                        Command="{Binding SearchCancelCommand}"
+                                        Content="取消"
+                                        Style="{StaticResource RSApp.Styles.DefaultButton}" />
                                 </StackPanel>
                             </Border>
                         </Grid>

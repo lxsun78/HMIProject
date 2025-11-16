@@ -6,13 +6,10 @@ using RS.Commons.Extensions;
 using RS.Models;
 using RS.Server.WebAPI;
 using RS.Widgets.Enums;
-using RS.Widgets.Interfaces;
 using RS.Widgets.Models;
-using RS.Widgets.Services;
+using RS.WPFClient.IBLL;
 using RS.WPFClient.IServices;
 using RS.WPFClient.Models;
-using RS.WPFClient.Views;
-using RS.WPFClient.IBLL;
 using System.Windows.Input;
 
 namespace RS.WPFClient.ViewModels

@@ -28,5 +28,23 @@ namespace RS.Widgets.Controls
         {
             obj.SetValue(SelectionBoxItemTemplateProperty, value);
         }
+
+
+
+        public static readonly DependencyProperty DisplayTextProperty =
+           DependencyProperty.RegisterAttached(
+               "DisplayText",
+               typeof(string),
+               typeof(ComboBoxHelper),
+               new PropertyMetadata(null));
+        public static string GetDisplayText(DependencyObject obj)
+        {
+            return (string)obj.GetValue(DisplayTextProperty);
+        }
+
+        public static void SetDisplayText(DependencyObject obj, string value)
+        {
+            obj.SetValue(DisplayTextProperty, value);
+        }
     }
 }
