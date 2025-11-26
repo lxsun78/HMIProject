@@ -18,11 +18,11 @@ namespace RS.Server.Controllers
         /// </summary>
         private readonly IRoleBLL RoleBLL;
 
-        private readonly ILogBLL LogBLL;
-        public RoleController(IRoleBLL roleBLL, ILogBLL logBLL)
+        private readonly ILogService LogService;
+        public RoleController(IRoleBLL roleBLL, ILogService logService)
         {
             this.RoleBLL = roleBLL;
-            this.LogBLL = logBLL;
+            this.LogService = logService;
         }
 
         /// <summary>

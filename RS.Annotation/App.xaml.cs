@@ -32,7 +32,7 @@ namespace RS.Annotation
         /// <summary>
         /// 日志服务
         /// </summary>
-        public ILogBLL LogBLL { get; private set; }
+        public ILogService LogService { get; private set; }
 
         /// <summary>
         /// 程序入口
@@ -74,7 +74,7 @@ namespace RS.Annotation
             ServiceProviderExtensions.ConfigServices(ServiceProvider);
 
             // 获取日志服务
-            LogBLL = ServiceProvider.GetRequiredService<ILogBLL>();
+            LogService = ServiceProvider.GetRequiredService<ILogService>();
 
             //程序未处理异常
             this.RegisterUnknowExceptionsHandler();
@@ -104,7 +104,7 @@ namespace RS.Annotation
 
         private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            LogBLL.LogCritical(e.Exception, "App_DispatcherUnhandledException");
+            LogService.LogCritical(e.Exception, "App_DispatcherUnhandledException");
             e.Handled = true;
         }
 
@@ -113,13 +113,13 @@ namespace RS.Annotation
         {
             if (e.ExceptionObject is Exception ex)
             {
-                LogBLL.LogCritical(ex, "CurrentDomain_UnhandledException");
+                LogService.LogCritical(ex, "CurrentDomain_UnhandledException");
             }
         }
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
-            LogBLL.LogCritical(e.Exception, "TaskScheduler_UnobservedTaskException");
+            LogService.LogCritical(e.Exception, "TaskScheduler_UnobservedTaskException");
         }
 
 

@@ -29,12 +29,12 @@ namespace RS.Server.BLL
     [ServiceInjectConfig(typeof(IOpenCVBLL), ServiceLifetime.Singleton, IsInterceptor = true)]
     public class OpenCVBLL : IOpenCVBLL
     {
-        private readonly ILogBLL LogBLL;
+        private readonly ILogService LogService;
         private readonly IConfiguration Configuration;
 
-        public OpenCVBLL(IConfiguration configuration, ILogBLL logBLL)
+        public OpenCVBLL(IConfiguration configuration, ILogService logService)
         {
-            this.LogBLL = logBLL;
+            this.LogService = logService;
             this.Configuration = configuration;
         }
 

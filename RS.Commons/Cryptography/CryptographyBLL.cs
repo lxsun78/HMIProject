@@ -29,12 +29,10 @@ namespace RS.Commons
     [ServiceInjectConfig(typeof(ICryptographyBLL), ServiceLifetime.Singleton)]
     public class CryptographyBLL : ICryptographyBLL
     {
-        private readonly ILogBLL LogBLL;
         private readonly IDataProtector DataProtector;
         private readonly IMemoryCache MemoryCache;
-        public CryptographyBLL(ILogBLL logBLL, IDataProtectionProvider dataProtectionProvider, IMemoryCache memoryCache)
+        public CryptographyBLL( IDataProtectionProvider dataProtectionProvider, IMemoryCache memoryCache)
         {
-            LogBLL = logBLL;
             DataProtector = dataProtectionProvider.CreateProtector("15B4D612-39AB-45AF-8CEF-BC4FAF711D1C");
             MemoryCache = memoryCache;
         }
@@ -260,7 +258,6 @@ namespace RS.Commons
                 }
                 catch (Exception ex)
                 {
-                    LogBLL.LogError(ex, "加密失败");
                     return OperateResult.CreateFailResult<string>("加密失败");
                 }
             }

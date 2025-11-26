@@ -19,11 +19,11 @@ namespace RS.Server.Controllers
         /// </summary>
         private readonly IUserBLL UserBLL;
 
-        private readonly ILogBLL LogBLL;
-        public UserController(IUserBLL userBLL, ILogBLL logBLL)
+        private readonly ILogService LogService;
+        public UserController(IUserBLL userBLL, ILogService logService)
         {
             UserBLL = userBLL;
-            LogBLL = logBLL;
+            LogService = logService;
         }
 
 

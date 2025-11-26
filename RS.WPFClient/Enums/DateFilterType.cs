@@ -56,6 +56,6 @@ namespace RS.WPFClient.Enums
         /// <summary>
         /// 自定义时间范围（用户手动指定的起始和结束时间）
         /// </summary>
-        Customise = -2,
+        Customise = 9999,
     }
 }

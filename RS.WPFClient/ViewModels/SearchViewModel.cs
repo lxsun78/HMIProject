@@ -188,6 +188,22 @@ namespace RS.WPFClient.ViewModels
         #endregion
 
 
+
+        #region 关键字
+        private string keywords;
+        /// <summary>
+        /// 关键字位置类型
+        /// </summary>
+        public string Keywords
+        {
+            get { return keywords; }
+            set
+            {
+                this.SetProperty(ref keywords, value);
+            }
+        }
+        #endregion
+
         #region 关键字位置
         /// <summary>
         /// 初始化关键位置
@@ -229,6 +245,82 @@ namespace RS.WPFClient.ViewModels
             }
         }
         #endregion
+
+
+
+        #region 发件人
+
+        private ObservableCollection<UserModel> emailFromSelectList;
+        /// <summary>
+        /// 邮件发件人列表 多选
+        /// </summary>
+        public ObservableCollection<UserModel> EmailFromSelectList
+        {
+            get
+            {
+                return emailFromSelectList;
+            }
+            set
+            {
+                this.SetProperty(ref emailFromSelectList, value);
+            }
+        }
+
+
+        private ObservableCollection<UserModel> emailFromList;
+        /// <summary>
+        /// 邮件发件人筛选列表 默认只加载最近联系人
+        /// </summary>
+        public ObservableCollection<UserModel> EmailFromList
+        {
+            get
+            {
+                return emailFromList;
+            }
+            set
+            {
+                this.SetProperty(ref emailFromList, value);
+            }
+        }
+        #endregion
+
+        #region 收件人
+
+        private ObservableCollection<UserModel> emailToSelectList;
+        /// <summary>
+        /// 邮件收件人列表 多选
+        /// </summary>
+        public ObservableCollection<UserModel> EmailToSelectList
+        {
+            get
+            {
+                return emailToSelectList;
+            }
+            set
+            {
+                this.SetProperty(ref emailToSelectList, value);
+            }
+        }
+
+
+        private ObservableCollection<UserModel> emailToList;
+        /// <summary>
+        /// 邮件收件人筛选列表 默认只加载最近联系人
+        /// </summary>
+        public ObservableCollection<UserModel> EmailToList
+        {
+            get
+            {
+                return emailToList;
+            }
+            set
+            {
+                this.SetProperty(ref emailToList, value);
+            }
+        }
+
+        #endregion
+
 
 
         #region 日期
@@ -407,14 +499,10 @@ namespace RS.WPFClient.ViewModels
         }
         #endregion
 
-
-
-
-
         private List<T> GetDataList<T>()
         {
             return Enum.GetValues(typeof(T))
-               .Cast<T>().ToList();
+               .Cast<T>().Order().ToList();
         }
     }
 }

@@ -22,10 +22,5 @@ namespace RS.WPFClient.Models
             }
         }
 
-
-       
-
-
-
     }
 }

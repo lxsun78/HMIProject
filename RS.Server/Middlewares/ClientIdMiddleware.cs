@@ -10,11 +10,11 @@ namespace RS.Server.Middlewares
     {
         private readonly RequestDelegate RequestDelegate;
         private readonly string DefaultRoute;
-        private readonly ILogBLL LogBLL;
+        private readonly ILogService LogService;
         private readonly IGeneralBLL GeneralBLL;
-        public ClientIdMiddleware(IGeneralBLL generalBLL, ILogBLL logBLL, RequestDelegate requestDelegate, string defaultRoute)
+        public ClientIdMiddleware(IGeneralBLL generalBLL, ILogService logService, RequestDelegate requestDelegate, string defaultRoute)
         {
-            this.LogBLL = logBLL;
+            this.LogService = logService;
             this.GeneralBLL = generalBLL;
             this.RequestDelegate = requestDelegate;
             this.DefaultRoute = defaultRoute;

@@ -16,7 +16,7 @@ namespace RS.Server.Controllers
     {
         private readonly IGeneralBLL GeneralBLL;
         private readonly ICryptographyBLL CryptographyBLL;
-        private readonly ILogBLL LogBLL;
+        private readonly ILogService LogService;
         private readonly IConfiguration Configuration;
 
 
@@ -24,10 +24,10 @@ namespace RS.Server.Controllers
             ICryptographyBLL cryptographyBLL,
             IConfiguration configuration,
             IOpenCVBLL openCVBLL,
-            ILogBLL logBLL)
+            ILogService logService)
         {
             this.GeneralBLL = generalBLL;
-            this.LogBLL = logBLL;
+            this.LogService = logService;
             this.CryptographyBLL = cryptographyBLL;
             this.Configuration = configuration;
         }

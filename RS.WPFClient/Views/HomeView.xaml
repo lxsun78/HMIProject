@@ -146,8 +146,8 @@
                                 </Grid>
                             </rs:RSDropdown.DropdownContent>
                         </rs:RSDropdown>
-                        
-                        
+
+
 
 
                         <Button
@@ -191,12 +191,30 @@
                 Margin="0,0,15,0"
                 Background="#fff"
                 CornerRadius="10,10,0,0">
-                <ScrollViewer>
-                    <!--<ContentControl Height="5000" Content="{Binding}" />-->
-                    <!--<rs:RSDateTimePicker />-->
-
-
-
+                <ScrollViewer Focusable="False">
+                    <Canvas
+                        x:Name="TestCanvas"
+                        Height="100000"
+                        Background="AliceBlue"
+                        Cursor="IBeam"
+                        FocusVisualStyle="{x:Null}"
+                        Focusable="True"
+                        GotFocus="TestCanvas_GotFocus"
+                        KeyDown="Canvas_KeyDown"
+                        LostFocus="TestCanvas_LostFocus"
+                        MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
+                        MouseLeftButtonUp="TestCanvas_MouseLeftButtonUp"
+                        MouseMove="TestCanvas_MouseMove"
+                        TextInput="TestCanvas_TextInput">
+                        <Rectangle
+                            x:Name="PART_Caret"
+                            Canvas.Left="{Binding CaretLeft}"
+                            Canvas.Top="{Binding CaretTop}"
+                            Width="{Binding CaretWidth}"
+                            Height="{Binding CaretHeight}"
+                            Fill="Black"
+                            Visibility="{Binding IsCaretVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </Canvas>
                 </ScrollViewer>
             </Border>
         </Grid>

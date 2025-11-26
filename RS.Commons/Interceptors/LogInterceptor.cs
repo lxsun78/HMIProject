@@ -8,10 +8,10 @@ namespace RS.Commons.Interceptors
     public class LogInterceptor : IInterceptor
     {
 
-        private readonly ILogBLL LogBLL;
-        public LogInterceptor(ILogBLL logBLL)
+        private readonly ILogService LogService;
+        public LogInterceptor(ILogService logService)
         {
-            LogBLL = logBLL;
+            LogService = logService;
         }
 
         /// <summary>
@@ -22,12 +22,12 @@ namespace RS.Commons.Interceptors
         {
             try
             {
-                LogBLL.LogInformation($"日志拦截:{invocation.Method.Name} 触发");
+                LogService.LogInformation($"日志拦截:{invocation.Method.Name} 触发");
                 invocation.Proceed();
             }
             catch (Exception ex)
             {
-                LogBLL.LogCritical($"{invocation.Method.Name} 异常：{ex.ToString()}");
+                LogService.LogCritical($"{invocation.Method.Name} 异常：{ex.ToString()}");
             }
         }
 

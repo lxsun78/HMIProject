@@ -13,12 +13,12 @@ namespace RS.Server.Controllers
     public class SecurityController : BaseController
     {
         private readonly ISecurityBLL SecurityBLL;
-        private readonly ILogBLL LogBLL;
+        private readonly ILogService LogService;
 
-        public SecurityController(ISecurityBLL securityBLL, ILogBLL logBLL)
+        public SecurityController(ISecurityBLL securityBLL, ILogService logService)
         {
             this.SecurityBLL = securityBLL;
-            this.LogBLL = logBLL;
+            this.LogService = logService;
         }
 
 

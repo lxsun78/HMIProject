@@ -32,7 +32,6 @@
         }
 
 
-
         private string? phone;
         /// <summary>
         /// 电话 每个账户只能绑定一个手机号
@@ -45,6 +44,7 @@
                 this.SetProperty(ref phone, value);
             }
         }
+
 
         /// <summary>
         /// 关联实名认证
@@ -65,6 +65,7 @@
                 this.SetProperty(ref isDisabled, value);
             }
         }
+
 
         private DateTime? createTime;
         /// <summary>

@@ -213,7 +213,7 @@ namespace RS.HMIServer
                     if (exceptionHandlerPathFeature?.Error != null)
                     {
                         // 从DI中获取日志记录器  
-                        var logger = context.RequestServices.GetRequiredService<ILogBLL>();
+                        var logger = context.RequestServices.GetRequiredService<ILogService>();
 
                         // 记录异常  
                         logger.LogError(exceptionHandlerPathFeature.Error, "An unhandled exception has occurred.");

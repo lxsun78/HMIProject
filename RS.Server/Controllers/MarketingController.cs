@@ -10,11 +10,11 @@ namespace RS.Server.Controllers
     {
         private readonly IGeneralBLL GeneralBLL;
         private readonly ICryptographyBLL CryptographyBLL;
-        private readonly ILogBLL LogBLL;
-        public MarketingController(IGeneralBLL generalBLL, ICryptographyBLL cryptographyBLL, ILogBLL logBLL)
+        private readonly ILogService LogService;
+        public MarketingController(IGeneralBLL generalBLL, ICryptographyBLL cryptographyBLL, ILogService logService)
         {
             GeneralBLL = generalBLL;
-            LogBLL = logBLL;
+            LogService = logService;
             CryptographyBLL = cryptographyBLL;
         }
 

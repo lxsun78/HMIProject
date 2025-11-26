@@ -15,11 +15,11 @@ namespace RS.Server.Controllers
         /// 注册服务接口
         /// </summary>
         private readonly IRegisterBLL RegisterBLL;
-        private readonly ILogBLL LogBLL;
-        public RegisterController(IRegisterBLL registerBLL, ILogBLL logBLL)
+        private readonly ILogService LogService;
+        public RegisterController(IRegisterBLL registerBLL, ILogService logService)
         {
             RegisterBLL = registerBLL;
-            LogBLL = logBLL;
+            LogService = logService;
         }
 
         #region 注册邮箱验证业务处理

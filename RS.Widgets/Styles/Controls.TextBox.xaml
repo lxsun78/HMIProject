@@ -11,8 +11,8 @@
     </ResourceDictionary.MergedDictionaries>
 
 
+
     <Style x:Key="RSApp.Styles.TextBoxStyle" TargetType="{x:Type TextBox}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Background" Value="#fff" />
         <Setter Property="BorderBrush" Value="#eeeeee" />
         <Setter Property="Foreground" Value="#333" />
@@ -86,10 +86,9 @@
                                 <ContentControl
                                     x:Name="PART_Watermark"
                                     Grid.Column="0"
-                                    Padding="{TemplateBinding Padding}"
+                                    Margin="2,0,0,0"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Background="Transparent"
+                                    VerticalAlignment="Top"
                                     Content="{TemplateBinding rs:TextBoxHelper.Watermark}"
                                     FontSize="{TemplateBinding FontSize}"
                                     Foreground="{TemplateBinding rs:TextBoxHelper.WatermarkForground}"

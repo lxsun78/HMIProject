@@ -1,16 +1,17 @@
-﻿using System;
+﻿using RS.Widgets.Behaviors;
+using RS.Widgets.Controls;
+using SixLabors.ImageSharp.ColorSpaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Permissions;
 using System.Security;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows;
 using System.Windows.Controls;
-using RS.Widgets.Behaviors;
-using RS.Widgets.Controls;
+using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace RS.Widgets.Controls
 {
@@ -30,6 +31,10 @@ namespace RS.Widgets.Controls
             if (source is TextBox textBox)
             {
                 textBox.Text = string.Empty;
+            }
+            else if (source is RichTextBox richTextBox)
+            {
+                richTextBox.Document.Blocks.Clear();
             }
             else if (source is PasswordBox passwordBox)
             {

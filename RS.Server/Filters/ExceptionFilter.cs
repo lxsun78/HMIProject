@@ -10,14 +10,14 @@ namespace RS.Server.Filters
     /// </summary>
     public class ExceptionFilter : IExceptionFilter
     {
-        private readonly ILogBLL LogBLL;
+        private readonly ILogService LogService;
 
         /// <summary>
         /// 构造函数，注入日志服务
         /// </summary>
-        public ExceptionFilter(ILogBLL logBLL)
+        public ExceptionFilter(ILogService logService)
         {
-            LogBLL = logBLL;
+            LogService = logService;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace RS.Server.Filters
         public void OnException(ExceptionContext context)
         {
             // 记录异常日志
-            this.LogBLL.LogCritical(context.Exception, context.ActionDescriptor.DisplayName);
+            this.LogService.LogCritical(context.Exception, context.ActionDescriptor.DisplayName);
 
             // 构造统一的错误返回结果
             OperateResult operateResult = OperateResult.CreateFailResult<object>("内部错误，暂时无法访问");

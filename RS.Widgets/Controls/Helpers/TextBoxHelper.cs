@@ -1,11 +1,14 @@
-﻿using System;
+﻿using SixLabors.ImageSharp.ColorSpaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -18,7 +21,7 @@ namespace RS.Widgets.Controls
 
         public static readonly DependencyProperty WatermarkProperty =
   DependencyProperty.RegisterAttached("Watermark", typeof(object), typeof(TextBoxHelper), new PropertyMetadata("请输入内容"));
-        
+
         public static object GetWatermark(DependencyObject obj)
         {
             return (object)obj.GetValue(WatermarkProperty);
@@ -124,6 +127,22 @@ DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextBox
                     textBox.PreviewMouseLeftButtonDown -= UIElementPreviewMouseLeftButtonDown;
                 }
             }
+            else if (d is RichTextBox richTextBox)
+            {
+                if ((bool)e.NewValue)
+                {
+                    richTextBox.Dispatcher.BeginInvoke(() => RichTextBox_TextChanged(richTextBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None)), DispatcherPriority.Background);
+                    richTextBox.TextChanged += RichTextBox_TextChanged;
+                    richTextBox.GotFocus += RichTextBox_GotFocus;
+                    richTextBox.PreviewMouseLeftButtonDown += UIElementPreviewMouseLeftButtonDown;
+                }
+                else
+                {
+                    richTextBox.TextChanged -= RichTextBox_TextChanged;
+                    richTextBox.GotFocus -= RichTextBox_GotFocus;
+                    richTextBox.PreviewMouseLeftButtonDown -= UIElementPreviewMouseLeftButtonDown;
+                }
+            }
             else if (d is PasswordBox passwordBox)
             {
                 if ((bool)e.NewValue)
@@ -142,9 +161,19 @@ DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextBox
             }
         }
 
+        private static void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ControlGotFocus(sender as TextBoxBase, textBox => textBox?.SelectAll());
+        }
+
         private static void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
             ControlGotFocus(sender as PasswordBox, passwordBox => passwordBox?.SelectAll());
+        }
+
+        private static void RichTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ControlGotFocus(sender as RichTextBox, richTextBox => richTextBox?.SelectAll());
         }
 
 
@@ -176,10 +205,7 @@ DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextBox
             }
         }
 
-        private static void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            ControlGotFocus(sender as TextBoxBase, textBox => textBox?.SelectAll());
-        }
+
 
         private static void TextBox_TextChanged(object sender, RoutedEventArgs e)
         {
@@ -224,6 +250,15 @@ DependencyProperty.RegisterAttached("IsShowClearButton", typeof(bool), typeof(Te
                     TextBox_TextChanged(textBox, new RoutedEventArgs());
                 }
             }
+            else if (d is RichTextBox richTextBox)
+            {
+                richTextBox.Loaded -= RichTextBox_TextChanged;
+                richTextBox.Loaded += RichTextBox_TextChanged;
+                if (richTextBox.IsLoaded)
+                {
+                    TextBox_TextChanged(richTextBox, new RoutedEventArgs());
+                }
+            }
             else if (d is PasswordBox passwordBox)
             {
                 passwordBox.Loaded -= PasswordBox_PasswordChanged;
@@ -235,6 +270,27 @@ DependencyProperty.RegisterAttached("IsShowClearButton", typeof(bool), typeof(Te
             }
         }
 
+        private static void RichTextBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as RichTextBox, richTextBox =>
+            {
+                var text = GetRichTextBoxText(richTextBox);
+                return text.Length;
+            });
+        }
+
+        private static string GetRichTextBoxText(RichTextBox richTextBox)
+        {
+            // 从文档开始到结束创建文本范围
+            TextRange textRange = new TextRange(
+                richTextBox.Document.ContentStart,  // 起始位置
+                richTextBox.Document.ContentEnd      // 结束位置
+            );
+
+            // 返回纯文本
+            return textRange.Text.Trim();
+        }
+
         public static bool GetIsShowClearButton(DependencyObject obj)
         {
             return (bool)obj.GetValue(IsShowClearButtonProperty);
@@ -244,5 +300,6 @@ DependencyProperty.RegisterAttached("IsShowClearButton", typeof(bool), typeof(Te
             obj.SetValue(IsShowClearButtonProperty, value);
         }
         #endregion
+
     }
 }
