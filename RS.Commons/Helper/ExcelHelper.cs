@@ -64,29 +64,6 @@ namespace RS.Commons.Helper
             return workbook;
         }
 
-
-        public static short ConvertHexColorToExcelColor(IWorkbook workbook, string hexColor)
-        {
-            // 去除十六进制颜色代码中的 # 符号（如果有的话）
-            if (hexColor.StartsWith("#"))
-            {
-                hexColor = hexColor.Substring(1);
-            }
-
-            // 解析 RGB 值
-            byte red = Convert.ToByte(hexColor.Substring(0, 2), 16);
-            byte green = Convert.ToByte(hexColor.Substring(2, 2), 16);
-            byte blue = Convert.ToByte(hexColor.Substring(4, 2), 16);
-
-            // 获取调色板
-            XSSFColor color = new XSSFColor(new byte[] { red, green, blue });
-
-            // 获取调色板的索引（这里对于 XSSF 不需要手动添加到调色板，直接使用颜色对象）
-            return color.Indexed;
-        }
-
-
-
         public ICell GetValueCell(ISheet sheet, ICell cell)
         {
             ICell cellValue = null;

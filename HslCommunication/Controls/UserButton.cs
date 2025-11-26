@@ -134,6 +134,7 @@ namespace HslCommunication.Controls
         /// 按钮的背景色
         /// </summary>
         [Category("外观")]
+        [DefaultValue(typeof(Color))]
         [Description("按钮的活动色")]
         public Color EnableColor
         {
@@ -173,6 +174,7 @@ namespace HslCommunication.Controls
         /// 存放用户需要保存的一些额外的信息
         /// </summary>
         [Browsable(false)]
+        [DefaultValue(typeof(string))]
         public string CustomerInformation { get; set; } = "";
 
 

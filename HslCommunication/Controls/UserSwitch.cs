@@ -193,6 +193,7 @@ namespace HslCommunication.Controls
         /// 获取或设置两种开关状态的文本描述，例如：new string[]{"Off","On"}
         /// </summary>
         [Browsable(false)]
+        [DefaultValue(typeof(string[]))]
         public string[] SwitchStatusDescription
         {
             get { return description; }
