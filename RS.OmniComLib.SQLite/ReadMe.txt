@@ -13,6 +13,6 @@
 //Update-Database
 
 //如果要初始化数据库或者更新数据库 请使用以下命令 比如：
-//Add-Migration WPFClientDbContexts0  创建
-//Update-Database WPFClientDbContexts0 更新
+//Add-Migration OmniComLibDbContext0  创建
+//Update-Database OmniComLibDbContext0 更新
 //Remove-Migration 撤销

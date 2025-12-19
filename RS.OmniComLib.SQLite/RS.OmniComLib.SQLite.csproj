@@ -1,12 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net9.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<ImplicitUsings>enable</ImplicitUsings>
-
 	</PropertyGroup>
+
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
@@ -22,14 +22,8 @@
 		<PackageReference Include="System.IO.Ports" Version="9.0.1" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\RS.Commons\RS.Commons.csproj" />
-	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Entities\" />
-	  <Folder Include="Mapping\" />
-	  <Folder Include="SqlScripts\" />
+	  <ProjectReference Include="..\RS.Commons\RS.Commons.csproj" />
 	</ItemGroup>
-
 </Project>

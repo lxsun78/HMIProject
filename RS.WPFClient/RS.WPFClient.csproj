@@ -115,9 +115,6 @@
 	  <Compile Update="Controls\MySlider.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>
-	  <Compile Update="Controls\RSModBusRTU.xaml.cs">
-	    <SubType>Code</SubType>
-	  </Compile>
 	  <Compile Update="Controls\RSSerialPort11.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>
