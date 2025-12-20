@@ -187,6 +187,8 @@
     <Content Include="detect\detect.yaml" />
     <Content Include="ReadMe.txt" />
     <Content Include="RS.Python.rar" />
+    <Content Include="runs\detect\test-detect2\args.yaml" />
+    <Content Include="runs\detect\test-detect\args.yaml" />
     <Content Include="ultralytics\assets\bus.jpg" />
     <Content Include="ultralytics\assets\zidane.jpg" />
     <Content Include="ultralytics\cfg\datasets\african-wildlife.yaml" />
@@ -449,6 +451,12 @@
     <Folder Include="datasets\" />
     <Folder Include="datasets\detect\" />
     <Folder Include="detect\" />
+    <Folder Include="runs\" />
+    <Folder Include="runs\detect\" />
+    <Folder Include="runs\detect\test-detect2\" />
+    <Folder Include="runs\detect\test-detect2\weights\" />
+    <Folder Include="runs\detect\test-detect\" />
+    <Folder Include="runs\detect\test-detect\weights\" />
     <Folder Include="ultralytics\" />
     <Folder Include="ultralytics\assets\" />
     <Folder Include="ultralytics\cfg\" />
