@@ -186,6 +186,7 @@
   <ItemGroup>
     <Content Include="detect\detect.yaml" />
     <Content Include="ReadMe.txt" />
+    <Content Include="RS.Python.rar" />
     <Content Include="ultralytics\assets\bus.jpg" />
     <Content Include="ultralytics\assets\zidane.jpg" />
     <Content Include="ultralytics\cfg\datasets\african-wildlife.yaml" />
@@ -439,6 +440,7 @@
     <Content Include="ultralytics\utils\__pycache__\tuner.cpython-39.pyc" />
     <Content Include="ultralytics\utils\__pycache__\__init__.cpython-39.pyc" />
     <Content Include="ultralytics\__pycache__\__init__.cpython-39.pyc" />
+    <Content Include="yolov8n.pt" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|YoloGPU" />
