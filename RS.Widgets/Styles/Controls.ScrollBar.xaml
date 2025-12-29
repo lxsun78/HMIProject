@@ -72,23 +72,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="RSApp.Styles.VerticalScrollBarPageButton2Style" TargetType="{x:Type RepeatButton}">
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="IsTabStop" Value="false" />
-        <Setter Property="Opacity" Value="1" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Rectangle
-                        Width="15"
-                        Height="15"
-                        Fill="#8A8A8A" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+
 
 
     <Style TargetType="{x:Type ScrollBar}">
@@ -96,7 +80,7 @@
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="15" />
-        <Setter Property="MinWidth" Value="3" />
+        <Setter Property="MinWidth" Value="5" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
@@ -116,7 +100,7 @@
                             <RepeatButton
                                 x:Name="PART_LineUp"
                                 Grid.Row="0"
-                                Height="15"
+                                Height="0"
                                 Margin="0"
                                 Padding="0"
                                 rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.TriangleUp}"
@@ -145,7 +129,7 @@
                             <RepeatButton
                                 x:Name="PART_LineDown"
                                 Grid.Row="2"
-                                Height="15"
+                                Height="0"
                                 Margin="0"
                                 Padding="0"
                                 rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.TriangleDown}"
@@ -162,7 +146,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_LineUp" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_LineDown" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_Scroll" Property="Width" Value="5" />
+                            <Setter TargetName="PART_Scroll" Property="Width" Value="7" />
                         </Trigger>
 
                         <Trigger Property="rs:ScrollViewHelper.IsShowLineCommand" Value="False">
@@ -201,7 +185,7 @@
                                     <RepeatButton
                                         x:Name="PART_LineLeft"
                                         Grid.Column="0"
-                                        Width="15"
+                                        Width="0"
                                         Margin="0"
                                         Padding="0"
                                         rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.TriangleLeft}"
@@ -230,7 +214,7 @@
                                     <RepeatButton
                                         x:Name="PART_LineRight"
                                         Grid.Column="2"
-                                        Width="15"
+                                        Width="0"
                                         Margin="0"
                                         Padding="0"
                                         rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.TriangleDown}"
@@ -247,7 +231,7 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="PART_LineLeft" Property="Visibility" Value="Visible" />
                                     <Setter TargetName="PART_LineRight" Property="Visibility" Value="Visible" />
-                                    <Setter TargetName="PART_Scroll" Property="Height" Value="5" />
+                                    <Setter TargetName="PART_Scroll" Property="Height" Value="7" />
                                 </Trigger>
 
                                 <Trigger Property="rs:ScrollViewHelper.IsShowLineCommand" Value="False">

@@ -1,28 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32;
-using NPOI.SS.UserModel;
-using NPOI.SS.Util;
-using RS.Commons;
-using RS.Commons.Enums;
-using RS.Commons.Extensions;
-using RS.Commons.Helper;
-using RS.OmniComLib.DataConfigs;
-using RS.OmniComLib.SQLite.DbContexts;
-using RS.OmniComLib.SQLite.Entities;
-using RS.Widgets.Commons;
-using RS.Widgets.Controls;
+﻿using RS.Commons.Enums;
 using RS.Widgets.Models;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.IO.Ports;
-using System.Net.Http;
-using System.Runtime.InteropServices;
-using System.Timers;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace RS.OmniComLib.Controls
 {
@@ -1305,57 +1283,57 @@ namespace RS.OmniComLib.Controls
 
 
 
-        //private static List<ByteOrderEnum> byteOrderList;
-        ///// <summary>
-        ///// 字节序
-        ///// </summary>
-        //public static List<ByteOrderEnum> ByteOrderList
-        //{
-        //    get
-        //    {
-        //        if (byteOrderList == null)
-        //        {
-        //            byteOrderList = Enum.GetValues<ByteOrderEnum>().ToList();
-        //        }
-        //        return byteOrderList;
-        //    }
-        //}
+        private static List<ByteOrderEnum> byteOrderList;
+        /// <summary>
+        /// 字节序
+        /// </summary>
+        public static List<ByteOrderEnum> ByteOrderList
+        {
+            get
+            {
+                if (byteOrderList == null)
+                {
+                    byteOrderList = Enum.GetValues<ByteOrderEnum>().ToList();
+                }
+                return byteOrderList;
+            }
+        }
 
-        //private static List<ComboBoxItemModel<FunctionCodeEnum>> functionCodeList;
-        ///// <summary>
-        ///// 功能码
-        ///// </summary>
-        //public static List<ComboBoxItemModel<FunctionCodeEnum>> FunctionCodeList
-        //{
-        //    get
-        //    {
-        //        if (functionCodeList == null)
-        //        {
-        //            functionCodeList = new List<ComboBoxItemModel<FunctionCodeEnum>>();
-        //            functionCodeList.Add(new ComboBoxItemModel<FunctionCodeEnum>()
-        //            {
-        //                Key = FunctionCodeEnum.ReadCoils_0x01,
-        //                KeyDes = "01(0x01)- 读取线圈状态"
-        //            });
-        //            functionCodeList.Add(new ComboBoxItemModel<FunctionCodeEnum>()
-        //            {
-        //                Key = FunctionCodeEnum.ReadDiscreteInputs_0x02,
-        //                KeyDes = "02(0x02)-读取离散输入 "
-        //            });
-        //            functionCodeList.Add(new ComboBoxItemModel<FunctionCodeEnum>()
-        //            {
-        //                Key = FunctionCodeEnum.ReadHoldingRegisters_0x03,
-        //                KeyDes = "03(0x03)-读取保持寄存器 "
-        //            });
-        //            functionCodeList.Add(new ComboBoxItemModel<FunctionCodeEnum>()
-        //            {
-        //                Key = FunctionCodeEnum.ReadInputRegisters_0x04,
-        //                KeyDes = "04(0x04)-读取输入寄存器 "
-        //            });
-        //        }
-        //        return functionCodeList;
-        //    }
-        //}
+        private static List<ComboBoxItemModel<FunctionCodeEnum>> functionCodeList;
+        /// <summary>
+        /// 功能码
+        /// </summary>
+        public static List<ComboBoxItemModel<FunctionCodeEnum>> FunctionCodeList
+        {
+            get
+            {
+                if (functionCodeList == null)
+                {
+                    functionCodeList = new List<ComboBoxItemModel<FunctionCodeEnum>>();
+                    functionCodeList.Add(new ComboBoxItemModel<FunctionCodeEnum>()
+                    {
+                        Key = FunctionCodeEnum.ReadCoils_0x01,
+                        KeyDes = "01(0x01)- 读取线圈状态"
+                    });
+                    functionCodeList.Add(new ComboBoxItemModel<FunctionCodeEnum>()
+                    {
+                        Key = FunctionCodeEnum.ReadDiscreteInputs_0x02,
+                        KeyDes = "02(0x02)-读取离散输入 "
+                    });
+                    functionCodeList.Add(new ComboBoxItemModel<FunctionCodeEnum>()
+                    {
+                        Key = FunctionCodeEnum.ReadHoldingRegisters_0x03,
+                        KeyDes = "03(0x03)-读取保持寄存器 "
+                    });
+                    functionCodeList.Add(new ComboBoxItemModel<FunctionCodeEnum>()
+                    {
+                        Key = FunctionCodeEnum.ReadInputRegisters_0x04,
+                        KeyDes = "04(0x04)-读取输入寄存器 "
+                    });
+                }
+                return functionCodeList;
+            }
+        }
 
     }
 }

@@ -1,0 +1,8 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/RS.OmniComLib;component/Themes/RSModBusRTU.xaml" />
+        <ResourceDictionary Source="/RS.OmniComLib;component/Themes/RSModbusTCP.xaml" />
+        <ResourceDictionary Source="/RS.OmniComLib;component/Themes/RSMultiAxisDevice.xaml" />
+        <ResourceDictionary Source="/RS.OmniComLib;component/Themes/RSSiemens.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

@@ -18,9 +18,7 @@
     <converters:ClipConverter x:Key="ClipConverter" />
 
 
-
     <Style x:Key="RSApp.Styles.ComboBoxStyle" TargetType="{x:Type ComboBox}">
-        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
@@ -136,7 +134,6 @@
                                     PlacementTarget="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     PopupAnimation="None"
                                     RelativeElement="{Binding ElementName=ToggleButton}"
-                                    SnapsToDevicePixels="True"
                                     StaysOpen="True"
                                     VerticalOffset="3">
                                     <Border

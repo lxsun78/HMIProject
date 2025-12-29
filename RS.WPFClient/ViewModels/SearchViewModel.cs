@@ -248,6 +248,33 @@ namespace RS.WPFClient.ViewModels
 
 
 
+
+        private ObservableCollection<TagModel> tagModelList;
+        /// <summary>
+        /// 标签选中
+        /// </summary>
+        public ObservableCollection<TagModel> TagModelList
+        {
+            get
+            {
+                if (tagModelList == null)
+                {
+                    tagModelList = new ObservableCollection<TagModel>();
+                    tagModelList.Add(new TagModel()
+                    {
+
+                        TagContent="12312"
+                    });
+                }
+                return tagModelList;
+            }
+            set
+            {
+                this.SetProperty(ref tagModelList, value);
+            }
+        }
+
+
         #region 发件人
 
         private ObservableCollection<UserModel> emailFromSelectList;
@@ -258,6 +285,10 @@ namespace RS.WPFClient.ViewModels
         {
             get
             {
+                if (emailFromSelectList == null)
+                {
+                    emailFromSelectList = new ObservableCollection<UserModel>();
+                }
                 return emailFromSelectList;
             }
             set
@@ -275,6 +306,35 @@ namespace RS.WPFClient.ViewModels
         {
             get
             {
+                if (emailFromList == null)
+                {
+                    emailFromList = new ObservableCollection<UserModel>();
+                    //加几个测试数据
+                    // 循环添加100条测试数据
+                    for (int i = 0; i < 100; i++)
+                    {
+                        emailFromList.Add(new UserModel()
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            CreateBy = $"createUser{i}",
+                            CreateId = Guid.NewGuid().ToString(),
+                            CreateTime = DateTime.Now.AddMinutes(-i), // 时间随索引递减，模拟不同创建时间
+                            DeleteBy = $"deleteUser{i}",
+                            DeleteId = Guid.NewGuid().ToString(),
+                            DeleteTime = DateTime.Now.AddMinutes(-i + 10),
+                            Email = $"18455454{i}@qq.com", // 邮箱后拼接索引，保证唯一性
+                            IsDelete = false,
+                            IsDisabled = i % 10 == 0, // 每10条数据设置一个禁用状态，增加测试多样性
+                            NickName = $"张三{i}", // 昵称后拼接索引
+                            Phone = $"1380000{i:D4}", // 手机号后拼接4位索引（补零），保证格式合法
+                            RealNameId = Guid.NewGuid().ToString(),
+                            UpdateBy = $"updateUser{i}",
+                            UpdateId = Guid.NewGuid().ToString(),
+                            UpdateTime = DateTime.Now.AddMinutes(-i + 5),
+                            UserPic = "https://thirdqq.qlogo.cn/ek_qqapp/AQNJwODbttyTGtqoBEHKLDGKAD3Dr9GaICvFiaX47kLnn45xjFmGWfkC6m7GPSZ65qhXheNicn6x1rn2LDBPRFAbB9qGUFJyNfnEkG4SoyIUkMjUCiaX5Kwu8y9ibREKKA/0"
+                        });
+                    }
+                }
                 return emailFromList;
             }
             set
@@ -294,6 +354,10 @@ namespace RS.WPFClient.ViewModels
         {
             get
             {
+                if (emailToSelectList == null)
+                {
+                    emailToSelectList = new ObservableCollection<UserModel>();
+                }
                 return emailToSelectList;
             }
             set
@@ -366,7 +430,7 @@ namespace RS.WPFClient.ViewModels
         #endregion
 
 
-       
+
 
         #region 所在文件夹
 

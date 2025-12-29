@@ -27,7 +27,7 @@
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Margin" Value="3,3,3,3" />
         <Setter Property="Padding" Value="2,3,2,3" />
-        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="TextWrapping" Value="NoWrap" />
         <Setter Property="rs:ControlsHelper.CornerRadius" Value="3" />
@@ -88,7 +88,7 @@
                                     Grid.Column="0"
                                     Margin="2,0,0,0"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="Top"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Content="{TemplateBinding rs:TextBoxHelper.Watermark}"
                                     FontSize="{TemplateBinding FontSize}"
                                     Foreground="{TemplateBinding rs:TextBoxHelper.WatermarkForground}"

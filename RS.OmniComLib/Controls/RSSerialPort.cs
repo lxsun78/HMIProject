@@ -30,7 +30,6 @@ namespace RS.OmniComLib.Controls
         private Button PART_BtnSaveConfig;
         private RSWindow ParentWin;
         private CancellationTokenSource ConnectCTS;
-
         public SerialPort SerialPort { get; private set; }
 
         public RSSerialPort()
@@ -41,7 +40,7 @@ namespace RS.OmniComLib.Controls
             this.SetValue(ExportCommandPropertyKey, new RelayCommand<object>(ExportConfig));
             this.SetValue(TemplateDownloadCommandPropertyKey, new RelayCommand<object>(TemplateDownload));
             this.SetValue(CellValueEditChangedCommandPropertyKey, new RelayCommand<string>(CellValueEditChanged));
-            Loaded += RSSerialPort_Loaded;
+            this.Loaded += RSSerialPort_Loaded;
         }
 
 
@@ -206,6 +205,32 @@ namespace RS.OmniComLib.Controls
         #endregion
 
 
+
+        [Description("通讯状态描述")]
+        [DefaultValue(null)]
+        public string CommuStatusDes
+        {
+            get { return (string)GetValue(CommuStatusDesProperty); }
+            set { SetValue(CommuStatusDesProperty, value); }
+        }
+
+        public static readonly DependencyProperty CommuStatusDesProperty =
+            DependencyProperty.Register("CommuStatusDes", typeof(string), typeof(RSSerialPort), new PropertyMetadata(null));
+
+
+
+        [Description("标题")]
+        [DefaultValue("串口通讯")]
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(string), typeof(RSSerialPort), new PropertyMetadata("串口通讯"));
+
+
         #region 这是串口通用数据
 
         private static List<string> serialPortNameList;
@@ -300,7 +325,6 @@ namespace RS.OmniComLib.Controls
         }
         #endregion
 
-
         /// <summary>
         /// 获取可用串口列表
         /// </summary>
@@ -391,7 +415,5 @@ namespace RS.OmniComLib.Controls
         {
 
         }
-
-
     }
 }

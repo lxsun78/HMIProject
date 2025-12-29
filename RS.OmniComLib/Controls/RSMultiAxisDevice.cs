@@ -18,11 +18,11 @@ namespace RS.OmniComLib.Controls
     /// <summary>
     /// 多轴设备示例
     /// </summary>
-    public partial class RSMultiAxisDevice : RSSerialPort
+    public  class RSMultiAxisDevice : RSSerialPort
     {
         public RSMultiAxisDevice()
         {
-            InitializeComponent();
+            
         }
     }
 }

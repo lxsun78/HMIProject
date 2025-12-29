@@ -49,7 +49,7 @@
         /// <summary>
         /// 关联实名认证
         /// </summary>
-        public long? RealNameId { get; set; }
+        public string? RealNameId { get; set; }
 
 
 

@@ -13,6 +13,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Languages\**" />
+	  <Compile Remove="Services\**" />
+	  <EmbeddedResource Remove="Languages\**" />
+	  <EmbeddedResource Remove="Services\**" />
+	  <None Remove="Languages\**" />
+	  <None Remove="Services\**" />
+	  <Page Remove="Languages\**" />
+	  <Page Remove="Services\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Remove="Assets\img1.jpg" />
 		<None Remove="Assets\img2.jpg" />
 		<None Remove="Assets\img3.jpg" />
@@ -104,11 +115,6 @@
 	  <None Update="Temlates\ModbusRTU数据导入模版.xlsx">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Languages\" />
-	  <Folder Include="Services\" />
 	</ItemGroup>
 
 	<ItemGroup>

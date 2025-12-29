@@ -299,26 +299,17 @@
                 SelectedItem="{Binding SearchTypeSelect}"
                 Style="{StaticResource CustomComboBoxStyle}" />
 
-            <rs:RSRichTextBox
-                x:Name="PART_TxtSearch"
+            <rs:RSMultiSelectTextBox
                 Grid.Column="1"
                 Margin="0"
                 VerticalAlignment="Center"
-                VerticalContentAlignment="Center"
                 rs:TextBoxHelper.IsShowClearButton="True"
                 rs:TextBoxHelper.Watermark="搜索"
-                AcceptsReturn="False"
                 Background="Transparent"
-                BorderBrush="Transparent"
                 BorderThickness="0"
-                CaretBrush="{Binding ElementName=PART_SearchChecked, Path=BorderBrush}"
-                FontSize="14"
-                HorizontalScrollBarVisibility="Hidden"
-                IsDocumentEnabled="True"
-                VerticalScrollBarVisibility="Hidden">
-                <rs:RSRichTextBox.Style>
-                    <Style BasedOn="{StaticResource RSApp.Styles.RichTextBoxStyle}" TargetType="{x:Type RichTextBox}">
-                        <Setter Property="VerticalAlignment" Value="Center" />
+                TextWrapping="NoWrap">
+                <rs:RSMultiSelectTextBox.Style>
+                    <Style TargetType="{x:Type rs:RSMultiSelectTextBox}">
                         <Setter Property="IsReadOnly" Value="True" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsShowSearch}" Value="True">
@@ -326,28 +317,8 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </rs:RSRichTextBox.Style>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Loaded">
-                        <i:InvokeCommandAction Command="{Binding TxtSearchLoadedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <rs:RSRichTextBox.Document>
-                    <FlowDocument TextAlignment="Center">
-                        <Paragraph Margin="0,10,0,0" TextAlignment="Center">
-                            <InlineUIContainer BaselineAlignment="Center">
-                                <StackPanel
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal">
-                                    <CheckBox VerticalAlignment="Center" Content="复选框" />
-                                </StackPanel>
-                            </InlineUIContainer>
-                        </Paragraph>
-                    </FlowDocument>
-                </rs:RSRichTextBox.Document>
-            </rs:RSRichTextBox>
-
+                </rs:RSMultiSelectTextBox.Style>
+            </rs:RSMultiSelectTextBox>
             <rs:RSDropdown
                 x:Name="PART_AdvancedSearch"
                 Grid.Column="2"
@@ -463,29 +434,35 @@
                                     Style="{StaticResource TextBlockDesStyle}"
                                     Text="发件人" />
 
-                                <rs:RSRichTextBox
+                                <rs:RSMultiSelectComboBox
                                     Grid.Row="2"
                                     Grid.Column="1"
-                                    rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource MultiComboBoxSelectDataTemplate}"
+                                    VerticalAlignment="Center"
                                     rs:TextBoxHelper.IsShowClearButton="True"
                                     rs:TextBoxHelper.Watermark="请输入"
-                                    Style="{StaticResource RSApp.Styles.RichTextBoxStyle}" />
-
+                                    ItemsSource="{Binding EmailToList}"
+                                    MultiSelectedItems="{Binding EmailToSelectList}"
+                                    TagDisplayMemberPath="NickName" />
                                 <TextBlock
                                     Grid.Row="3"
                                     Grid.Column="0"
                                     Style="{StaticResource TextBlockDesStyle}"
                                     Text="收件人" />
 
-                                <rs:RSRichTextBox
+                                <rs:RSMultiSelectComboBox
                                     Grid.Row="3"
                                     Grid.Column="1"
-                                    VerticalAlignment="Stretch"
-                                    rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource MultiComboBoxSelectDataTemplate}"
+                                    VerticalAlignment="Center"
                                     rs:TextBoxHelper.IsShowClearButton="True"
                                     rs:TextBoxHelper.Watermark="请输入"
-                                    AcceptsReturn="True"
-                                    Style="{StaticResource RSApp.Styles.RichTextBoxStyle}" />
+                                    ItemsSource="{Binding EmailFromList}"
+                                    MultiSelectedItems="{Binding EmailFromSelectList}"
+                                    TagDisplayMemberPath="NickName"
+                                    TagModelList="{Binding TagModelList}">
+                                    <rs:RSMultiSelectComboBox.Columns>
+                                        <DataGridTextColumn Binding="{Binding NickName}" />
+                                    </rs:RSMultiSelectComboBox.Columns>
+                                </rs:RSMultiSelectComboBox>
 
                                 <TextBlock
                                     Grid.Row="4"
@@ -501,6 +478,7 @@
                                     ItemContainerStyle="{StaticResource FilterComboBoxItemStyle}"
                                     ItemsSource="{Binding DateFilterTypeList}"
                                     SelectedItem="{Binding DateFilterTypeSelect}" />
+
 
                                 <TextBlock
                                     Grid.Row="5"
