@@ -25,13 +25,12 @@
                                 x:Name="PART_Popup"
                                 AllowsTransparency="True"
                                 Focusable="False"
-                                IsOpen="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsChecked, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                IsOpen="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 Placement="Bottom"
                                 PlacementTarget="{TemplateBinding PlacementTarget}"
                                 PopupAnimation="None"
                                 RelativeElement="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                 SnapsToDevicePixels="True"
-                                StaysOpen="False"
                                 VerticalOffset="3">
                                 <Border
                                     Width="{TemplateBinding DropdownWidth}"

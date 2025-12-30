@@ -191,15 +191,9 @@
                 Margin="0,0,15,0"
                 Background="#fff"
                 CornerRadius="10,10,0,0">
-                <!--<ScrollViewer Focusable="False" />-->
-
-                <Grid>
-                    <DataGrid ItemsSource="{Binding SearchViewModel.EmailFromList}" Style="{StaticResource RSApp.Styles.DataGridStyle}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Width="*" Binding="{Binding NickName}" Header="姓名" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                <ScrollViewer Focusable="False">
+                    <Grid Height="10000" Background="AliceBlue" />
+                </ScrollViewer>
             </Border>
         </Grid>
     </Grid>

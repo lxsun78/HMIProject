@@ -54,7 +54,7 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="RSApp.Templates.EmptyData" TargetType="{x:Type ContentControl}">
-        <Border>
+        <Border Padding="10">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Path
                     x:Name="PART_EmptyDataIcon"

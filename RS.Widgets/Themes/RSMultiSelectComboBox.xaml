@@ -27,7 +27,7 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HeadersVisibility" Value="Column" />
-        <Setter Property="MinRowHeight" Value="28" />
+        <Setter Property="MinRowHeight" Value="32" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="VerticalGridLinesBrush" Value="#e5e6eb" />
         <Setter Property="HorizontalGridLinesBrush" Value="#e5e6eb" />
@@ -75,14 +75,15 @@
                                 x:Name="Popup"
                                 AllowsTransparency="True"
                                 Focusable="False"
-                                IsOpen="{TemplateBinding IsDropDownOpen}"
+                                IsOpen="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsDropDownOpen, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                 Placement="Bottom"
                                 PlacementTarget="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                 PopupAnimation="None"
-                                StaysOpen="False"
+                                RelativeElement="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                StaysOpen="True"
                                 VerticalOffset="3">
                                 <Border
-                                    MinWidth="{TemplateBinding ActualWidth}"
+                                    Width="{TemplateBinding ActualWidth}"
                                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
                                     Margin="15"
                                     Background="#FFF"

@@ -79,85 +79,8 @@
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Width" Value="15" />
-        <Setter Property="MinWidth" Value="5" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ScrollBar}">
-                    <Border Background="{TemplateBinding Background}">
-                        <Grid
-                            x:Name="PART_Scroll"
-                            Width="3"
-                            HorizontalAlignment="Right"
-                            SnapsToDevicePixels="true">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
-                            <RepeatButton
-                                x:Name="PART_LineUp"
-                                Grid.Row="0"
-                                Height="0"
-                                Margin="0"
-                                Padding="0"
-                                rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.TriangleUp}"
-                                rs:ControlsHelper.IconHeight="7"
-                                rs:ControlsHelper.IconWidth="7"
-                                Background="Transparent"
-                                Command="{x:Static ScrollBar.LineUpCommand}"
-                                Foreground="#8A8A8A"
-                                Style="{StaticResource RSApp.Styles.IconButtonStyle}"
-                                Visibility="Hidden" />
-                            <Track
-                                x:Name="PART_Track"
-                                Grid.Row="1"
-                                IsDirectionReversed="true">
-                                <Track.DecreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RSApp.Styles.VerticalScrollBarPageButtonStyle}" />
-                                </Track.DecreaseRepeatButton>
-                                <Track.IncreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RSApp.Styles.VerticalScrollBarPageButtonStyle}" />
-                                </Track.IncreaseRepeatButton>
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource RSApp.Styles.ScrollBarThumbStyle}" />
-                                </Track.Thumb>
-                            </Track>
-
-                            <RepeatButton
-                                x:Name="PART_LineDown"
-                                Grid.Row="2"
-                                Height="0"
-                                Margin="0"
-                                Padding="0"
-                                rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.TriangleDown}"
-                                rs:ControlsHelper.IconHeight="7"
-                                rs:ControlsHelper.IconWidth="7"
-                                Background="Transparent"
-                                Command="{x:Static ScrollBar.LineDownCommand}"
-                                Foreground="#8A8A8A"
-                                Style="{StaticResource RSApp.Styles.IconButtonStyle}"
-                                Visibility="Hidden" />
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_LineUp" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_LineDown" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_Scroll" Property="Width" Value="7" />
-                        </Trigger>
-
-                        <Trigger Property="rs:ScrollViewHelper.IsShowLineCommand" Value="False">
-                            <Setter TargetName="PART_LineUp" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="PART_LineDown" Property="Visibility" Value="Hidden" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="#A9A9A9" />
@@ -165,8 +88,8 @@
 
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Height" Value="15" />
-                <Setter Property="MinHeight" Value="3" />
+                <Setter Property="Height" Value="7" />
+                <Setter Property="MinHeight" Value="7" />
                 <Setter Property="Width" Value="Auto" />
                 <Setter Property="Template">
                     <Setter.Value>
@@ -174,7 +97,6 @@
                             <Border Background="{TemplateBinding Background}">
                                 <Grid
                                     x:Name="PART_Scroll"
-                                    Height="3"
                                     VerticalAlignment="Bottom"
                                     SnapsToDevicePixels="true">
                                     <Grid.ColumnDefinitions>
@@ -237,6 +159,86 @@
                                 <Trigger Property="rs:ScrollViewHelper.IsShowLineCommand" Value="False">
                                     <Setter TargetName="PART_LineLeft" Property="Visibility" Value="Hidden" />
                                     <Setter TargetName="PART_LineRight" Property="Visibility" Value="Hidden" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Width" Value="7" />
+                <Setter Property="MinWidth" Value="7" />
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Border Background="{TemplateBinding Background}">
+                                <Grid
+                                    x:Name="PART_Scroll"
+                                    HorizontalAlignment="Right"
+                                    SnapsToDevicePixels="true">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <RepeatButton
+                                        x:Name="PART_LineUp"
+                                        Grid.Row="0"
+                                        Height="0"
+                                        Margin="0"
+                                        Padding="0"
+                                        rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.TriangleUp}"
+                                        rs:ControlsHelper.IconHeight="7"
+                                        rs:ControlsHelper.IconWidth="7"
+                                        Background="Transparent"
+                                        Command="{x:Static ScrollBar.LineUpCommand}"
+                                        Foreground="#8A8A8A"
+                                        Style="{StaticResource RSApp.Styles.IconButtonStyle}"
+                                        Visibility="Hidden" />
+                                    <Track
+                                        x:Name="PART_Track"
+                                        Grid.Row="1"
+                                        IsDirectionReversed="true">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RSApp.Styles.VerticalScrollBarPageButtonStyle}" />
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RSApp.Styles.VerticalScrollBarPageButtonStyle}" />
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource RSApp.Styles.ScrollBarThumbStyle}" />
+                                        </Track.Thumb>
+                                    </Track>
+
+                                    <RepeatButton
+                                        x:Name="PART_LineDown"
+                                        Grid.Row="2"
+                                        Height="0"
+                                        Margin="0"
+                                        Padding="0"
+                                        rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.TriangleDown}"
+                                        rs:ControlsHelper.IconHeight="7"
+                                        rs:ControlsHelper.IconWidth="7"
+                                        Background="Transparent"
+                                        Command="{x:Static ScrollBar.LineDownCommand}"
+                                        Foreground="#8A8A8A"
+                                        Style="{StaticResource RSApp.Styles.IconButtonStyle}"
+                                        Visibility="Hidden" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="PART_LineUp" Property="Visibility" Value="Visible" />
+                                    <Setter TargetName="PART_LineDown" Property="Visibility" Value="Visible" />
+                                    <Setter TargetName="PART_Scroll" Property="Width" Value="7" />
+                                </Trigger>
+
+                                <Trigger Property="rs:ScrollViewHelper.IsShowLineCommand" Value="False">
+                                    <Setter TargetName="PART_LineUp" Property="Visibility" Value="Hidden" />
+                                    <Setter TargetName="PART_LineDown" Property="Visibility" Value="Hidden" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

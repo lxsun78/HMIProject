@@ -1,25 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using RS.Commons.Extensions;
 using RS.Widgets.Models;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.Metrics;
-using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Threading;
-using ZXing;
-using ZXing.OneD;
 
 namespace RS.Widgets.Controls
 {
@@ -74,22 +58,17 @@ namespace RS.Widgets.Controls
 
         private void TagSelectExcute(TagModel? model)
         {
-           
-            if (model==null)
+            if (model == null)
             {
                 return;
             }
-            ClearTagSelect();
-            model.IsSelect = true;
-
-            //var itemCollection = this.PART_TagHost.Items;
-            //var stackPanel = this.PART_TagHost.FindChild<StackPanel>();
-            //var elementCollection = stackPanel.Children;
-            //foreach (var item in elementCollection)
-            //{
-
-            //}
-            //Console.WriteLine(13123123123123);
+            
+            // 找到点击的Tag的索引
+            int index = this.TagModelList.IndexOf(model);
+            if (index >= 0)
+            {
+                SelectTag(index);
+            }
         }
 
         private static readonly DependencyPropertyKey TagCloseCommandPropertyKey =
@@ -122,31 +101,101 @@ namespace RS.Widgets.Controls
         public static readonly DependencyProperty IsShowBtnClearProperty =
             DependencyProperty.Register(nameof(IsShowBtnClear), typeof(bool), typeof(RSMultiSelectTextBox), new PropertyMetadata(false));
 
+        /// <summary>
+        /// 当前选中的Tag索引，-1表示没有Tag被选中（焦点在文本输入区）
+        /// </summary>
+        public int SelectedTagIndex
+        {
+            get { return (int)GetValue(SelectedTagIndexProperty); }
+            set { SetValue(SelectedTagIndexProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedTagIndexProperty =
+            DependencyProperty.Register(nameof(SelectedTagIndex), typeof(int), typeof(RSMultiSelectTextBox), new PropertyMetadata(-1));
+
 
         private void RSMultiSelectTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
-                case Key.Back:
-                    if (this.Text.Length > 0)
-                    {
-                        return;
-                    }
-                    if (this.TagModelList.Count == 0)
-                    {
-                        return;
-                    }
-                    this.TagModelList.RemoveAt(this.TagModelList.Count - 1);
-                    this.UpdateHasContent();
-                    break;
-
                 case Key.Left:
-                    Console.WriteLine("Key.Left");
-                    break;
-                case Key.Right:
-                    Console.WriteLine("Key.Right");
+                    // 当光标在输入框最左端或已有Tag被选中时，处理Tag导航
+                    if (this.CaretIndex == 0 || this.SelectedTagIndex >= 0)
+                    {
+                        if (this.TagModelList.Count == 0)
+                        {
+                            return;
+                        }
+
+                        if (this.SelectedTagIndex < 0)
+                        {
+                            // 没有Tag被选中，选中最后一个Tag
+                            SelectTag(this.TagModelList.Count - 1);
+                        }
+                        else if (this.SelectedTagIndex > 0)
+                        {
+                            // 选中前一个Tag
+                            SelectTag(this.SelectedTagIndex - 1);
+                        }
+                        // 如果已经是第一个Tag，不做任何操作
+                        e.Handled = true;
+                    }
                     break;
 
+                case Key.Right:
+                    // 只有当有Tag被选中时才处理
+                    if (this.SelectedTagIndex >= 0)
+                    {
+                        if (this.SelectedTagIndex < this.TagModelList.Count - 1)
+                        {
+                            // 选中下一个Tag
+                            SelectTag(this.SelectedTagIndex + 1);
+                        }
+                        else
+                        {
+                            // 当前是最后一个Tag，取消选中并返回输入框
+                            ClearTagSelect();
+                            this.CaretIndex = 0;
+                        }
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Key.Back:
+                    if (this.SelectedTagIndex >= 0)
+                    {
+                        // 有Tag被选中，删除它
+                        DeleteSelectedTag();
+                        e.Handled = true;
+                    }
+                    else if (this.Text.Length == 0 && this.TagModelList.Count > 0)
+                    {
+                        // 输入框为空，删除最后一个Tag
+                        var lastTag = this.TagModelList[this.TagModelList.Count - 1];
+                        this.TagModelList.RemoveAt(this.TagModelList.Count - 1);
+                        this.UpdateHasContent();
+                        OnTagModelDeleteCallBack?.Invoke(new List<TagModel>() { lastTag });
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Key.Delete:
+                    if (this.SelectedTagIndex >= 0)
+                    {
+                        // 有Tag被选中，删除它
+                        DeleteSelectedTag();
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Key.Escape:
+                    // 取消所有Tag的选中状态
+                    if (this.SelectedTagIndex >= 0)
+                    {
+                        ClearTagSelect();
+                        e.Handled = true;
+                    }
+                    break;
             }
         }
 
@@ -211,6 +260,11 @@ namespace RS.Widgets.Controls
 
         private void RSMultiSelectTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // 用户输入文本时，取消Tag的选中状态
+            if (this.SelectedTagIndex >= 0 && this.Text.Length > 0)
+            {
+                ClearTagSelect();
+            }
             this.UpdateHasContent();
             this.UpdateTagHostMargin();
         }
@@ -283,9 +337,80 @@ namespace RS.Widgets.Controls
 
         private void ClearTagSelect()
         {
+            this.SelectedTagIndex = -1;
             foreach (var tag in this.TagModelList)
             {
                 tag.IsSelect = false;
+            }
+        }
+
+        /// <summary>
+        /// 选中指定索引的Tag，-1表示取消所有选中
+        /// </summary>
+        private void SelectTag(int index)
+        {
+            if (this.TagModelList == null || this.TagModelList.Count == 0)
+            {
+                this.SelectedTagIndex = -1;
+                return;
+            }
+
+            // 确保索引在有效范围内
+            if (index < -1)
+            {
+                index = -1;
+            }
+            else if (index >= this.TagModelList.Count)
+            {
+                index = this.TagModelList.Count - 1;
+            }
+
+            this.SelectedTagIndex = index;
+            UpdateTagSelectionVisual();
+        }
+
+        /// <summary>
+        /// 根据SelectedTagIndex更新所有Tag的选中状态视觉效果
+        /// </summary>
+        private void UpdateTagSelectionVisual()
+        {
+            for (int i = 0; i < this.TagModelList.Count; i++)
+            {
+                this.TagModelList[i].IsSelect = (i == this.SelectedTagIndex);
+            }
+        }
+
+        /// <summary>
+        /// 删除当前选中的Tag
+        /// </summary>
+        private void DeleteSelectedTag()
+        {
+            if (this.SelectedTagIndex < 0 || this.SelectedTagIndex >= this.TagModelList.Count)
+            {
+                return;
+            }
+
+            var tagToDelete = this.TagModelList[this.SelectedTagIndex];
+            int deletedIndex = this.SelectedTagIndex;
+            
+            this.TagModelList.RemoveAt(deletedIndex);
+            this.UpdateHasContent();
+            OnTagModelDeleteCallBack?.Invoke(new List<TagModel>() { tagToDelete });
+
+            // 删除后调整选中索引
+            if (this.TagModelList.Count == 0)
+            {
+                this.SelectedTagIndex = -1;
+            }
+            else if (deletedIndex >= this.TagModelList.Count)
+            {
+                // 如果删除的是最后一个，选中新的最后一个
+                SelectTag(this.TagModelList.Count - 1);
+            }
+            else
+            {
+                // 保持当前索引位置（选中下一个Tag）
+                SelectTag(deletedIndex);
             }
         }
     }

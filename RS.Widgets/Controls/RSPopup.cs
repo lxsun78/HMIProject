@@ -1,16 +1,20 @@
 ﻿using RS.Win32API;
 using RS.Win32API.Structs;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 namespace RS.Widgets.Controls
 {
     public class RSPopup : Popup
     {
         private HwndSource HwndSource;
+        private Window ParentWindow;
         /// <summary> 
         /// 加载窗口随动事件 
         /// </summary> 
@@ -19,10 +23,19 @@ namespace RS.Widgets.Controls
             this.Loaded += RSPopup_Loaded;
             this.Opened += RSPopup_Opened;
             this.Closed += RSPopup_Closed;
+            this.Unloaded += RSPopup_Unloaded;
+            this.StaysOpen = true;
         }
 
-
-
+        private void RSPopup_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (ParentWindow != null)
+            {
+                ParentWindow.LocationChanged -= ParentWindow_LocationChanged;
+                ParentWindow.SizeChanged -= ParentWindow_SizeChanged;
+                ParentWindow.PreviewMouseLeftButtonUp -= ParentWindow_PreviewMouseLeftButtonUp;
+            }
+        }
 
         public UIElement RelativeElement
         {
@@ -37,19 +50,28 @@ namespace RS.Widgets.Controls
 
         private void RSPopup_Closed(object? sender, EventArgs e)
         {
-            if (this.RelativeElement == null)
-            {
-                return;
-            }
-            var directlyOver = Mouse.DirectlyOver as UIElement;
-            if (directlyOver== this.RelativeElement)
-            {
-                return;
-            }
-            if (RelativeElement is ToggleButton toggleButton && toggleButton.IsChecked == true)
-            {
-                toggleButton.IsChecked = false;
-            }
+
+            //if (this.RelativeElement == null)
+            //{
+            //    return;
+            //}
+            //if (this.RelativeElement.IsMouseOver)
+            //{
+            //    return;
+            //}
+            //var directlyOver = Mouse.DirectlyOver as UIElement;
+            //if (directlyOver == this.RelativeElement)
+            //{
+            //    return;
+            //}
+            //if (RelativeElement is RSMultiSelectComboBox multiSelectComboBox && multiSelectComboBox.IsDropDownOpen == true)
+            //{
+            //    multiSelectComboBox.IsDropDownOpen = false;
+            //}
+            //if (RelativeElement is ToggleButton toggleButton && toggleButton.IsChecked == true)
+            //{
+            //    toggleButton.IsChecked = false;
+            //}
         }
 
         private void RSPopup_Opened(object? sender, EventArgs e)
@@ -59,17 +81,35 @@ namespace RS.Widgets.Controls
 
         private void RSPopup_Loaded(object sender, RoutedEventArgs e)
         {
-            var rsWindow = this.TryFindParent<RSWindow>();
-            if (rsWindow != null)
+            ParentWindow = this.TryFindParent<RSWindow>();
+            if (ParentWindow != null)
             {
-                rsWindow.LocationChanged -= RsWindow_LocationChanged;
-                rsWindow.LocationChanged += RsWindow_LocationChanged;
-                rsWindow.SizeChanged -= RsWindow_SizeChanged;
-                rsWindow.SizeChanged += RsWindow_SizeChanged;
+                ParentWindow.LocationChanged -= ParentWindow_LocationChanged;
+                ParentWindow.LocationChanged += ParentWindow_LocationChanged;
+                ParentWindow.SizeChanged -= ParentWindow_SizeChanged;
+                ParentWindow.SizeChanged += ParentWindow_SizeChanged;
+                ParentWindow.PreviewMouseLeftButtonUp -= ParentWindow_PreviewMouseLeftButtonUp;
+                ParentWindow.PreviewMouseLeftButtonUp += ParentWindow_PreviewMouseLeftButtonUp;
             }
         }
 
-        private void RsWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+
+
+        private void ParentWindow_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var directlyOver = Mouse.DirectlyOver as UIElement;
+            if (this.IsMouseOver || directlyOver == this.RelativeElement)
+            {
+                return;
+            }
+
+            if (this.IsOpen)
+            {
+                this.SetCurrentValue(IsOpenProperty, false);
+            }
+        }
+
+        private void ParentWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             this.UpdatePopupPosition();
         }
@@ -77,7 +117,7 @@ namespace RS.Widgets.Controls
         /// <summary> 
         /// 刷新位置 
         /// </summary> 
-        private void RsWindow_LocationChanged(object? sender, EventArgs e)
+        private void ParentWindow_LocationChanged(object? sender, EventArgs e)
         {
             this.UpdatePopupPosition();
         }
@@ -86,13 +126,7 @@ namespace RS.Widgets.Controls
         {
             if (this.IsOpen)
             {
-                try
-                {
-                    typeof(Popup).ReflectionCall("UpdatePosition");
-                }
-                catch
-                {
-                }
+                _ = this.ReflectionCall("UpdatePosition");
             }
         }
 

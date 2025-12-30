@@ -102,7 +102,6 @@
                                     IsOpen="{Binding ElementName=PART_TogBtnCountryCode, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Placement="Bottom"
                                     PlacementTarget="{Binding ElementName=PART_TogBtnCountryCode}"
-                                    StaysOpen="False"
                                     VerticalOffset="5">
                                     <Grid
                                         Width="200"

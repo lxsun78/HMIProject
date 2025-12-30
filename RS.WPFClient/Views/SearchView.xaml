@@ -265,7 +265,8 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="317*" />
+                <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
@@ -273,7 +274,7 @@
                 Grid.Column="0"
                 Width="16"
                 Height="16"
-                Margin="10,0,0,0"
+                Margin="10,6,0,6"
                 HorizontalAlignment="Left"
                 Data="{StaticResource RSApp.Icons.Search}"
                 Fill="#515151"
@@ -301,13 +302,12 @@
 
             <rs:RSMultiSelectTextBox
                 Grid.Column="1"
-                Margin="0"
                 VerticalAlignment="Center"
                 rs:TextBoxHelper.IsShowClearButton="True"
                 rs:TextBoxHelper.Watermark="搜索"
                 Background="Transparent"
                 BorderThickness="0"
-                TextWrapping="NoWrap">
+                TextWrapping="NoWrap" Grid.ColumnSpan="2">
                 <rs:RSMultiSelectTextBox.Style>
                     <Style TargetType="{x:Type rs:RSMultiSelectTextBox}">
                         <Setter Property="IsReadOnly" Value="True" />
@@ -321,11 +321,10 @@
             </rs:RSMultiSelectTextBox>
             <rs:RSDropdown
                 x:Name="PART_AdvancedSearch"
-                Grid.Column="2"
+                Grid.Column="3"
                 Height="28"
-                Margin="0,0,5,0"
+                Margin="0,0,0,-1"
                 Padding="8,0,8,0"
-                VerticalAlignment="Stretch"
                 rs:ControlsHelper.CornerRadius="8"
                 DropdownWidth="{Binding ElementName=PART_Border, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 IsChecked="{Binding IsAdvancedSearchChecked}"
@@ -458,11 +457,21 @@
                                     ItemsSource="{Binding EmailFromList}"
                                     MultiSelectedItems="{Binding EmailFromSelectList}"
                                     TagDisplayMemberPath="NickName"
+                                    HeadersVisibility="Column"
                                     TagModelList="{Binding TagModelList}">
                                     <rs:RSMultiSelectComboBox.Columns>
-                                        <DataGridTextColumn Binding="{Binding NickName}" />
+                                        <DataGridTextColumn
+                                            Width="*"
+                                            Binding="{Binding NickName}"
+                                            Header="昵称" />
+                                        <DataGridTextColumn
+                                            Width="*"
+                                            Binding="{Binding Phone}"
+                                            Header="电话" />
                                     </rs:RSMultiSelectComboBox.Columns>
                                 </rs:RSMultiSelectComboBox>
+
+
 
                                 <TextBlock
                                     Grid.Row="4"

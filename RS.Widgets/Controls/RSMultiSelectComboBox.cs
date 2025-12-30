@@ -37,19 +37,30 @@ namespace RS.Widgets.Controls
         {
             this.Loaded += RSMultiSelectComboBox_Loaded;
             this.SelectionChanged += RSMultiSelectComboBox_SelectionChanged;
+            this.Columns.CollectionChanged += Columns_CollectionChanged;
+        }
 
+        private void Columns_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            AdjustColumnWidth();
+        }
+
+        /// <summary>
+        /// 当只有1列时，自动设置宽度为*填满可用空间
+        /// </summary>
+        private void AdjustColumnWidth()
+        {
+            if (this.Columns.Count == 1)
+            {
+                this.Columns[0].Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            }
         }
 
         protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
-            //switch (e.Property.Equals(DataGrid.Colomns))
-            //{
-            //    default:
-            //        break;
-            //}
-
+            base.OnPropertyChanged(e);
         }
-       
+
 
         private void RSMultiSelectComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -102,7 +113,6 @@ namespace RS.Widgets.Controls
             {
                 return;
             }
-
             this.IsDropDownOpen = false;
             this.PART_MultiSelectTextBox.SetTagHostMarginZero();
         }
@@ -187,22 +197,11 @@ namespace RS.Widgets.Controls
                 this.PART_MultiSelectTextBox.KeyDown -= PART_MultiSelectTextBox_KeyDown;
                 this.PART_MultiSelectTextBox.KeyDown += PART_MultiSelectTextBox_KeyDown;
             }
-
-
         }
-
 
 
         private void PART_MultiSelectTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void PART_MultiSelectTextBox_OnSelectTextBoxLostFocus(object sender, RoutedEventArgs e)
-        {
-
-            Console.WriteLine("PART_MultiSelectTextBox_OnSelectTextBoxLostFocus");
-
 
         }
 
@@ -272,12 +271,6 @@ namespace RS.Widgets.Controls
                 this.PART_MultiSelectTextBox.Focus();
             }
         }
-
-
-        //public object? GetDisplayMemberValue()
-        //{
-        //    return GetDisplayMemberValue(SelectedItem);
-        //}
 
 
         public object? GetDisplayMemberValue(object? item, string displayMemberPath)
