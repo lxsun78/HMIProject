@@ -215,6 +215,23 @@ namespace RS.Widgets.Controls
         {
             element.SetValue(SelectedBackgroundProperty, value);
         }
+
+
+        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.RegisterAttached(
+"SelectedColor",
+typeof(Brush),
+typeof(ControlsHelper),
+new FrameworkPropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0067C0"))));
+
+        public static Brush GetSelectedColor(UIElement element)
+        {
+            return (Brush)element.GetValue(SelectedColorProperty);
+        }
+
+        public static void SetSelectedColor(UIElement element, Brush value)
+        {
+            element.SetValue(SelectedColorProperty, value);
+        }
         #endregion
 
 

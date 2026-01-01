@@ -50,28 +50,6 @@ namespace RS.Widgets.Controls
 
         private void RSPopup_Closed(object? sender, EventArgs e)
         {
-
-            //if (this.RelativeElement == null)
-            //{
-            //    return;
-            //}
-            //if (this.RelativeElement.IsMouseOver)
-            //{
-            //    return;
-            //}
-            //var directlyOver = Mouse.DirectlyOver as UIElement;
-            //if (directlyOver == this.RelativeElement)
-            //{
-            //    return;
-            //}
-            //if (RelativeElement is RSMultiSelectComboBox multiSelectComboBox && multiSelectComboBox.IsDropDownOpen == true)
-            //{
-            //    multiSelectComboBox.IsDropDownOpen = false;
-            //}
-            //if (RelativeElement is ToggleButton toggleButton && toggleButton.IsChecked == true)
-            //{
-            //    toggleButton.IsChecked = false;
-            //}
         }
 
         private void RSPopup_Opened(object? sender, EventArgs e)
@@ -105,6 +83,7 @@ namespace RS.Widgets.Controls
 
             if (this.IsOpen)
             {
+                Console.WriteLine("ParentWindow_PreviewMouseLeftButtonUp-PopClose");
                 this.SetCurrentValue(IsOpenProperty, false);
             }
         }

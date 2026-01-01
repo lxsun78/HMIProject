@@ -30,12 +30,11 @@
                                 PlacementTarget="{TemplateBinding PlacementTarget}"
                                 PopupAnimation="None"
                                 RelativeElement="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                SnapsToDevicePixels="True"
-                                VerticalOffset="3">
+                                SnapsToDevicePixels="True">
                                 <Border
                                     Width="{TemplateBinding DropdownWidth}"
                                     Height="{TemplateBinding DropdownHeight}"
-                                    Margin="15"
+                                    Margin="15,0,15,15"
                                     Background="#fff"
                                     CornerRadius="5"
                                     Effect="{StaticResource RSApp.Styles.DefaultEffect}"

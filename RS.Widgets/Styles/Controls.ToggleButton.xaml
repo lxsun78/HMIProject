@@ -214,6 +214,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
+                            <ContentPresenter />
                             <Path
                                 x:Name="Arrow"
                                 Grid.Column="1"

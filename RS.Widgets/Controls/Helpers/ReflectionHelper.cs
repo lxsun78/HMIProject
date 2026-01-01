@@ -547,5 +547,64 @@ namespace RS.Widgets.Controls
                 return false;
             }
         }
+
+        /// <summary>
+        /// 根据属性路径获取属性值（支持嵌套属性，如"User.Name"）
+        /// </summary>
+        /// <param name="targetObject">目标对象</param>
+        /// <param name="propertyPath">属性路径，支持嵌套属性（如"User.Name"）</param>
+        /// <returns>属性值，如果属性不存在或路径无效则返回null</returns>
+        public static object? GetPropertyValue(object? targetObject, string? propertyPath)
+        {
+            if (targetObject == null || string.IsNullOrEmpty(propertyPath))
+            {
+                return null;
+            }
+
+            var propertyNames = propertyPath.Split('.');
+            object? currentObject = targetObject;
+
+            foreach (var propertyName in propertyNames)
+            {
+                if (currentObject == null)
+                {
+                    return null;
+                }
+
+                Type type = currentObject.GetType();
+                PropertyInfo? property = type.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                if (property == null)
+                {
+                    return null;
+                }
+
+                currentObject = property.GetValue(currentObject);
+            }
+
+            return currentObject;
+        }
+
+        /// <summary>
+        /// 获取显示成员的值（用于标签显示等场景）
+        /// </summary>
+        /// <param name="item">数据项</param>
+        /// <param name="displayMemberPath">显示成员路径，如果为空则返回null</param>
+        /// <returns>显示值，如果路径无效或为空则返回null</returns>
+        public static object? GetDisplayMemberValue(object? item, string? displayMemberPath)
+        {
+            if (item == null || string.IsNullOrEmpty(displayMemberPath))
+            {
+                return null;
+            }
+
+            try
+            {
+                return GetPropertyValue(item, displayMemberPath);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

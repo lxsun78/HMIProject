@@ -101,12 +101,11 @@
                                     AllowsTransparency="True"
                                     IsOpen="{Binding ElementName=PART_TogBtnCountryCode, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Placement="Bottom"
-                                    PlacementTarget="{Binding ElementName=PART_TogBtnCountryCode}"
-                                    VerticalOffset="5">
+                                    PlacementTarget="{Binding ElementName=PART_TogBtnCountryCode}">
                                     <Grid
                                         Width="200"
                                         Height="200"
-                                        Margin="15">
+                                        Margin="15,0,15,15">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto" />
                                             <RowDefinition />

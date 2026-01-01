@@ -85,6 +85,11 @@ namespace RS.WPFClient.ViewModels
                 return;
             }
 
+            if (this.IsSearchHasContent)
+            {
+                return;
+            }
+
             IsShowSearch = false;
         }
 
@@ -100,6 +105,19 @@ namespace RS.WPFClient.ViewModels
             set
             {
                 this.SetProperty(ref isShowSearch, value);
+            }
+        }
+
+        private bool isSearchHasContent;
+        /// <summary>
+        /// 搜索是否有内容
+        /// </summary>
+        public bool IsSearchHasContent
+        {
+            get { return isSearchHasContent; }
+            set
+            {
+                this.SetProperty(ref isSearchHasContent, value);
             }
         }
 
@@ -260,11 +278,7 @@ namespace RS.WPFClient.ViewModels
                 if (tagModelList == null)
                 {
                     tagModelList = new ObservableCollection<TagModel>();
-                    tagModelList.Add(new TagModel()
-                    {
-
-                        TagContent="12312"
-                    });
+                    tagModelList.Add(new TagModel());
                 }
                 return tagModelList;
             }

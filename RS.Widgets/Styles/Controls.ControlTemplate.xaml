@@ -92,12 +92,10 @@
                 <Popup
                     x:Name="PART_ErrorPopup"
                     AllowsTransparency="True"
-                    HorizontalOffset="3"
                     IsOpen="False"
                     Placement="Right"
                     PlacementTarget="{Binding ElementName=PART_ValidErrorTipHost}"
-                    StaysOpen="True"
-                    VerticalOffset="-1">
+                    StaysOpen="True">
                     <Border Padding="10,5,10,5" Background="#ff5b5b">
                         <TextBlock Foreground="#FFF" Text="{Binding ErrorContent}" />
                     </Border>

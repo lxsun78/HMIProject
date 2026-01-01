@@ -113,6 +113,7 @@
                                     rs:ControlsHelper.IconWidth="12"
                                     Command="{x:Static rs:RSCommands.CleanTextCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Focusable="False"
                                     Foreground="#949494"
                                     Style="{StaticResource RSApp.Styles.IconButtonStyle}"
                                     ToolTip="清除输入框内容"
@@ -131,14 +132,13 @@
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="rs:TextBoxHelper.HasText" Value="True" />
+                                <Condition Property="IsFocused" Value="True" />
                                 <Condition Property="rs:TextBoxHelper.IsShowClearButton" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Visible" />
                         </MultiTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.IsShowClearButton)}" Value="False">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
+
 
                         <Trigger Property="rs:TextBoxHelper.HasText" Value="True">
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Collapsed" />
@@ -148,13 +148,12 @@
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
                         </Trigger>
+
                         <Trigger Property="Validation.HasError" Value="True">
                             <Setter Property="BorderBrush" Value="Transparent" />
                         </Trigger>
 
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
-                        </Trigger>
+
 
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="#eee" />
@@ -171,6 +170,10 @@
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.RightContent)}" Value="{x:Null}">
                             <Setter TargetName="PART_RightContent" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.IsShowClearButton)}" Value="False">
+                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -247,6 +250,7 @@
                                 rs:ControlsHelper.IconWidth="12"
                                 Command="{x:Static rs:RSCommands.CleanTextCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                Focusable="False"
                                 Foreground="#949494"
                                 Style="{StaticResource RSApp.Styles.IconButtonStyle}"
                                 ToolTip="清除输入框内容"
@@ -256,18 +260,17 @@
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="rs:TextBoxHelper.HasText" Value="True" />
+                                <Condition Property="IsFocused" Value="True" />
                                 <Condition Property="rs:TextBoxHelper.IsShowClearButton" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Visible" />
                         </MultiTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.IsShowClearButton)}" Value="False">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
 
                         <Trigger Property="Validation.HasError" Value="True">
                             <Setter Property="BorderBrush" Value="Transparent" />
                         </Trigger>
+
                         <Trigger Property="rs:TextBoxHelper.HasText" Value="True">
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Hidden" />
                         </Trigger>
@@ -277,7 +280,9 @@
                             <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
                         </Trigger>
 
-
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.IsShowClearButton)}" Value="False">
+                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
 
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -70,10 +70,9 @@
                                 IsOpen="{Binding ElementName=PART_BtnDatePicker, Path=IsChecked}"
                                 Placement="Bottom"
                                 PlacementTarget="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                SnapsToDevicePixels="True"
-                                VerticalOffset="0">
+                                SnapsToDevicePixels="True">
                                 <Border
-                                    Margin="15"
+                                    Margin="15,0,15,15"
                                     Background="#fff"
                                     CornerRadius="{TemplateBinding CornerRadius}"
                                     Effect="{StaticResource RSApp.Styles.DefaultEffect}">

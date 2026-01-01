@@ -6,9 +6,20 @@
     xmlns:model="clr-namespace:RS.Widgets.Models"
     xmlns:rs="clr-namespace:RS.Widgets.Controls">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Border.xaml" />
         <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.ComboBoxItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.DataGrid.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Effects.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Icons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Path.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.RepeatButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Templates.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.ToggleButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter" />
 
     <Style TargetType="{x:Type rs:RSMultiSelectTextBox}">
         <Setter Property="Background" Value="#fff" />
@@ -40,7 +51,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type rs:RSMultiSelectTextBox}">
                     <Border
-                        x:Name="border"
+                        x:Name="PART_RootBorder"
                         Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -49,8 +60,7 @@
                         SnapsToDevicePixels="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <ContentControl
@@ -63,134 +73,373 @@
                                 FontSize="{TemplateBinding FontSize}"
                                 Foreground="{TemplateBinding rs:TextBoxHelper.WatermarkForground}"
                                 Visibility="Collapsed" />
+                            <Grid x:Name="PART_GridHost">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TagColumnWidth, UpdateSourceTrigger=PropertyChanged}" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid x:Name="PART_TagHost">
+                                        <ScrollViewer
+                                            Background="Transparent"
+                                            CanContentScroll="True"
+                                            Focusable="False"
+                                            HorizontalScrollBarVisibility="Hidden"
+                                            VerticalScrollBarVisibility="Disabled">
+                                            <ItemsControl x:Name="PART_TagContent" ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TagModelList, UpdateSourceTrigger=PropertyChanged}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="{x:Type model:TagModel}">
+                                                        <Border
+                                                            x:Name="PART_TagItemBorder"
+                                                            Margin="2,0,2,0"
+                                                            Padding="5,0,5,0"
+                                                            Background="#E7EAED"
+                                                            CornerRadius="5">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition />
+                                                                    <ColumnDefinition Width="auto" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <ContentControl x:Name="PART_TagItemContent" Content="{Binding TagContent}">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type rs:RSMultiSelectTextBox}}, Path=TagSelectCommand}" CommandParameter="{Binding}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </ContentControl>
+                                                                <Border
+                                                                    x:Name="PART_TagItemCloseButtonHost"
+                                                                    Grid.Column="1"
+                                                                    Width="8"
+                                                                    Height="8"
+                                                                    Margin="2,0,2,0"
+                                                                    Background="Transparent">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type rs:RSMultiSelectTextBox}}, Path=TagCloseCommand}" CommandParameter="{Binding}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                    <Path
+                                                                        x:Name="PART_TagItemCloseIcon"
+                                                                        Data="{StaticResource RSApp.Icons.Close}"
+                                                                        Fill="#4D182B40"
+                                                                        Stretch="Fill" />
+                                                                </Border>
 
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
+                                                            </Grid>
+                                                        </Border>
+                                                        <DataTemplate.Triggers>
+                                                            <Trigger SourceName="PART_TagItemBorder" Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Cursor" Value="Hand" />
+                                                                <Setter Property="Opacity" Value="0.8" />
+                                                            </Trigger>
 
-                                <ItemsControl x:Name="PART_TagHost" ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TagModelList}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel IsItemsHost="True" Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type model:TagModel}">
-                                            <Border
-                                                x:Name="PART_Border"
-                                                Margin="2,0,2,0"
-                                                Padding="5,0,5,0"
-                                                Background="#E7EAED"
-                                                CornerRadius="5">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition Width="auto" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <ContentControl x:Name="PART_TagContent" Content="{Binding TagContent}">
-                                                        <i:Interaction.Triggers>
-                                                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type rs:RSMultiSelectTextBox}}, Path=TagSelectCommand}" CommandParameter="{Binding BindsDirectlyToSource=True}" />
-                                                            </i:EventTrigger>
-                                                        </i:Interaction.Triggers>
-                                                    </ContentControl>
-                                                    <Border
-                                                        x:Name="PART_IconHost"
-                                                        Grid.Column="1"
-                                                        Width="8"
-                                                        Height="8"
-                                                        Margin="2,0,2,0"
-                                                        Background="Transparent">
-                                                        <i:Interaction.Triggers>
-                                                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type rs:RSMultiSelectTextBox}}, Path=TagCloseCommand}" CommandParameter="{Binding BindsDirectlyToSource=True}" />
-                                                            </i:EventTrigger>
-                                                        </i:Interaction.Triggers>
-                                                        <Path
-                                                            x:Name="PART_Icon"
-                                                            Data="{StaticResource RSApp.Icons.Close}"
-                                                            Fill="#4D182B40"
-                                                            Stretch="Fill" />
-                                                    </Border>
+                                                            <Trigger SourceName="PART_TagItemCloseButtonHost" Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="PART_TagItemCloseIcon" Property="Fill" Value="#CC182B40" />
+                                                            </Trigger>
 
-                                                </Grid>
-                                            </Border>
-                                            <DataTemplate.Triggers>
-                                                <Trigger SourceName="PART_Border" Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Cursor" Value="Hand" />
-                                                    <Setter Property="Opacity" Value="0.8" />
-                                                </Trigger>
+                                                            <DataTrigger Binding="{Binding IsSelect}" Value="True">
+                                                                <Setter TargetName="PART_TagItemBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(rs:ControlsHelper.SelectedColor)}" />
+                                                                <Setter TargetName="PART_TagItemContent" Property="Foreground" Value="#FFFFFF" />
+                                                                <Setter TargetName="PART_TagItemCloseIcon" Property="Fill" Value="#FFFFFF" />
+                                                            </DataTrigger>
+                                                        </DataTemplate.Triggers>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Grid>
+                                    <ScrollViewer
+                                        x:Name="PART_ContentHost"
+                                        Grid.Column="1"
+                                        Margin="0"
+                                        Focusable="false"
+                                        HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+                                        VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
+                                        Visibility="Visible" />
+                                </Grid>
+                            </Grid>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
 
-                                                <Trigger SourceName="PART_IconHost" Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="PART_Icon" Property="Fill" Value="#CC182B40" />
-                                                </Trigger>
-
-                                                <DataTrigger Binding="{Binding IsSelect}" Value="True">
-                                                    <Setter TargetName="PART_Border" Property="Background" Value="#305BD2" />
-                                                    <Setter TargetName="PART_TagContent" Property="Foreground" Value="#FFFFFF" />
-                                                    <Setter TargetName="PART_Icon" Property="Fill" Value="#FFFFFF" />
-
-                                                </DataTrigger>
-                                            </DataTemplate.Triggers>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                <Button
+                                    x:Name="PART_ClearAllButton"
+                                    Grid.Column="1"
+                                    Margin="0"
+                                    Padding="5,3,5,3"
+                                    HorizontalAlignment="Right"
+                                    rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.Close}"
+                                    rs:ControlsHelper.IconHeight="12"
+                                    rs:ControlsHelper.IconWidth="12"
+                                    Focusable="False"
+                                    Foreground="#949494"
+                                    Style="{StaticResource RSApp.Styles.IconButtonStyle}"
+                                    ToolTip="清除输入框内容"
+                                    Visibility="Collapsed" />
 
                                 <ToggleButton
-                                    x:Name="PART_More"
-                                    Grid.Column="1"
+                                    x:Name="PART_MoreButton"
                                     Padding="0"
                                     rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.Ellipsis}"
+                                    Focusable="True"
                                     Style="{StaticResource RSApp.Styles.IconButtonStyle}" />
+                            </StackPanel>
 
-                                <ScrollViewer
-                                    x:Name="PART_ContentHost"
-                                    Grid.Column="2"
-                                    Margin="0"
-                                    Focusable="false"
-                                    HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
-                                    VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" />
+                            <rs:RSPopup
+                                x:Name="PART_MorePopup"
+                                AllowsTransparency="True"
+                                Focusable="False"
+                                HorizontalOffset="-3"
+                                IsOpen="{Binding ElementName=PART_MoreButton, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Placement="Bottom"
+                                PlacementTarget="{Binding ElementName=PART_MoreButton}"
+                                PopupAnimation="None"
+                                RelativeElement="{Binding ElementName=PART_MoreButton}"
+                                StaysOpen="True"
+                                VerticalOffset="8">
+                                <Border
+                                    MinWidth="250"
+                                    MaxWidth="400"
+                                    MaxHeight="400"
+                                    Margin="15,0,15,15"
+                                    Background="#FFF"
+                                    CornerRadius="5"
+                                    Effect="{StaticResource RSApp.Styles.DefaultEffect}">
+                                    <Grid>
+                                        <ScrollViewer
+                                            MaxHeight="350"
+                                            CanContentScroll="True"
+                                            VerticalScrollBarVisibility="Auto">
+                                            <ScrollViewer.Style>
+                                                <Style BasedOn="{x:Null}" TargetType="{x:Type ScrollViewer}">
+                                                    <Setter Property="HorizontalScrollBarVisibility" Value="Visible" />
+                                                    <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                                                <Grid SnapsToDevicePixels="true">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="*" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Border Grid.Row="1" Grid.Column="0">
+                                                                        <ScrollContentPresenter Margin="{TemplateBinding Padding}" CanContentScroll="{TemplateBinding CanContentScroll}" />
+                                                                    </Border>
+                                                                    <RepeatButton
+                                                                        x:Name="PART_BtnUpArrow"
+                                                                        Grid.Row="0"
+                                                                        Grid.Column="0"
+                                                                        Command="{x:Static ScrollBar.LineUpCommand}"
+                                                                        CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                        Focusable="false"
+                                                                        Style="{StaticResource MenuScrollButton}">
+                                                                        <RepeatButton.Visibility>
+                                                                            <MultiBinding
+                                                                                Converter="{StaticResource MenuScrollingVisibilityConverter}"
+                                                                                ConverterParameter="0"
+                                                                                FallbackValue="Visibility.Collapsed">
+                                                                                <Binding Path="ComputedVerticalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                                                <Binding Path="VerticalOffset" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                                                <Binding Path="ExtentHeight" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                                                <Binding Path="ViewportHeight" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                                            </MultiBinding>
+                                                                        </RepeatButton.Visibility>
+                                                                        <Path
+                                                                            x:Name="PART_IconUpArrow"
+                                                                            Data="{StaticResource RSApp.Icons.MenuItemUpArrow}"
+                                                                            Fill="{TemplateBinding Foreground}" />
+                                                                    </RepeatButton>
 
-                            </Grid>
+                                                                    <RepeatButton
+                                                                        x:Name="PART_BtnDownArrow"
+                                                                        Grid.Row="2"
+                                                                        Grid.Column="0"
+                                                                        Command="{x:Static ScrollBar.LineDownCommand}"
+                                                                        CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                        Focusable="false"
+                                                                        Style="{StaticResource MenuScrollButton}">
+                                                                        <RepeatButton.Visibility>
+                                                                            <MultiBinding
+                                                                                Converter="{StaticResource MenuScrollingVisibilityConverter}"
+                                                                                ConverterParameter="100"
+                                                                                FallbackValue="Visibility.Collapsed">
+                                                                                <Binding Path="ComputedVerticalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                                                <Binding Path="VerticalOffset" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                                                <Binding Path="ExtentHeight" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                                                <Binding Path="ViewportHeight" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                                            </MultiBinding>
+                                                                        </RepeatButton.Visibility>
+                                                                        <Path
+                                                                            x:Name="PART_IconDownArrow"
+                                                                            Data="{StaticResource RSApp.Icons.MenuItemDownArrow}"
+                                                                            Fill="{TemplateBinding Foreground}" />
+                                                                    </RepeatButton>
+                                                                </Grid>
 
-                            <Button
-                                x:Name="PART_BtnClear"
-                                Grid.Column="2"
-                                Margin="0"
-                                Padding="5,3,5,3"
-                                HorizontalAlignment="Right"
-                                rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.Close}"
-                                rs:ControlsHelper.IconHeight="12"
-                                rs:ControlsHelper.IconWidth="12"
-                                Foreground="#949494"
-                                Style="{StaticResource RSApp.Styles.IconButtonStyle}"
-                                ToolTip="清除输入框内容"
-                                Visibility="Collapsed" />
-                            <ContentControl
-                                x:Name="PART_RightContent"
-                                Grid.Column="3"
-                                Background="Transparent"
-                                Content="{TemplateBinding rs:TextBoxHelper.RightContent}"
-                                FontSize="{TemplateBinding FontSize}"
-                                Foreground="{TemplateBinding rs:TextBoxHelper.WatermarkForground}" />
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger SourceName="PART_BtnDownArrow" Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="PART_IconDownArrow" Property="Opacity" Value="0.7" />
+                                                                    </Trigger>
+                                                                    <Trigger SourceName="PART_BtnUpArrow" Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="PART_IconUpArrow" Property="Opacity" Value="0.7" />
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </ScrollViewer.Style>
+
+                                            <ItemsControl Margin="5" ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TagModelList}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <VirtualizingStackPanel IsItemsHost="True" Orientation="Vertical" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="{x:Type model:TagModel}">
+                                                        <Border
+                                                            x:Name="PART_TagItemBorder"
+                                                            Height="32"
+                                                            Background="Transparent"
+                                                            CornerRadius="3"
+                                                            Focusable="False">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="2" />
+                                                                    <ColumnDefinition />
+                                                                    <ColumnDefinition Width="auto" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Rectangle
+                                                                    x:Name="PART_TagItemSelectionIndicator"
+                                                                    Height="15"
+                                                                    VerticalAlignment="Center"
+                                                                    Fill="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(rs:ControlsHelper.SelectedColor)}"
+                                                                    Visibility="{Binding IsSelect, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                                <Grid Grid.Column="1" Background="Transparent">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type rs:RSMultiSelectTextBox}}, Path=TagSelectCommand}" CommandParameter="{Binding}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                    <ContentControl
+                                                                        VerticalAlignment="Center"
+                                                                        Content="{Binding TagContent}"
+                                                                        FontSize="12" />
+                                                                </Grid>
+
+                                                                <Border
+                                                                    x:Name="PART_TagItemCloseButtonHost"
+                                                                    Grid.Column="2"
+                                                                    Width="12"
+                                                                    Height="12"
+                                                                    Margin="8,0,5,0"
+                                                                    VerticalAlignment="Center"
+                                                                    Background="Transparent"
+                                                                    Cursor="Hand">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type rs:RSMultiSelectTextBox}}, Path=TagCloseCommand}" CommandParameter="{Binding}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                    <Path
+                                                                        x:Name="PART_TagItemCloseIcon"
+                                                                        Data="{StaticResource RSApp.Icons.Close}"
+                                                                        Fill="#999999"
+                                                                        Stretch="Fill" />
+                                                                </Border>
+                                                            </Grid>
+                                                        </Border>
+                                                        <DataTemplate.Triggers>
+                                                            <Trigger SourceName="PART_TagItemBorder" Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="PART_TagItemBorder" Property="Background" Value="#F9F9F9" />
+                                                                <Setter TargetName="PART_TagItemCloseIcon" Property="Fill" Value="#666666" />
+                                                                <Setter TargetName="PART_TagItemCloseIcon" Property="Visibility" Value="Visible" />
+                                                            </Trigger>
+                                                            <Trigger SourceName="PART_TagItemBorder" Property="IsMouseOver" Value="False">
+                                                                <Setter TargetName="PART_TagItemCloseIcon" Property="Visibility" Value="Collapsed" />
+                                                            </Trigger>
+                                                            <Trigger SourceName="PART_TagItemCloseButtonHost" Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="PART_TagItemCloseIcon" Property="Fill" Value="#333333" />
+                                                            </Trigger>
+                                                            <DataTrigger Binding="{Binding IsSelect}" Value="True">
+                                                                <Setter TargetName="PART_TagItemBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(rs:ControlsHelper.SelectedBackground)}" />
+                                                            </DataTrigger>
+                                                        </DataTemplate.Triggers>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </rs:RSPopup>
                         </Grid>
                     </Border>
 
-
                     <ControlTemplate.Triggers>
+                        <!--  没有Tag时：显示完整输入框，隐藏More和清除按钮  -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=HasTags, Mode=OneWay}" Value="False">
+                            <Setter TargetName="PART_MoreButton" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_ClearAllButton" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_GridHost" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_ContentHost" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+
+                        <!--  有Tag但没有焦点且没有文本时：隐藏输入框，显示TagList和More按钮，隐藏清除按钮  -->
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="HasTags" Value="True" />
+                                <Condition Property="IsFocused" Value="False" />
+                                <Condition Property="HasContent" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_GridHost" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_ContentHost" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_MoreButton" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_ClearAllButton" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+
+                        <!--  有Tag但没有焦点且有文本时：显示TagList、More按钮和输入框（保持输入框可见）  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasTags" Value="True" />
+                                <Condition Property="IsFocused" Value="False" />
+                                <Condition Property="HasContent" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_GridHost" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_ContentHost" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_MoreButton" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_ClearAllButton" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+
+                        <!--  有Tag且有焦点时：显示TagList、More按钮和输入框  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasTags" Value="True" />
+                                <Condition Property="IsFocused" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_GridHost" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_ContentHost" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_MoreButton" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+
+                        <!--  清除按钮的显示条件：有Tag且有焦点且有内容  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasTags" Value="True" />
+                                <Condition Property="IsFocused" Value="True" />
+                                <Condition Property="HasContent" Value="True" />
                                 <Condition Property="rs:TextBoxHelper.IsShowClearButton" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_ClearAllButton" Property="Visibility" Value="Visible" />
                         </MultiTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.IsShowClearButton)}" Value="False">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
 
                         <Trigger Property="HasContent" Value="True">
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Collapsed" />
@@ -198,14 +447,10 @@
 
                         <Trigger Property="HasContent" Value="False">
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
-                        </Trigger>
-                        <Trigger Property="Validation.HasError" Value="True">
-                            <Setter Property="BorderBrush" Value="Transparent" />
                         </Trigger>
 
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="BorderBrush" Value="Transparent" />
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
@@ -214,20 +459,13 @@
                         </Trigger>
 
                         <Trigger Property="IsReadOnly" Value="True">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_ClearAllButton" Property="Visibility" Value="Collapsed" />
                         </Trigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.RightContent)}" Value="{x:Null}">
-                            <Setter TargetName="PART_RightContent" Property="Visibility" Value="Collapsed" />
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.IsShowClearButton)}" Value="False">
+                            <Setter TargetName="PART_ClearAllButton" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
 
-                        <Trigger Property="IsShowBtnClear" Value="True">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Visible" />
-                        </Trigger>
-
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=TagModelList.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                            <Setter TargetName="PART_More" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

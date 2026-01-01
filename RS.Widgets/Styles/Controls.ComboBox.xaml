@@ -85,7 +85,6 @@
                                 <ToggleButton
                                     x:Name="ToggleButton"
                                     Grid.ColumnSpan="3"
-                                    ClickMode="Press"
                                     Focusable="false"
                                     IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                     Style="{StaticResource RSApp.Styles.ComboBoxToggleButtonStyle}" />
@@ -109,10 +108,11 @@
                                     rs:ControlsHelper.IconWidth="12"
                                     Command="{x:Static rs:RSCommands.CleanTextCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Focusable="False"
                                     Foreground="#949494"
                                     Style="{StaticResource RSApp.Styles.IconButtonStyle}"
                                     ToolTip="清除输入框内容"
-                                    Visibility="Visible" />
+                                    Visibility="Collapsed" />
 
                                 <TextBox
                                     x:Name="PART_EditableTextBox"
@@ -129,17 +129,17 @@
                                     x:Name="Popup"
                                     AllowsTransparency="True"
                                     Focusable="False"
-                                    IsOpen="{TemplateBinding IsDropDownOpen}"
+                                    IsOpen="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsDropDownOpen, Mode=OneWay}"
                                     Placement="Bottom"
                                     PlacementTarget="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     PopupAnimation="None"
                                     RelativeElement="{Binding ElementName=ToggleButton}"
-                                    StaysOpen="True"
-                                    VerticalOffset="3">
+                                    StaysOpen="True">
                                     <Border
                                         MinWidth="{TemplateBinding ActualWidth}"
                                         MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                        Margin="15"
+                                        Margin="15,0,15,15"
+                                        Padding="0,2,0,2"
                                         Background="#FFF"
                                         CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
                                         Effect="{StaticResource RSApp.Styles.DefaultEffect}">
@@ -172,13 +172,6 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Visible" />
                         </MultiDataTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.IsShowClearButton)}" Value="True">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Visible" />
-
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.IsShowClearButton)}" Value="False">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
 
                         <Trigger Property="HasItems" Value="False">
                             <Setter TargetName="PART_EmptyData" Property="Visibility" Value="Visible" />
@@ -191,9 +184,7 @@
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
-                        </Trigger>
+
                         <Trigger Property="IsEditable" Value="True">
                             <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Collapsed" />
@@ -207,7 +198,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition SourceName="PART_EditableTextBox" Property="rs:TextBoxHelper.HasText" Value="True" />
-                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition SourceName="PART_EditableTextBox" Property="IsFocused" Value="True" />
                                 <Condition Property="IsEditable" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Visible" />
@@ -217,6 +208,10 @@
                             <Setter TargetName="PART_Description" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
 
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(rs:TextBoxHelper.IsShowClearButton)}" Value="False">
+                            <Setter TargetName="PART_BtnClear" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -112,17 +112,15 @@
                                             x:Name="PART_Popup"
                                             AllowsTransparency="True"
                                             Focusable="False"
-                                            HorizontalOffset="0"
                                             IsOpen="{Binding ElementName=PART_BtnWindowPosition, Path=IsChecked}"
                                             Placement="Bottom"
                                             PlacementTarget="{Binding ElementName=PART_BtnWindowPosition}"
                                             PopupAnimation="None"
                                             SnapsToDevicePixels="True"
-                                            StaysOpen="False"
-                                            VerticalOffset="3">
+                                            StaysOpen="False">
                                             <Border
                                                 Width="200"
-                                                Margin="15"
+                                                Margin="15,0,15,15"
                                                 Background="#FFF"
                                                 CornerRadius="3"
                                                 Effect="{StaticResource RSApp.Styles.DefaultEffect}">

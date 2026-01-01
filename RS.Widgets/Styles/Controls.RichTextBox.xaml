@@ -93,6 +93,7 @@
                                 rs:ControlsHelper.IconWidth="12"
                                 Command="{x:Static rs:RSCommands.CleanTextCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                Focusable="False"
                                 Foreground="#949494"
                                 Style="{StaticResource RSApp.Styles.IconButtonStyle}"
                                 ToolTip="清除输入框内容"

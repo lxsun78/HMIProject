@@ -6,6 +6,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Icons.xaml" />
         <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Effects.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.RepeatButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <converters:ClipConverter x:Key="ClipConverter" />
@@ -23,36 +24,7 @@
         </Setter>
     </Style>
 
-    <Style
-        x:Key="MenuScrollButton"
-        BasedOn="{x:Null}"
-        TargetType="{x:Type RepeatButton}">
-        <Setter Property="ClickMode" Value="Hover" />
-        <Setter Property="Background" Value="#fff" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Padding" Value="3,5,3,5" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Border
-                        x:Name="templateRoot"
-                        Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-                        SnapsToDevicePixels="true">
-                        <ContentPresenter
-                            Margin="6"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+
     <Style
         x:Key="{ComponentResourceKey ResourceId=MenuScrollViewer,
                                      TypeInTargetAssembly={x:Type FrameworkElement}}"
@@ -97,7 +69,7 @@
                             </RepeatButton.Visibility>
                             <Path
                                 x:Name="PART_IconUpArrow"
-                                Data="{StaticResource RSApp.Icons.MenuItemDownArrow}"
+                                Data="{StaticResource RSApp.Icons.MenuItemUpArrow}"
                                 Fill="{TemplateBinding Foreground}" />
                         </RepeatButton>
 
@@ -192,13 +164,12 @@
                     x:Name="PART_Popup"
                     AllowsTransparency="true"
                     Focusable="false"
-                    HorizontalOffset="-4"
                     IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
                     Placement="Bottom"
                     PlacementTarget="{Binding ElementName=templateRoot}"
                     PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                     SnapsToDevicePixels="True">
-                    <Border Margin="15" Effect="{StaticResource RSApp.Styles.DefaultEffect}">
+                    <Border Margin="15,0,15,15" Effect="{StaticResource RSApp.Styles.DefaultEffect}">
                         <Border
                             x:Name="SubMenuBorder"
                             Margin="5"
