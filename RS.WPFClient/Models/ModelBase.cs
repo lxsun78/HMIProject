@@ -124,5 +124,19 @@ namespace RS.WPFClient.Models
             }
         }
 
+
+        private bool isSelected;
+        /// <summary>
+        /// 是否选择
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                this.SetProperty(ref isSelected, value);
+            }
+        }
+
     }
 }

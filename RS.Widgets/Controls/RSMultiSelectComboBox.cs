@@ -13,13 +13,33 @@ using System.Windows.Media;
 
 namespace RS.Widgets.Controls
 {
+    /// <summary>
+    /// 多选下拉框控件
+    /// 功能说明：
+    /// 1. 支持从下拉框中选择多个项，显示为标签形式
+    /// 2. 支持搜索筛选功能
+    /// 3. 支持键盘导航（左右箭头键选择标签，Backspace/Delete删除标签）
+    /// 4. 支持Single和Extended两种选择模式
+    /// </summary>
     public class RSMultiSelectComboBox : DataGrid
     {
-        private ItemsControl? PART_TagContent;
-        private TextBox? PART_SearchContent;
-        private bool isSyncingSelectedItems = false; // 标志：正在同步选中项，避免触发SelectionChanged事件
-        private bool isTagSelecting = false; // 标志：正在处理标签选择，防止ToggleDropDownCommand执行
-        private ObservableCollection<TagModel>? currentTagModelList;
+        #region 私有字段
+
+        // 模板部件
+        private ItemsControl? PART_TagContent;      // 标签容器
+        private TextBox? PART_SearchContent;        // 搜索框
+
+        // 状态标志
+        private bool isSyncingSelectedItems = false; // 正在同步选中项，避免触发SelectionChanged事件
+        private bool isTagSelecting = false;         // 正在处理标签选择，防止ToggleDropDownCommand执行
+        private ObservableCollection<TagModel>? currentTagModelList; // 当前订阅的TagModelList
+
+        // 标签选中状态
+        private int selectedTagIndex = -1;          // 当前选中的标签索引（-1表示未选中）
+
+        #endregion
+
+        #region 构造函数和初始化
 
         static RSMultiSelectComboBox()
         {
@@ -31,104 +51,177 @@ namespace RS.Widgets.Controls
             // 初始化 TagModelList
             TagModelList = new ObservableCollection<TagModel>();
             
+            // 初始化命令
             SetValue(TagCloseCommandPropertyKey, new RelayCommand<TagModel>(TagCloseExecute));
             SetValue(TagSelectCommandPropertyKey, new RelayCommand<TagModel>(TagSelectExecute));
             SetValue(ClearAllTagsCommandPropertyKey, new RelayCommand(ClearAllTagsExecute));
             SetValue(ToggleDropDownCommandPropertyKey, new RelayCommand(ToggleDropDownExecute));
+            
+            // 订阅事件
             this.SelectionChanged += OnSelectionChanged;
             this.Columns.CollectionChanged += OnColumnsCollectionChanged;
             this.PreviewKeyDown += OnPreviewKeyDown;
         }
 
-        private void OnColumnsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        public override void OnApplyTemplate()
         {
-            AdjustColumnWidthWhenSingleColumn();
+            base.OnApplyTemplate();
+            
+            // 获取模板部件
+            this.PART_TagContent = this.GetTemplateChild("PART_TagContent") as ItemsControl;
+            this.PART_SearchContent = this.GetTemplateChild("PART_SearchContent") as TextBox;
+
+            // 订阅搜索框事件
+            if (this.PART_SearchContent != null)
+            {
+                this.PART_SearchContent.KeyDown += OnSearchContentKeyDown;
+            }
         }
+
+        #endregion
+
+        #region 依赖属性定义
 
         /// <summary>
-        /// 当只有1列时，自动设置宽度为*填满可用空间
+        /// 标签显示成员路径（用于从数据项中获取显示文本）
         /// </summary>
-        private void AdjustColumnWidthWhenSingleColumn()
-        {
-            if (this.Columns.Count == 1)
-            {
-                this.Columns[0].Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-            }
-        }
-
-        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // 如果正在同步选中项，跳过处理
-            if (isSyncingSelectedItems)
-            {
-                return;
-            }
-
-            // 下拉框只负责选择添加，将新增的选中项添加到TagModelList
-            if (e.AddedItems != null && e.AddedItems.Count > 0)
-            {
-                // 如果是 Single 模式，先清除所有标签（只允许选择一个）
-                if (this.SelectionMode == DataGridSelectionMode.Single)
-                {
-                    // 清除所有标签
-                    TagModelList.Clear();
-                    // 同步到 MultiSelectedItems
-                    var multiSelectedItems = this.MultiSelectedItems as IList;
-                    multiSelectedItems?.Clear();
-                }
-
-                foreach (var item in e.AddedItems)
-                {
-                    var tagModel = CreateTagModel(item, TagItemSource.FromItemsSource);
-                    // 检查是否已存在，避免重复添加
-                    if (!TagModelList.Contains(tagModel))
-                    {
-                        TagModelList.Add(tagModel);
-                        // 同步到 MultiSelectedItems
-                        var multiSelectedItems = this.MultiSelectedItems as IList;
-                        if (multiSelectedItems != null)
-                        {
-                            multiSelectedItems.Add(tagModel.Data);
-                        }
-                    }
-                }
-                UpdateHasContent();
-            }
-        }
-
         public string TagDisplayMemberPath
         {
             get { return (string)GetValue(TagDisplayMemberPathProperty); }
             set { SetValue(TagDisplayMemberPathProperty, value); }
         }
-
         public static readonly DependencyProperty TagDisplayMemberPathProperty =
             DependencyProperty.Register(nameof(TagDisplayMemberPath), typeof(string), typeof(RSMultiSelectComboBox), new PropertyMetadata(null));
 
         /// <summary>
-        /// 这是实际选择的数据 实际选择数据肯定是从数据源来的
+        /// 实际选择的数据集合（绑定到外部，只包含来自ItemsSource的数据）
         /// </summary>
         public IEnumerable MultiSelectedItems
         {
             get { return (IEnumerable)GetValue(MultiSelectedItemsProperty); }
             set { SetValue(MultiSelectedItemsProperty, value); }
         }
-
         public static readonly DependencyProperty MultiSelectedItemsProperty =
-            DependencyProperty.Register(nameof(MultiSelectedItems), typeof(IEnumerable), typeof(RSMultiSelectComboBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register(nameof(MultiSelectedItems), typeof(IEnumerable), typeof(RSMultiSelectComboBox), 
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
-        /// 这是选择Tag数据 这个标签则可能和SelectedItems 个数不一样
+        /// 标签数据集合（包含所有标签，包括自定义标签）
+        /// 注意：TagModelList 可能包含 Custom 类型的标签，这些不会出现在 MultiSelectedItems 中
         /// </summary>
         public ObservableCollection<TagModel> TagModelList
         {
             get { return (ObservableCollection<TagModel>)GetValue(TagModelListProperty); }
             set { SetValue(TagModelListProperty, value); }
         }
-
         public static readonly DependencyProperty TagModelListProperty =
-            DependencyProperty.Register(nameof(TagModelList), typeof(ObservableCollection<TagModel>), typeof(RSMultiSelectComboBox), new FrameworkPropertyMetadata(new ObservableCollection<TagModel>(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTagModelListChanged));
+            DependencyProperty.Register(nameof(TagModelList), typeof(ObservableCollection<TagModel>), typeof(RSMultiSelectComboBox), 
+                new FrameworkPropertyMetadata(new ObservableCollection<TagModel>(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTagModelListChanged));
 
+        /// <summary>
+        /// 下拉框最大高度
+        /// </summary>
+        public double MaxDropDownHeight
+        {
+            get { return (double)GetValue(MaxDropDownHeightProperty); }
+            set { SetValue(MaxDropDownHeightProperty, value); }
+        }
+        public static readonly DependencyProperty MaxDropDownHeightProperty =
+            DependencyProperty.Register(nameof(MaxDropDownHeight), typeof(double), typeof(RSMultiSelectComboBox), new PropertyMetadata(300D));
+
+        /// <summary>
+        /// 下拉框是否打开
+        /// </summary>
+        public bool IsDropDownOpen
+        {
+            get { return (bool)GetValue(IsDropDownOpenProperty); }
+            set { SetValue(IsDropDownOpenProperty, value); }
+        }
+        public static readonly DependencyProperty IsDropDownOpenProperty =
+            DependencyProperty.Register(nameof(IsDropDownOpen), typeof(bool), typeof(RSMultiSelectComboBox), 
+                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged));
+
+        /// <summary>
+        /// 搜索框内容
+        /// </summary>
+        public string SearchContent
+        {
+            get { return (string)GetValue(SearchContentProperty); }
+            set { SetValue(SearchContentProperty, value); }
+        }
+        public static readonly DependencyProperty SearchContentProperty =
+            DependencyProperty.Register(nameof(SearchContent), typeof(string), typeof(RSMultiSelectComboBox), 
+                new PropertyMetadata(null, OnSearchContentChanged));
+
+        /// <summary>
+        /// 是否显示搜索框
+        /// </summary>
+        public bool ShowSearchBox
+        {
+            get { return (bool)GetValue(ShowSearchBoxProperty); }
+            set { SetValue(ShowSearchBoxProperty, value); }
+        }
+        public static readonly DependencyProperty ShowSearchBoxProperty =
+            DependencyProperty.Register(nameof(ShowSearchBox), typeof(bool), typeof(RSMultiSelectComboBox), new PropertyMetadata(true));
+
+        /// <summary>
+        /// 是否有内容（是否有标签）
+        /// </summary>
+        public bool HasContent
+        {
+            get { return (bool)GetValue(HasContentProperty); }
+            set { SetValue(HasContentProperty, value); }
+        }
+        public static readonly DependencyProperty HasContentProperty =
+            DependencyProperty.Register(nameof(HasContent), typeof(bool), typeof(RSMultiSelectComboBox), new PropertyMetadata(false));
+
+        /// <summary>
+        /// 当前选中的标签索引（只读，用于内部状态管理）
+        /// </summary>
+        public int SelectedTagIndex
+        {
+            get { return selectedTagIndex; }
+            private set
+            {
+                if (selectedTagIndex != value)
+                {
+                    selectedTagIndex = value;
+                    UpdateTagSelectionVisual();
+                }
+            }
+        }
+
+        #endregion
+
+        #region 命令定义
+
+        private static readonly DependencyPropertyKey TagCloseCommandPropertyKey =
+            DependencyProperty.RegisterReadOnly("TagCloseCommand", typeof(ICommand), typeof(RSMultiSelectComboBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty TagCloseCommandProperty = TagCloseCommandPropertyKey.DependencyProperty;
+        public ICommand TagCloseCommand => (ICommand)GetValue(TagCloseCommandProperty);
+
+        private static readonly DependencyPropertyKey TagSelectCommandPropertyKey =
+            DependencyProperty.RegisterReadOnly("TagSelectCommand", typeof(ICommand), typeof(RSMultiSelectComboBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty TagSelectCommandProperty = TagSelectCommandPropertyKey.DependencyProperty;
+        public ICommand TagSelectCommand => (ICommand)GetValue(TagSelectCommandProperty);
+
+        private static readonly DependencyPropertyKey ClearAllTagsCommandPropertyKey =
+            DependencyProperty.RegisterReadOnly("ClearAllTagsCommand", typeof(ICommand), typeof(RSMultiSelectComboBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty ClearAllTagsCommandProperty = ClearAllTagsCommandPropertyKey.DependencyProperty;
+        public ICommand ClearAllTagsCommand => (ICommand)GetValue(ClearAllTagsCommandProperty);
+
+        private static readonly DependencyPropertyKey ToggleDropDownCommandPropertyKey =
+            DependencyProperty.RegisterReadOnly("ToggleDropDownCommand", typeof(ICommand), typeof(RSMultiSelectComboBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty ToggleDropDownCommandProperty = ToggleDropDownCommandPropertyKey.DependencyProperty;
+        public ICommand ToggleDropDownCommand => (ICommand)GetValue(ToggleDropDownCommandProperty);
+
+        #endregion
+
+        #region 依赖属性变更处理
+
+        /// <summary>
+        /// TagModelList 变更处理：订阅/取消订阅集合变更事件
+        /// </summary>
         private static void OnTagModelListChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (RSMultiSelectComboBox)d;
@@ -137,76 +230,50 @@ namespace RS.Widgets.Controls
 
         private void OnTagModelListChanged(ObservableCollection<TagModel>? oldValue, ObservableCollection<TagModel>? newValue)
         {
-            // 取消订阅旧的集合的CollectionChanged事件
+            // 取消订阅旧的集合
             if (oldValue != null && oldValue == currentTagModelList)
             {
                 oldValue.CollectionChanged -= TagModelList_CollectionChanged;
                 currentTagModelList = null;
             }
 
-            // 订阅新的集合的CollectionChanged事件
+            // 订阅新的集合
             if (newValue != null)
             {
                 newValue.CollectionChanged += TagModelList_CollectionChanged;
                 currentTagModelList = newValue;
             }
 
-            // 更新HasContent属性
             UpdateHasContent();
         }
 
         private void TagModelList_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            // 当TagModelList集合发生变化时，更新HasContent属性
             UpdateHasContent();
         }
 
-        public double MaxDropDownHeight
-        {
-            get { return (double)GetValue(MaxDropDownHeightProperty); }
-            set { SetValue(MaxDropDownHeightProperty, value); }
-        }
-
-        public static readonly DependencyProperty MaxDropDownHeightProperty =
-            DependencyProperty.Register(nameof(MaxDropDownHeight), typeof(double), typeof(RSMultiSelectComboBox), new PropertyMetadata(300D));
-
-        public bool IsDropDownOpen
-        {
-            get { return (bool)GetValue(IsDropDownOpenProperty); }
-            set { SetValue(IsDropDownOpenProperty, value); }
-        }
-
-        public static readonly DependencyProperty IsDropDownOpenProperty =
-            DependencyProperty.Register(nameof(IsDropDownOpen), typeof(bool), typeof(RSMultiSelectComboBox), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged));
-
+        /// <summary>
+        /// IsDropDownOpen 变更处理：打开时同步选中项，关闭时清除筛选
+        /// </summary>
         private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (RSMultiSelectComboBox)d;
             if ((bool)e.NewValue == true)
             {
-                // 当下拉框打开时，根据TagModelList同步SelectedItems
+                // 下拉框打开：根据TagModelList同步SelectedItems，使下拉框显示已选择的项
                 control.SyncSelectedItemsFromTagModelList();
             }
             else
             {
-                // 当下拉框关闭时，清除筛选
+                // 下拉框关闭：清除筛选，清空搜索内容
                 control.ClearItemsSourceFilter();
-                // 清空搜索内容
                 control.SearchContent = string.Empty;
             }
         }
 
-
-
-        public string SearchContent
-        {
-            get { return (string)GetValue(SearchContentProperty); }
-            set { SetValue(SearchContentProperty, value); }
-        }
-
-        public static readonly DependencyProperty SearchContentProperty =
-            DependencyProperty.Register(nameof(SearchContent), typeof(string), typeof(RSMultiSelectComboBox), new PropertyMetadata(null, OnSearchContentChanged));
-
+        /// <summary>
+        /// SearchContent 变更处理：搜索内容变化时筛选数据源
+        /// </summary>
         private static void OnSearchContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (RSMultiSelectComboBox)d;
@@ -215,33 +282,135 @@ namespace RS.Widgets.Controls
 
         private void OnSearchContentChanged(string? oldValue, string? newValue)
         {
-            // 当搜索内容变化时，筛选数据源
             FilterItemsSource();
-        }
-
-        public bool ShowSearchBox
-        {
-            get { return (bool)GetValue(ShowSearchBoxProperty); }
-            set { SetValue(ShowSearchBoxProperty, value); }
-        }
-
-        public static readonly DependencyProperty ShowSearchBoxProperty =
-            DependencyProperty.Register(nameof(ShowSearchBox), typeof(bool), typeof(RSMultiSelectComboBox), new PropertyMetadata(true));
-
-
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            this.PART_TagContent = this.GetTemplateChild("PART_TagContent") as ItemsControl;
-            this.PART_SearchContent = this.GetTemplateChild("PART_SearchContent") as TextBox;
-
-            if (this.PART_SearchContent != null)
+            
+            // 筛选后，如果下拉框是打开的，重新同步选中项
+            // 这样已选择的项在筛选后的列表中仍然显示为选中状态
+            if (this.IsDropDownOpen)
             {
-                this.PART_SearchContent.KeyDown += OnSearchContentKeyDown;
+                SyncSelectedItemsFromTagModelList();
             }
         }
 
+        #endregion
+
+        #region 下拉框选择处理（核心逻辑）
+
+        /// <summary>
+        /// DataGrid 选择变更事件处理
+        /// 功能：当下拉框中选择项时，将选中的项添加到TagModelList，并选中对应的标签使其可见
+        /// </summary>
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 如果正在同步选中项（避免循环触发），跳过处理
+            if (isSyncingSelectedItems)
+            {
+                return;
+            }
+
+            // ========== 处理添加的项 ==========
+            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            {
+                HandleAddedItems(e.AddedItems);
+            }
+            // ========== 处理移除的项 ==========
+            else if (e.RemovedItems != null && e.RemovedItems.Count > 0)
+            {
+                HandleRemovedItems();
+            }
+        }
+
+        /// <summary>
+        /// 处理添加的选中项：添加到TagModelList，并选中最后添加的标签
+        /// </summary>
+        private void HandleAddedItems(IList addedItems)
+        {
+            // Single 模式：只允许选择一个，先清除所有标签
+            if (this.SelectionMode == DataGridSelectionMode.Single)
+            {
+                TagModelList.Clear();
+                var multiSelectedItems = this.MultiSelectedItems as IList;
+                multiSelectedItems?.Clear();
+            }
+
+            int lastAddedIndex = -1;      // 最后新添加的项的索引
+            object? lastAddedItem = null; // 最后处理的项（可能已存在）
+
+            // 遍历所有添加的项
+            foreach (var item in addedItems)
+            {
+                var tagModel = CreateTagModel(item, TagItemSource.FromItemsSource);
+                
+                // 如果不存在，添加到TagModelList
+                if (!TagModelList.Contains(tagModel))
+                {
+                    TagModelList.Add(tagModel);
+                    lastAddedIndex = TagModelList.Count - 1;
+                    
+                    // 同步到 MultiSelectedItems
+                    var multiSelectedItems = this.MultiSelectedItems as IList;
+                    multiSelectedItems?.Add(tagModel.Data);
+                }
+                
+                // 记录最后处理的项（无论是否新添加）
+                lastAddedItem = item;
+            }
+
+            UpdateHasContent();
+
+            // 选中最后添加/处理的标签，并确保其可见
+            if (lastAddedIndex >= 0)
+            {
+                // 新添加的项，直接使用索引
+                SelectTag(lastAddedIndex);
+            }
+            else if (lastAddedItem != null)
+            {
+                // 已存在的项，找到它的索引
+                var lastTagModel = CreateTagModel(lastAddedItem, TagItemSource.FromItemsSource);
+                int existingIndex = TagModelList.IndexOf(lastTagModel);
+                if (existingIndex >= 0)
+                {
+                    SelectTag(existingIndex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 处理移除的选中项：选中当前SelectedItems中最后一项对应的标签
+        /// 注意：TagModelList不会自动移除，只有用户点击关闭按钮才会移除
+        /// </summary>
+        private void HandleRemovedItems()
+        {
+            if (this.SelectedItems != null && this.SelectedItems.Count > 0)
+            {
+                // 获取当前SelectedItems中的最后一项
+                var lastSelectedItem = this.SelectedItems.Cast<object>().LastOrDefault();
+                if (lastSelectedItem != null)
+                {
+                    // 找到对应的标签并选中
+                    var tagModel = CreateTagModel(lastSelectedItem, TagItemSource.FromItemsSource);
+                    int tagIndex = TagModelList.IndexOf(tagModel);
+                    if (tagIndex >= 0)
+                    {
+                        SelectTag(tagIndex);
+                    }
+                }
+            }
+            else if (TagModelList.Count > 0)
+            {
+                // 如果SelectedItems为空，选中最后一个标签
+                SelectTag(TagModelList.Count - 1);
+            }
+        }
+
+        #endregion
+
+        #region 搜索功能
+
+        /// <summary>
+        /// 搜索框回车键处理：添加第一个匹配的项，或创建自定义标签
+        /// </summary>
         private void OnSearchContentKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -252,7 +421,10 @@ namespace RS.Widgets.Controls
         }
 
         /// <summary>
-        /// 处理搜索框回车键：添加第一个未添加的项，或使用输入内容创建标签
+        /// 处理搜索框回车键
+        /// 逻辑：
+        /// 1. 如果绑定了TagDisplayMemberPath，尝试从筛选结果中找到第一个未添加的项
+        /// 2. 如果没找到或没绑定TagDisplayMemberPath，使用输入内容创建自定义标签
         /// </summary>
         private void HandleSearchEnterKey()
         {
@@ -261,7 +433,7 @@ namespace RS.Widgets.Controls
                 return;
             }
 
-            // 如果绑定了 TagDisplayMemberPath，尝试从筛选结果中找到第一个未添加的项
+            // 尝试从数据源中找到匹配的项
             if (!string.IsNullOrEmpty(this.TagDisplayMemberPath) && this.ItemsSource != null)
             {
                 var searchText = this.SearchContent.Trim();
@@ -273,55 +445,70 @@ namespace RS.Widgets.Controls
                     var tagModel = CreateTagModel(item, TagItemSource.FromItemsSource);
                     if (!TagModelList.Contains(tagModel))
                     {
-                        // 如果是 Single 模式，先清除所有标签（只允许选择一个）
-                        if (this.SelectionMode == DataGridSelectionMode.Single)
-                        {
-                            // 清除所有标签
-                            TagModelList.Clear();
-                            // 同步到 MultiSelectedItems
-                            var multiSelectedItems = this.MultiSelectedItems as IList;
-                            multiSelectedItems?.Clear();
-                        }
-
-                        // 添加到 TagModelList
-                        TagModelList.Add(tagModel);
-                        // 同步到 MultiSelectedItems
-                        var multiSelectedItems2 = this.MultiSelectedItems as IList;
-                        if (multiSelectedItems2 != null)
-                        {
-                            multiSelectedItems2.Add(tagModel.Data);
-                        }
-                        UpdateHasContent();
-                        
-                        // 清空搜索内容
+                        AddTagFromItemSource(item);
                         this.SearchContent = string.Empty;
                         return;
                     }
                 }
             }
 
-            // 如果没有找到匹配的项或没有绑定 TagDisplayMemberPath，使用输入内容创建标签（Custom类型）
+            // 没找到匹配项，创建自定义标签
             object tagData = this.SearchContent.Trim();
             var customTagModel = CreateTagModel(tagData, TagItemSource.Custom);
-            // 检查是否已存在
             if (!TagModelList.Contains(customTagModel))
             {
-                // 如果是 Single 模式，先清除所有标签（只允许选择一个）
-                if (this.SelectionMode == DataGridSelectionMode.Single)
-                {
-                    // 清除所有标签
-                    TagModelList.Clear();
-                    // 同步到 MultiSelectedItems
-                    var multiSelectedItems = this.MultiSelectedItems as IList;
-                    multiSelectedItems?.Clear();
-                }
-
-                TagModelList.Add(customTagModel);
-                UpdateHasContent();
+                AddCustomTag(customTagModel);
             }
 
-            // 清空搜索内容
             this.SearchContent = string.Empty;
+        }
+
+        /// <summary>
+        /// 从ItemsSource添加标签
+        /// </summary>
+        private void AddTagFromItemSource(object item)
+        {
+            // Single 模式：先清除所有标签
+            if (this.SelectionMode == DataGridSelectionMode.Single)
+            {
+                TagModelList.Clear();
+                var multiSelectedItems = this.MultiSelectedItems as IList;
+                multiSelectedItems?.Clear();
+            }
+
+            var tagModel = CreateTagModel(item, TagItemSource.FromItemsSource);
+            TagModelList.Add(tagModel);
+            
+            // 同步到 MultiSelectedItems
+            var multiSelectedItems2 = this.MultiSelectedItems as IList;
+            multiSelectedItems2?.Add(tagModel.Data);
+            
+            UpdateHasContent();
+            
+            // 选中并确保可见
+            int addedIndex = TagModelList.Count - 1;
+            SelectTag(addedIndex);
+        }
+
+        /// <summary>
+        /// 添加自定义标签
+        /// </summary>
+        private void AddCustomTag(TagModel customTagModel)
+        {
+            // Single 模式：先清除所有标签
+            if (this.SelectionMode == DataGridSelectionMode.Single)
+            {
+                TagModelList.Clear();
+                var multiSelectedItems = this.MultiSelectedItems as IList;
+                multiSelectedItems?.Clear();
+            }
+
+            TagModelList.Add(customTagModel);
+            UpdateHasContent();
+            
+            // 选中并确保可见
+            int addedIndex = TagModelList.Count - 1;
+            SelectTag(addedIndex);
         }
 
         /// <summary>
@@ -331,7 +518,6 @@ namespace RS.Widgets.Controls
         {
             if (string.IsNullOrEmpty(this.TagDisplayMemberPath) || this.ItemsSource == null)
             {
-                // 如果没有绑定 TagDisplayMemberPath，不进行筛选，清除筛选
                 ClearItemsSourceFilter();
                 return;
             }
@@ -339,7 +525,6 @@ namespace RS.Widgets.Controls
             var searchText = this.SearchContent?.Trim();
             if (string.IsNullOrEmpty(searchText))
             {
-                // 如果搜索文本为空，显示所有数据
                 ClearItemsSourceFilter();
                 return;
             }
@@ -399,100 +584,13 @@ namespace RS.Widgets.Controls
             return results;
         }
 
-        public bool HasContent
-        {
-            get { return (bool)GetValue(HasContentProperty); }
-            set { SetValue(HasContentProperty, value); }
-        }
+        #endregion
 
-        public static readonly DependencyProperty HasContentProperty =
-            DependencyProperty.Register(nameof(HasContent), typeof(bool), typeof(RSMultiSelectComboBox), new PropertyMetadata(false));
-
-        private static readonly DependencyPropertyKey TagCloseCommandPropertyKey =
-            DependencyProperty.RegisterReadOnly(
-                "TagCloseCommand",
-                typeof(ICommand),
-                typeof(RSMultiSelectComboBox),
-                new PropertyMetadata(null));
-        public static readonly DependencyProperty TagCloseCommandProperty = TagCloseCommandPropertyKey.DependencyProperty;
-
-        public ICommand TagCloseCommand => (ICommand)GetValue(TagCloseCommandProperty);
-
-        private static readonly DependencyPropertyKey TagSelectCommandPropertyKey =
-            DependencyProperty.RegisterReadOnly(
-                "TagSelectCommand",
-                typeof(ICommand),
-                typeof(RSMultiSelectComboBox),
-                new PropertyMetadata(null));
-        public static readonly DependencyProperty TagSelectCommandProperty = TagSelectCommandPropertyKey.DependencyProperty;
-
-        public ICommand TagSelectCommand => (ICommand)GetValue(TagSelectCommandProperty);
-
-        private static readonly DependencyPropertyKey ClearAllTagsCommandPropertyKey =
-            DependencyProperty.RegisterReadOnly(
-                "ClearAllTagsCommand",
-                typeof(ICommand),
-                typeof(RSMultiSelectComboBox),
-                new PropertyMetadata(null));
-        public static readonly DependencyProperty ClearAllTagsCommandProperty = ClearAllTagsCommandPropertyKey.DependencyProperty;
-
-        public ICommand ClearAllTagsCommand => (ICommand)GetValue(ClearAllTagsCommandProperty);
-
-        private static readonly DependencyPropertyKey ToggleDropDownCommandPropertyKey =
-            DependencyProperty.RegisterReadOnly(
-                "ToggleDropDownCommand",
-                typeof(ICommand),
-                typeof(RSMultiSelectComboBox),
-                new PropertyMetadata(null));
-        public static readonly DependencyProperty ToggleDropDownCommandProperty = ToggleDropDownCommandPropertyKey.DependencyProperty;
-
-        public ICommand ToggleDropDownCommand => (ICommand)GetValue(ToggleDropDownCommandProperty);
-
-        private int selectedTagIndex = -1;
-        public int SelectedTagIndex
-        {
-            get { return selectedTagIndex; }
-            private set
-            {
-                if (selectedTagIndex != value)
-                {
-                    selectedTagIndex = value;
-                    UpdateTagSelectionVisual();
-                }
-            }
-        }
+        #region 标签操作（选择、删除、清除）
 
         /// <summary>
-        /// 创建 TagModel 实例
+        /// 标签选择命令执行：点击标签时选中它，或切换下拉框状态
         /// </summary>
-        private TagModel CreateTagModel(object data, TagItemSource source)
-        {
-            object? tagContent;
-            if (source == TagItemSource.FromItemsSource)
-            {
-                // 来自 ItemsSource 的数据，使用 TagDisplayMemberPath 获取显示内容
-                tagContent = ReflectionHelper.GetDisplayMemberValue(data, this.TagDisplayMemberPath) ?? data;
-            }
-            else
-            {
-                // 用户自定义输入的数据，直接使用数据本身作为显示内容
-                tagContent = data?.ToString() ?? data;
-            }
-
-            return new TagModel()
-            {
-                TagContent = tagContent,
-                IsSelect = false,
-                Data = data,
-                Source = source
-            };
-        }
-
-        private void UpdateHasContent()
-        {
-            this.HasContent = this.TagModelList.Count > 0;
-        }
-
         private void TagSelectExecute(TagModel? tag)
         {
             if (tag == null)
@@ -508,15 +606,14 @@ namespace RS.Widgets.Controls
                 int index = this.TagModelList.IndexOf(tag);
                 if (index >= 0)
                 {
-                    // 如果点击的是已经选中的 Tag，则切换下拉框状态
                     if (this.SelectedTagIndex == index)
                     {
-                        // 切换下拉框的打开/关闭状态
+                        // 点击已选中的标签：切换下拉框状态
                         this.IsDropDownOpen = !this.IsDropDownOpen;
                     }
                     else
                     {
-                        // 点击未选中的 Tag，选中它并关闭下拉框
+                        // 点击未选中的标签：选中它并关闭下拉框
                         SelectTag(index);
                         this.IsDropDownOpen = false;
                     }
@@ -525,7 +622,7 @@ namespace RS.Widgets.Controls
             }
             finally
             {
-                // 使用 Dispatcher.BeginInvoke 延迟重置标志，确保 ToggleDropDownCommand 检查时能看到这个标志
+                // 延迟重置标志，确保 ToggleDropDownCommand 检查时能看到这个标志
                 this.Dispatcher.BeginInvoke(new System.Action(() =>
                 {
                     this.isTagSelecting = false;
@@ -533,6 +630,9 @@ namespace RS.Widgets.Controls
             }
         }
 
+        /// <summary>
+        /// 标签关闭命令执行：删除标签
+        /// </summary>
         private void TagCloseExecute(TagModel? tag)
         {
             if (tag == null)
@@ -546,7 +646,7 @@ namespace RS.Widgets.Controls
                 return;
             }
 
-            // 保存当前选中索引（删除前的）
+            // 保存当前选中索引
             int currentSelectedIndex = this.SelectedTagIndex;
 
             // 从 TagModelList 中移除
@@ -571,7 +671,6 @@ namespace RS.Widgets.Controls
             }
             else
             {
-                // 如果删除的是当前选中的标签，清除选中状态（不自动选中其他标签）
                 if (currentSelectedIndex == index)
                 {
                     // 删除的是当前选中的标签，清除选中状态
@@ -586,8 +685,55 @@ namespace RS.Widgets.Controls
             }
         }
 
+        /// <summary>
+        /// 清除所有标签命令执行
+        /// </summary>
+        private void ClearAllTagsExecute()
+        {
+            if (this.TagModelList.Count == 0)
+            {
+                return;
+            }
+
+            TagModelList.Clear();
+            this.SelectedItems.Clear();
+            
+            var multiSelectedItems = this.MultiSelectedItems as IList;
+            multiSelectedItems?.Clear();
+
+            UpdateHasContent();
+            SelectedTagIndex = -1;
+        }
+
+        /// <summary>
+        /// 切换下拉框状态命令执行（用于空白区域点击）
+        /// </summary>
+        private void ToggleDropDownExecute()
+        {
+            // 如果正在处理标签选择，跳过执行，避免事件冒泡导致的重复切换
+            if (this.isTagSelecting)
+            {
+                return;
+            }
+
+            this.IsDropDownOpen = !this.IsDropDownOpen;
+        }
+
+        #endregion
+
+        #region 键盘导航
+
+        /// <summary>
+        /// 键盘事件处理：支持左右箭头键选择标签，Backspace/Delete删除标签
+        /// </summary>
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
+            // 如果焦点在搜索框中，不处理键盘事件，让搜索框自己处理
+            if (this.PART_SearchContent != null && this.PART_SearchContent.IsFocused)
+            {
+                return;
+            }
+
             if (this.TagModelList.Count == 0)
             {
                 return;
@@ -596,6 +742,7 @@ namespace RS.Widgets.Controls
             switch (e.Key)
             {
                 case Key.Left:
+                    // 左箭头：选择上一个标签
                     if (this.SelectedTagIndex > 0)
                     {
                         SelectTag(this.SelectedTagIndex - 1);
@@ -610,6 +757,7 @@ namespace RS.Widgets.Controls
                     break;
 
                 case Key.Right:
+                    // 右箭头：选择下一个标签
                     if (this.SelectedTagIndex >= 0 && this.SelectedTagIndex < this.TagModelList.Count - 1)
                     {
                         SelectTag(this.SelectedTagIndex + 1);
@@ -621,10 +769,10 @@ namespace RS.Widgets.Controls
                         SelectTag(0);
                         e.Handled = true;
                     }
-                    // 已经选中最后一个，保持选中状态不变
                     break;
 
                 case Key.Back:
+                    // Backspace：删除选中的标签，或删除最后一个标签
                     if (this.SelectedTagIndex >= 0)
                     {
                         DeleteSelectedTag();
@@ -632,7 +780,7 @@ namespace RS.Widgets.Controls
                     }
                     else if (this.TagModelList.Count > 0)
                     {
-                        // 没有选中时，删除最后一个Tag
+                        // 没有选中时，删除最后一个标签
                         var lastTag = this.TagModelList[this.TagModelList.Count - 1];
                         TagCloseExecute(lastTag);
                         e.Handled = true;
@@ -640,6 +788,7 @@ namespace RS.Widgets.Controls
                     break;
 
                 case Key.Delete:
+                    // Delete：删除选中的标签
                     if (this.SelectedTagIndex >= 0)
                     {
                         DeleteSelectedTag();
@@ -648,6 +797,7 @@ namespace RS.Widgets.Controls
                     break;
 
                 case Key.Escape:
+                    // Escape：清除标签选中状态
                     if (this.SelectedTagIndex >= 0)
                     {
                         ClearTagSelect();
@@ -658,7 +808,7 @@ namespace RS.Widgets.Controls
         }
 
         /// <summary>
-        /// 选择指定索引的Tag
+        /// 选择指定索引的标签，并确保其可见
         /// </summary>
         private void SelectTag(int index)
         {
@@ -674,13 +824,11 @@ namespace RS.Widgets.Controls
             }
 
             this.SelectedTagIndex = index;
-
-            // 使选中的Tag滚动到可见位置
             ScrollTagIntoView(index);
         }
 
         /// <summary>
-        /// 将指定索引的Tag滚动到可见位置
+        /// 将指定索引的标签滚动到可见位置
         /// </summary>
         private void ScrollTagIntoView(int index)
         {
@@ -694,7 +842,6 @@ namespace RS.Widgets.Controls
             {
                 try
                 {
-                    // 通过 ItemContainerGenerator 获取容器
                     var generator = this.PART_TagContent.ItemContainerGenerator;
                     if (generator.Status == System.Windows.Controls.Primitives.GeneratorStatus.ContainersGenerated)
                     {
@@ -722,10 +869,68 @@ namespace RS.Widgets.Controls
             }), System.Windows.Threading.DispatcherPriority.Loaded);
         }
 
+        /// <summary>
+        /// 删除当前选中的标签
+        /// </summary>
+        private void DeleteSelectedTag()
+        {
+            if (this.SelectedTagIndex < 0 || this.SelectedTagIndex >= this.TagModelList.Count)
+            {
+                return;
+            }
 
+            var tagToDelete = this.TagModelList[this.SelectedTagIndex];
+            TagCloseExecute(tagToDelete);
+        }
 
         /// <summary>
-        /// 根据SelectedTagIndex更新所有Tag的选中状态视觉效果
+        /// 清除标签选中状态
+        /// </summary>
+        private void ClearTagSelect()
+        {
+            this.SelectedTagIndex = -1;
+        }
+
+        #endregion
+
+        #region 辅助方法
+
+        /// <summary>
+        /// 创建 TagModel 实例
+        /// </summary>
+        private TagModel CreateTagModel(object data, TagItemSource source)
+        {
+            object? tagContent;
+            if (source == TagItemSource.FromItemsSource)
+            {
+                // 来自 ItemsSource 的数据，使用 TagDisplayMemberPath 获取显示内容
+                tagContent = ReflectionHelper.GetDisplayMemberValue(data, this.TagDisplayMemberPath) ?? data;
+            }
+            else
+            {
+                // 用户自定义输入的数据，直接使用数据本身作为显示内容
+                tagContent = data?.ToString() ?? data;
+            }
+
+            return new TagModel()
+            {
+                TagContent = tagContent,
+                IsSelect = false,
+                Data = data,
+                Source = source
+            };
+        }
+
+        /// <summary>
+        /// 更新 HasContent 属性
+        /// </summary>
+        private void UpdateHasContent()
+        {
+            this.HasContent = this.TagModelList.Count > 0;
+        }
+
+        /// <summary>
+        /// 根据 SelectedTagIndex 更新所有标签的选中状态视觉效果
         /// </summary>
         private void UpdateTagSelectionVisual()
         {
@@ -741,67 +946,28 @@ namespace RS.Widgets.Controls
         }
 
         /// <summary>
-        /// 清除Tag的选中状态
+        /// 当只有1列时，自动设置宽度为*填满可用空间
         /// </summary>
-        private void ClearTagSelect()
+        private void AdjustColumnWidthWhenSingleColumn()
         {
-            this.SelectedTagIndex = -1;
-        }
-
-        /// <summary>
-        /// 删除当前选中的Tag
-        /// </summary>
-        private void DeleteSelectedTag()
-        {
-            if (this.SelectedTagIndex < 0 || this.SelectedTagIndex >= this.TagModelList.Count)
+            if (this.Columns.Count == 1)
             {
-                return;
+                this.Columns[0].Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
-
-            var tagToDelete = this.TagModelList[this.SelectedTagIndex];
-            TagCloseExecute(tagToDelete);
         }
 
-        /// <summary>
-        /// 切换下拉框的打开/关闭状态（用于空白区域点击）
-        /// </summary>
-        private void ToggleDropDownExecute()
+        private void OnColumnsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            // 如果正在处理标签选择，跳过执行，避免事件冒泡导致的重复切换
-            if (this.isTagSelecting)
-            {
-                return;
-            }
-
-            this.IsDropDownOpen = !this.IsDropDownOpen;
+            AdjustColumnWidthWhenSingleColumn();
         }
 
-        /// <summary>
-        /// 清除所有Tag标签
-        /// </summary>
-        private void ClearAllTagsExecute()
-        {
-            if (this.TagModelList.Count == 0)
-            {
-                return;
-            }
+        #endregion
 
-            // 清除所有Tag
-            TagModelList.Clear();
-            this.SelectedItems.Clear();
-            
-            // 同步到 MultiSelectedItems
-            var multiSelectedItems = this.MultiSelectedItems as IList;
-            multiSelectedItems?.Clear();
-
-            UpdateHasContent();
-
-            // 清除选中索引
-            SelectedTagIndex = -1;
-        }
+        #region 数据同步
 
         /// <summary>
-        /// 根据TagModelList同步DataGrid的SelectedItems，使下拉框打开时显示已选择的项
+        /// 根据TagModelList同步DataGrid的SelectedItems
+        /// 功能：当下拉框打开时，使下拉框显示已选择的项
         /// </summary>
         private void SyncSelectedItemsFromTagModelList()
         {
@@ -817,7 +983,6 @@ namespace RS.Widgets.Controls
                 // 先清除当前选中项
                 this.SelectedItems.Clear();
 
-                // 如果 TagModelList 为空，直接返回（SelectedItems 已清除）
                 if (TagModelList.Count == 0)
                 {
                     return;
@@ -825,20 +990,41 @@ namespace RS.Widgets.Controls
 
                 // 获取实际的视图（考虑筛选）
                 var collectionView = CollectionViewSource.GetDefaultView(this.ItemsSource);
-                var itemsToIterate = collectionView?.Cast<object>() ?? this.ItemsSource.Cast<object>();
-
-                // 遍历ItemsSource，如果项在TagModelList中且来源是FromItemsSource，则添加到SelectedItems
-                foreach (var item in itemsToIterate)
+                
+                // 遍历筛选后的视图，如果项在TagModelList中且来源是FromItemsSource，则添加到SelectedItems
+                // 注意：使用 collectionView 的迭代器可以正确获取筛选后的项
+                if (collectionView != null)
                 {
-                    var tagModel = CreateTagModel(item, TagItemSource.FromItemsSource);
-                    if (TagModelList.Contains(tagModel))
+                    foreach (var item in collectionView)
                     {
-                        this.SelectedItems.Add(item);
-                        
-                        // 如果是 Single 模式，只添加第一个匹配的项，然后退出
-                        if (this.SelectionMode == DataGridSelectionMode.Single)
+                        var tagModel = CreateTagModel(item, TagItemSource.FromItemsSource);
+                        if (TagModelList.Contains(tagModel))
                         {
-                            break;
+                            this.SelectedItems.Add(item);
+                            
+                            // Single 模式：只添加第一个匹配的项
+                            if (this.SelectionMode == DataGridSelectionMode.Single)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // 如果没有 CollectionView，直接遍历 ItemsSource
+                    foreach (var item in this.ItemsSource)
+                    {
+                        var tagModel = CreateTagModel(item, TagItemSource.FromItemsSource);
+                        if (TagModelList.Contains(tagModel))
+                        {
+                            this.SelectedItems.Add(item);
+                            
+                            // Single 模式：只添加第一个匹配的项
+                            if (this.SelectionMode == DataGridSelectionMode.Single)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
@@ -848,6 +1034,7 @@ namespace RS.Widgets.Controls
                 isSyncingSelectedItems = false;
             }
         }
+
+        #endregion
     }
 }
-

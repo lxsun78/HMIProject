@@ -471,6 +471,10 @@
                                             Width="*"
                                             Binding="{Binding Phone}"
                                             Header="电话" />
+                                        <DataGridTextColumn
+                                            Width="*"
+                                            Binding="{Binding DeleteTime}"
+                                            Header="创建时间" />
                                     </rs:RSMultiSelectComboBox.Columns>
                                 </rs:RSMultiSelectComboBox>
 

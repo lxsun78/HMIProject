@@ -278,7 +278,6 @@ namespace RS.WPFClient.ViewModels
                 if (tagModelList == null)
                 {
                     tagModelList = new ObservableCollection<TagModel>();
-                    tagModelList.Add(new TagModel());
                 }
                 return tagModelList;
             }
