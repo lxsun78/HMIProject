@@ -13,7 +13,7 @@
     <converters:ForegroundColorConverter x:Key="ForegroundColorConverter" />
 
     <Style TargetType="{x:Type rs:RSDockPanel}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="#CCCEDB" />
         <Setter Property="BorderThickness" Value="1" />
@@ -116,7 +116,6 @@
                                             Placement="Bottom"
                                             PlacementTarget="{Binding ElementName=PART_BtnWindowPosition}"
                                             PopupAnimation="None"
-                                            SnapsToDevicePixels="True"
                                             StaysOpen="False">
                                             <Border
                                                 Width="200"

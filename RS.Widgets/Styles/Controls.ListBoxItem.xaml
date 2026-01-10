@@ -5,7 +5,7 @@
 
     <Style x:Key="RSApp.Styles.ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Background" Value="Transparent" />
@@ -25,12 +25,8 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
                         FocusVisualStyle="{x:Null}"
-                        Focusable="True"
-                        SnapsToDevicePixels="true">
-                        <ContentPresenter
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        Focusable="True">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

@@ -29,16 +29,14 @@
                                 Placement="Bottom"
                                 PlacementTarget="{TemplateBinding PlacementTarget}"
                                 PopupAnimation="None"
-                                RelativeElement="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                SnapsToDevicePixels="True">
+                                RelativeElement="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <Border
                                     Width="{TemplateBinding DropdownWidth}"
                                     Height="{TemplateBinding DropdownHeight}"
                                     Margin="15,0,15,15"
                                     Background="#fff"
                                     CornerRadius="5"
-                                    Effect="{StaticResource RSApp.Styles.DefaultEffect}"
-                                    SnapsToDevicePixels="True">
+                                    Effect="{StaticResource RSApp.Styles.DefaultEffect}">
                                     <ScrollViewer>
                                         <ContentControl Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=DropdownContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </ScrollViewer>

@@ -119,6 +119,23 @@ namespace RS.Widgets.Controls
             obj.SetValue(IconRotateAngleProperty, value);
         }
 
+
+        public static readonly DependencyProperty IconColorProperty = DependencyProperty.RegisterAttached(
+ "IconColor",
+ typeof(Brush),
+ typeof(ControlsHelper),
+ new FrameworkPropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000"))));
+
+        public static Brush GetIconColor(UIElement element)
+        {
+            return (Brush)element.GetValue(IconColorProperty);
+        }
+
+        public static void SetIconColor(UIElement element, Brush value)
+        {
+            element.SetValue(IconColorProperty, value);
+        }
+
         #endregion
         /// <summary>
         /// 设置控件圆角

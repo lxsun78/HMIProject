@@ -47,6 +47,7 @@
                 </Path>
                 <ContentPresenter
                     Grid.Column="1"
+                    Margin="3,0,0,0"
                     TextBlock.FontSize="{TemplateBinding FontSize}"
                     TextBlock.Foreground="{TemplateBinding Foreground}" />
             </Grid>

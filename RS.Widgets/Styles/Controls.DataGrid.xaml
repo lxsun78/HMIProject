@@ -70,8 +70,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-                        SnapsToDevicePixels="True">
+                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
                         <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false">
                             <ScrollViewer.Template>
                                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -150,7 +149,7 @@
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </ScrollViewer.Template>
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ItemsPresenter />
                         </ScrollViewer>
                     </Border>
                 </ControlTemplate>
@@ -181,8 +180,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-                        SnapsToDevicePixels="True">
+                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
                         <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
 
@@ -193,7 +191,6 @@
 
     <Style x:Key="RSApp.Styles.DataGridRowStyle" TargetType="{x:Type DataGridRow}">
         <Setter Property="Background" Value="#fff" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="BorderBrush" Value="#E5E6EB" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
         <Setter Property="ValidationErrorTemplate">
@@ -216,8 +213,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-                        SnapsToDevicePixels="True">
+                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2" />
@@ -238,10 +234,7 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" />
                                 </SelectiveScrollingGrid.RowDefinitions>
-                                <DataGridCellsPresenter
-                                    Grid.Column="1"
-                                    ItemsPanel="{TemplateBinding ItemsPanel}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <DataGridCellsPresenter Grid.Column="1" ItemsPanel="{TemplateBinding ItemsPanel}" />
                                 <DataGridDetailsPresenter
                                     Grid.Row="1"
                                     Grid.Column="1"
@@ -296,11 +289,8 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
                             <StackPanel Orientation="Horizontal">
-                                <ContentPresenter VerticalAlignment="Center" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                <Control
-                                    SnapsToDevicePixels="false"
-                                    Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
-                                    Visibility="{Binding (Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
+                                <ContentPresenter VerticalAlignment="Center" />
+                                <Control Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Visibility="{Binding (Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
                             </StackPanel>
                         </Border>
 
@@ -351,10 +341,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
-                            <ContentPresenter
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Border>
                         <Thumb
                             x:Name="PART_LeftHeaderGripper"

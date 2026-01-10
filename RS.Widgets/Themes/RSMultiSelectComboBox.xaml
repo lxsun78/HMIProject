@@ -365,7 +365,7 @@
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                                                                <Grid SnapsToDevicePixels="true">
+                                                                <Grid>
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="*" />
                                                                     </Grid.ColumnDefinitions>

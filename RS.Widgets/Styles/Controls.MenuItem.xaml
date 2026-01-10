@@ -35,7 +35,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                    <Grid SnapsToDevicePixels="true">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
@@ -124,8 +124,7 @@
             Background="{TemplateBinding Background}"
             BorderBrush="{TemplateBinding BorderBrush}"
             BorderThickness="{TemplateBinding BorderThickness}"
-            CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-            SnapsToDevicePixels="true">
+            CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -151,15 +150,13 @@
                     Margin="3,0,3,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    ContentSource="Icon"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    ContentSource="Icon" />
 
                 <ContentPresenter
                     Grid.Column="2"
                     Margin="3,0,3,0"
                     ContentSource="Header"
-                    RecognizesAccessKey="True"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    RecognizesAccessKey="True" />
                 <Popup
                     x:Name="PART_Popup"
                     AllowsTransparency="true"
@@ -167,8 +164,7 @@
                     IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
                     Placement="Bottom"
                     PlacementTarget="{Binding ElementName=templateRoot}"
-                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
-                    SnapsToDevicePixels="True">
+                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
                     <Border Margin="15,0,15,15" Effect="{StaticResource RSApp.Styles.DefaultEffect}">
                         <Border
                             x:Name="SubMenuBorder"
@@ -189,8 +185,7 @@
                                         x:Name="ItemsPresenter"
                                         Grid.IsSharedSizeScope="true"
                                         KeyboardNavigation.DirectionalNavigation="Cycle"
-                                        KeyboardNavigation.TabNavigation="Cycle"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        KeyboardNavigation.TabNavigation="Cycle" />
                                 </Grid>
                             </ScrollViewer>
                         </Border>
@@ -228,8 +223,7 @@
             Background="{TemplateBinding Background}"
             BorderBrush="{TemplateBinding BorderBrush}"
             BorderThickness="{TemplateBinding BorderThickness}"
-            CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-            SnapsToDevicePixels="true">
+            CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -254,14 +248,12 @@
                     Margin="3,0,3,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    ContentSource="Icon"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    ContentSource="Icon" />
                 <ContentPresenter
                     Grid.Column="2"
                     Margin="{TemplateBinding Padding}"
                     ContentSource="Header"
-                    RecognizesAccessKey="True"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    RecognizesAccessKey="True" />
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
@@ -297,8 +289,7 @@
             Background="{TemplateBinding Background}"
             BorderBrush="{TemplateBinding BorderBrush}"
             BorderThickness="{TemplateBinding BorderThickness}"
-            CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-            SnapsToDevicePixels="true">
+            CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup1" />
@@ -328,8 +319,7 @@
                     Margin="3,0,3,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    ContentSource="Icon"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    ContentSource="Icon" />
 
                 <ContentPresenter
                     Grid.Column="2"
@@ -337,8 +327,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     ContentSource="Header"
-                    RecognizesAccessKey="True"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    RecognizesAccessKey="True" />
                 <TextBlock
                     Grid.Column="4"
                     VerticalAlignment="Center"
@@ -360,7 +349,6 @@
                     IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
                     Placement="Right"
                     PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
-                    SnapsToDevicePixels="True"
                     VerticalOffset="-5">
                     <Border Margin="15" Effect="{StaticResource RSApp.Styles.DefaultEffect}">
                         <Border
@@ -382,8 +370,7 @@
                                         x:Name="ItemsPresenter"
                                         Grid.IsSharedSizeScope="true"
                                         KeyboardNavigation.DirectionalNavigation="Cycle"
-                                        KeyboardNavigation.TabNavigation="Cycle"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        KeyboardNavigation.TabNavigation="Cycle" />
                                 </Grid>
                             </ScrollViewer>
                         </Border>
@@ -421,8 +408,7 @@
             Background="{TemplateBinding Background}"
             BorderBrush="{TemplateBinding BorderBrush}"
             BorderThickness="{TemplateBinding BorderThickness}"
-            CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-            SnapsToDevicePixels="true">
+            CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup1" />
@@ -454,8 +440,7 @@
                     Margin="3,0,3,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    ContentSource="Icon"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    ContentSource="Icon" />
 
                 <ContentPresenter
                     x:Name="menuHeaderContainer"
@@ -464,8 +449,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     ContentSource="Header"
-                    RecognizesAccessKey="True"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    RecognizesAccessKey="True" />
                 <TextBlock
                     x:Name="menuGestureText"
                     Grid.Column="4"
@@ -501,7 +485,7 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+
         <Setter Property="rs:MenuItemHelper.CheckedIconFill" Value="#06b025" />
         <Setter Property="rs:MenuItemHelper.CheckedIcon" Value="{DynamicResource RSApp.Icons.Checked}" />
         <Setter Property="ScrollViewer.PanningMode" Value="Both" />

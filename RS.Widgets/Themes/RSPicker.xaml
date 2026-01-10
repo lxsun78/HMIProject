@@ -47,7 +47,7 @@
 
 
     <Style TargetType="{x:Type rs:RSPicker}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="BorderThickness" Value="1" />
@@ -98,8 +98,7 @@
                                     x:Name="PART_Canvas"
                                     Grid.Row="2"
                                     Background="Transparent"
-                                    ClipToBounds="True"
-                                    SnapsToDevicePixels="True" />
+                                    ClipToBounds="True" />
                                 <RepeatButton
                                     x:Name="PART_BtnScrollUp"
                                     Grid.Row="0"

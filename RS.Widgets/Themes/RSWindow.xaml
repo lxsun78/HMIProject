@@ -12,7 +12,7 @@
     <converters:ClipConverter x:Key="ClipConverter" />
     <converters:ForegroundColorConverter x:Key="ForegroundColorConverter" />
     <Style x:Key="RSApp.Styles.RSWindowBaseStyle" TargetType="{x:Type rs:RSWindowBase}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+
         <Setter Property="ResizeMode" Value="CanResize" />
         <Setter Property="Background" Value="#F3F3F3" />
         <Setter Property="BorderThickness" Value="0" />

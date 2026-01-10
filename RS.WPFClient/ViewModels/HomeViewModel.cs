@@ -27,6 +27,51 @@ namespace RS.WPFClient.ViewModels
 
         private DispatcherTimer CaretDispatcherTimer;
 
+        /// <summary>
+        /// Command for adding an account
+        /// </summary>
+        public ICommand AddAccountCommand { get; }
+
+        /// <summary>
+        /// Command for managing account security
+        /// </summary>
+        public ICommand AccountSecurityCommand { get; }
+
+        /// <summary>
+        /// Command for opening the help center
+        /// </summary>
+        public ICommand HelpCenterCommand { get; }
+
+        /// <summary>
+        /// Command for providing feedback
+        /// </summary>
+        public ICommand FeedbackCommand { get; }
+
+        /// <summary>
+        /// Command for accessing the old email version
+        /// </summary>
+        public ICommand OldEmailCommand { get; }
+
+        /// <summary>
+        /// Command for accessing the membership center
+        /// </summary>
+        public ICommand MembershipCenterCommand { get; }
+
+        /// <summary>
+        /// Command for logging out
+        /// </summary>
+        public ICommand LogoutCommand { get; }
+
+        /// <summary>
+        /// Command for opening the membership page
+        /// </summary>
+        public ICommand OpenMembershipCommand { get; }
+
+        /// <summary>
+        /// Command for copying the email address to clipboard
+        /// </summary>
+        public ICommand CopyEmailCommand { get; }
+
         public HomeViewModel()
         {
             this.NavCommand = new RelayCommand<NavigateModel>(Nav);
@@ -40,6 +85,61 @@ namespace RS.WPFClient.ViewModels
             {
                 IsCaretVisible = !IsCaretVisible;
             }, Application.Current.Dispatcher);
+
+            this.AddAccountCommand = new RelayCommand(AddAccount);
+            this.AccountSecurityCommand = new RelayCommand(AccountSecurity);
+            this.HelpCenterCommand = new RelayCommand(OpenHelpCenter);
+            this.FeedbackCommand = new RelayCommand(ProvideFeedback);
+            this.OldEmailCommand = new RelayCommand(OpenOldEmail);
+            this.MembershipCenterCommand = new RelayCommand(OpenMembershipCenter);
+            this.LogoutCommand = new RelayCommand(Logout);
+            this.OpenMembershipCommand = new RelayCommand(OpenMembership);
+            this.CopyEmailCommand = new RelayCommand(CopyEmail);
+        }
+
+        private void AddAccount()
+        {
+            // Logic for adding an account
+        }
+
+        private void AccountSecurity()
+        {
+            // Logic for managing account security
+        }
+
+        private void OpenHelpCenter()
+        {
+            // Logic for opening the help center
+        }
+
+        private void ProvideFeedback()
+        {
+            // Logic for providing feedback
+        }
+
+        private void OpenOldEmail()
+        {
+            // Logic for accessing the old email version
+        }
+
+        private void OpenMembershipCenter()
+        {
+            // Logic for accessing the membership center
+        }
+
+        private void Logout()
+        {
+            // Logic for logging out
+        }
+
+        private void OpenMembership()
+        {
+            // Logic for opening the membership page
+        }
+
+        private void CopyEmail()
+        {
+            // Logic for copying the email address to clipboard
         }
 
         #region 测试

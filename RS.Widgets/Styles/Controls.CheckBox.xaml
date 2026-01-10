@@ -8,7 +8,6 @@
 
     <Style x:Key="RSApp.Styles.CheckBoxStyle" TargetType="{x:Type CheckBox}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Foreground" Value="#333333" />
@@ -150,8 +149,7 @@
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Focusable="False"
-                                    RecognizesAccessKey="True"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    RecognizesAccessKey="True" />
                             </Grid>
                         </Grid>
                     </Border>

@@ -275,7 +275,7 @@
                                             <Setter Property="BorderThickness" Value="1" />
                                             <Setter Property="Margin" Value="0,0,0,3" />
                                             <Setter Property="IsChecked" Value="{Binding IsSelect, Mode=TwoWay}" />
-                                            <Setter Property="SnapsToDevicePixels" Value="True" />
+
                                             <Setter Property="GroupName" Value="TagModelGroup" />
                                             <Setter Property="Template">
                                                 <Setter.Value>
@@ -522,7 +522,6 @@
                         x:Name="CrossHorizontalLineBlack"
                         Margin="0,1,0,0"
                         RenderOptions.EdgeMode="Aliased"
-                        SnapsToDevicePixels="True"
                         Stroke="Black"
                         StrokeDashArray="2 2"
                         StrokeDashCap="Flat"
@@ -535,7 +534,6 @@
                         x:Name="CrossHorizontalLineWhite"
                         Margin="0,1,0,0"
                         RenderOptions.EdgeMode="Aliased"
-                        SnapsToDevicePixels="True"
                         Stroke="White"
                         StrokeDashArray="2 2"
                         StrokeDashCap="Flat"
@@ -549,7 +547,6 @@
                         x:Name="CrossVerticalLineBlack"
                         Margin="1,0,0,0"
                         RenderOptions.EdgeMode="Aliased"
-                        SnapsToDevicePixels="True"
                         Stroke="Black"
                         StrokeDashArray="2 2"
                         StrokeDashCap="Flat"
@@ -562,7 +559,6 @@
                         x:Name="CrossVerticalLineWhite"
                         Margin="1,0,0,0"
                         RenderOptions.EdgeMode="Aliased"
-                        SnapsToDevicePixels="True"
                         Stroke="White"
                         StrokeDashArray="2 2"
                         StrokeDashCap="Flat"

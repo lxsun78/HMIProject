@@ -45,16 +45,14 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-                        SnapsToDevicePixels="true">
+                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
                         <ContentPresenter
                             x:Name="contentPresenter"
                             Margin="{TemplateBinding Padding}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Focusable="False"
-                            RecognizesAccessKey="True"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            RecognizesAccessKey="True" />
                     </Border>
                     <ControlTemplate.Triggers />
                 </ControlTemplate>

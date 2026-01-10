@@ -21,7 +21,7 @@
     <converters:ClipConverter x:Key="ClipConverter" />
 
     <Style TargetType="{x:Type rs:RSNavigate}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+
         <Setter Property="Background" Value="#F3F3F3" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="BorderBrush" Value="#eee" />

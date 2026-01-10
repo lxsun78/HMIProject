@@ -25,10 +25,9 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-                        SnapsToDevicePixels="true">
+                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
                         <ScrollViewer Padding="{TemplateBinding Padding}" Focusable="false">
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ItemsPresenter />
                         </ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>

@@ -22,8 +22,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-                        SnapsToDevicePixels="true">
+                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
                         <ContentPresenter
                             Margin="6"
                             HorizontalAlignment="Center"

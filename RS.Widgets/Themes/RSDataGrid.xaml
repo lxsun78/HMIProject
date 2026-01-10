@@ -22,8 +22,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}"
-                        SnapsToDevicePixels="True">
+                        CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
                         <rs:RSDialog x:Name="PART_RSDialog">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -111,7 +110,7 @@
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
                                     </ScrollViewer.Template>
-                                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    <ItemsPresenter />
                                 </ScrollViewer>
 
                                 <Border

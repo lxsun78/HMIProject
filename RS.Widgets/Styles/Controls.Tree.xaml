@@ -6,7 +6,7 @@
 
     <Style x:Key="{x:Type TreeView}" TargetType="TreeView">
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />

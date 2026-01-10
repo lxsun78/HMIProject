@@ -15,7 +15,7 @@
     <converters:ClipConverter x:Key="ClipConverter" />
     <converters:BackgroundToForegroundConverter x:Key="BackgroundToForegroundConverter" />
     <Style TargetType="{x:Type rs:RSDateTimePicker}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="BorderThickness" Value="1" />
@@ -69,8 +69,7 @@
                                 AllowsTransparency="True"
                                 IsOpen="{Binding ElementName=PART_BtnDatePicker, Path=IsChecked}"
                                 Placement="Bottom"
-                                PlacementTarget="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                SnapsToDevicePixels="True">
+                                PlacementTarget="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <Border
                                     Margin="15,0,15,15"
                                     Background="#fff"

@@ -12,7 +12,7 @@
             <Style TargetType="{x:Type local:RSImgVerify}">
                 <Setter Property="MinHeight" Value="38" />
                 <Setter Property="Margin" Value="3,0,3,0" />
-                <Setter Property="SnapsToDevicePixels" Value="True" />
+
                 <Setter Property="Background" Value="#F5F5F5" />
                 <Setter Property="BorderBrush" Value="#198cff" />
                 <Setter Property="BorderThickness" Value="1" />

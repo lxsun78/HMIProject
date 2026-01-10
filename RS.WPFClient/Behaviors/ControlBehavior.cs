@@ -53,6 +53,7 @@ namespace RS.WPFClient.Behaviors
                 behavior.OnFocusedChanged();
             }
         }
+
         private int GetCaretIndex(string text)
         {
             int caretIndex = 0;

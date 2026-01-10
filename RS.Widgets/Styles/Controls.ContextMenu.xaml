@@ -18,7 +18,6 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Background" Value="#fff" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Margin" Value="15" />
         <Setter Property="rs:ControlsHelper.CornerRadius" Value="3" />
         <Setter Property="Effect" Value="{StaticResource RSApp.Styles.DefaultEffect}" />
@@ -51,8 +50,7 @@
                                     Margin="0"
                                     Grid.IsSharedSizeScope="True"
                                     KeyboardNavigation.DirectionalNavigation="Cycle"
-                                    KeyboardNavigation.TabNavigation="Cycle"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    KeyboardNavigation.TabNavigation="Cycle" />
                             </ScrollViewer>
                         </Grid>
                     </Border>
