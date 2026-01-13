@@ -453,15 +453,11 @@ namespace RS.Widgets.Controls
                 var itemTemplate = this.CreateItemContainer(item);
                 if (itemTemplate != null)
                 {
-                    if (this.CalcuWidth < itemTemplate.ActualWidth)
-                    {
-                        this.CalcuWidth = itemTemplate.ActualWidth;
-                    }
                     itemTemplate.MouseLeftButtonUp += ItemTemplate_MouseLeftButtonUp;
                     this.ItemsList.Add(itemTemplate);
                 }
             }
-            //this.Width = Math.Max(this.MinWidth, this.CalcuWidth);
+            
             this.AddItemsIntoCanvas();
         }
 
@@ -480,7 +476,6 @@ namespace RS.Widgets.Controls
 
 
 
-        private double CalcuWidth = 60;
         private int SelectedIndex = -1;
 
         /// <summary>
@@ -495,6 +490,13 @@ namespace RS.Widgets.Controls
                 || this.ItemsList.Count == 0)
             {
                 return;
+            }
+
+            var contentHostActualWidth = this.PART_ContentHost.ActualWidth;
+
+            foreach (var item in this.ItemsList)
+            {
+                item.Width = contentHostActualWidth;
             }
 
             int middleIndex = this.ItemsList.Count / 2;

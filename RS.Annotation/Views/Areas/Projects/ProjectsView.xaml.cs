@@ -23,6 +23,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RS.Widgets.Controls;
+using TagModel = RS.Annotation.Models.TagModel;
 
 namespace RS.Annotation.Views.Areas
 {

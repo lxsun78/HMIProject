@@ -66,9 +66,10 @@
                                 x:Name="PART_Popup"
                                 Height="380"
                                 AllowsTransparency="True"
-                                IsOpen="{Binding ElementName=PART_BtnDatePicker, Path=IsChecked}"
+                                IsOpen="{Binding ElementName=PART_BtnDatePicker, Path=IsChecked, Mode=TwoWay}"
                                 Placement="Bottom"
-                                PlacementTarget="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                PlacementTarget="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                RelativeElement="{Binding ElementName=PART_BtnDatePicker}">
                                 <Border
                                     Margin="15,0,15,15"
                                     Background="#fff"

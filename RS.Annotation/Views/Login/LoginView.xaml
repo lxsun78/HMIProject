@@ -169,7 +169,7 @@
 
         <Style
             x:Key="RSApp.Styles.LoginButtonStyle"
-            BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+            BasedOn="{StaticResource RSApp.Styles.ButtonBaseStyle}"
             TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#198cff" />
             <Style.Triggers>

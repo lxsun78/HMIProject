@@ -18,7 +18,7 @@
     <DataTemplate x:Key="ItemWrapperDataTemplate" DataType="{x:Type model:ItemWrapper}">
         <Border
             x:Name="PART_Border"
-            Padding="20,6,20,6"
+            Padding="0,6,0,6"
             Background="Transparent"
             BorderThickness="0">
             <TextBlock
@@ -56,7 +56,6 @@
         <Setter Property="Foreground" Value="#333" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="SelectedBackground" Value="#881E90FF" />
         <Setter Property="ItemTemplate" Value="{StaticResource ItemWrapperDataTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -84,7 +83,7 @@
                                 x:Name="PART_TxtSearch"
                                 Grid.Row="1"
                                 HorizontalContentAlignment="Center"
-                                rs:TextBoxHelper.IsShowClearButton="{TemplateBinding rs:TextBoxHelper.IsShowClearButton}"
+                                rs:TextBoxHelper.IsShowClearButton="False"
                                 rs:TextBoxHelper.Watermark="{TemplateBinding rs:TextBoxHelper.Watermark}"
                                 Style="{StaticResource RSApp.Styles.TextBoxStyle}"
                                 Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -96,15 +95,14 @@
                                 <Canvas
                                     x:Name="PART_Canvas"
                                     Grid.Row="2"
+                                    Margin="0,1,0,1"
                                     Background="Transparent"
                                     ClipToBounds="True" />
                                 <RepeatButton
                                     x:Name="PART_BtnScrollUp"
                                     Grid.Row="0"
-                                    Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ActualWidth}"
                                     Height="30"
                                     Margin="0"
-                                    HorizontalAlignment="Center"
                                     VerticalAlignment="Top"
                                     rs:ControlsHelper.CornerRadius="0"
                                     rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.UpArrow}"
@@ -116,10 +114,9 @@
                                 <RepeatButton
                                     x:Name="PART_BtnScrollDown"
                                     Grid.Row="2"
-                                    Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ActualWidth}"
                                     Height="30"
                                     Margin="0"
-                                    HorizontalAlignment="Center"
+                                    HorizontalAlignment="Stretch"
                                     VerticalAlignment="Bottom"
                                     rs:ControlsHelper.CornerRadius="0"
                                     rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.DownArrow}"
@@ -156,7 +153,6 @@
                         <Trigger Property="IsCanSearch" Value="False">
                             <Setter TargetName="PART_TxtSearch" Property="Visibility" Value="Collapsed" />
                         </Trigger>
-
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

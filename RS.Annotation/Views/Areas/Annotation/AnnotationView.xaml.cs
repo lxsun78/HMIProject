@@ -20,6 +20,7 @@ using System.Windows.Resources;
 using System.Windows.Shapes;
 using RS.Widgets.Controls;
 using RS.Annotation.Models;
+using TagModel = RS.Annotation.Models.TagModel;
 
 namespace RS.Annotation.Views.Areas
 {

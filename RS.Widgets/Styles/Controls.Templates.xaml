@@ -19,7 +19,7 @@
     <converters:EventArgsConverter x:Key="EventArgsConverter" />
     <converters:NavChildrenFilterConverter x:Key="NavChildrenFilterConverter" />
 
-    <ControlTemplate x:Key="RSApp.Templates.IconButton" TargetType="{x:Type ButtonBase}">
+    <ControlTemplate x:Key="RSApp.Templates.IconButtonTemplate" TargetType="{x:Type ButtonBase}">
         <Border
             x:Name="PART_Border"
             Padding="{TemplateBinding Padding}"
@@ -45,13 +45,20 @@
                         <RotateTransform Angle="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(rs:ControlsHelper.IconRotateAngle)}" />
                     </Path.RenderTransform>
                 </Path>
-                <ContentPresenter
+                <ContentControl
+                    x:Name="PART_Content"
                     Grid.Column="1"
                     Margin="3,0,0,0"
+                    Content="{TemplateBinding Content}"
                     TextBlock.FontSize="{TemplateBinding FontSize}"
                     TextBlock.Foreground="{TemplateBinding Foreground}" />
             </Grid>
         </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Content" Value="{x:Null}">
+                <Setter TargetName="PART_Content" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate x:Key="RSApp.Templates.EmptyData" TargetType="{x:Type ContentControl}">

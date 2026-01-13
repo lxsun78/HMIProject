@@ -11,7 +11,7 @@
     </ResourceDictionary.MergedDictionaries>
 
 
-    <Style x:Key="RSApp.Styles.ButtonBase" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="RSApp.Styles.ButtonBaseStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
@@ -49,32 +49,36 @@
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Background" Value="#EEE" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#F1F1F1" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style
         x:Key="RSApp.Styles.IconButtonStyle"
-        BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+        BasedOn="{StaticResource RSApp.Styles.ButtonBaseStyle}"
         TargetType="{x:Type ButtonBase}">
         <Setter Property="rs:ControlsHelper.IconWidth" Value="15" />
         <Setter Property="rs:ControlsHelper.IconHeight" Value="15" />
         <Setter Property="rs:ControlsHelper.IconData" Value="{x:Null}" />
-        <Setter Property="Template" Value="{StaticResource RSApp.Templates.IconButton}" />
+        <Setter Property="Template" Value="{StaticResource RSApp.Templates.IconButtonTemplate}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Background" Value="#EEE" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Opacity" Value="0.8" />
+                <Setter Property="Background" Value="#F1F1F1" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style
         x:Key="RSApp.Styles.IconWithDesButton"
-        BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+        BasedOn="{StaticResource RSApp.Styles.ButtonBaseStyle}"
         TargetType="{x:Type Button}">
         <Setter Property="rs:ControlsHelper.IconColor" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Foreground}" />
         <Setter Property="Template">
@@ -141,7 +145,7 @@
 
     <Style
         x:Key="RSApp.Styles.CmdButton"
-        BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+        BasedOn="{StaticResource RSApp.Styles.ButtonBaseStyle}"
         TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="#ADADAD" />
         <Setter Property="Padding" Value="5" />
@@ -237,7 +241,7 @@
 
     <Style
         x:Key="RSApp.Styles.NoIconBtn"
-        BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+        BasedOn="{StaticResource RSApp.Styles.ButtonBaseStyle}"
         TargetType="{x:Type Button}">
         <Setter Property="FontSize" Value="16" />
         <Setter Property="Background" Value="#e53256" />
@@ -276,7 +280,7 @@
 
     <Style
         x:Key="RSApp.Styles.SendMsgBtnStyle"
-        BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+        BasedOn="{StaticResource RSApp.Styles.ButtonBaseStyle}"
         TargetType="{x:Type Button}">
         <Setter Property="Margin" Value="5" />
         <Setter Property="Template">
@@ -313,7 +317,7 @@
 
     <Style
         x:Key="RSApp.Styles.DefaultButton"
-        BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+        BasedOn="{StaticResource RSApp.Styles.ButtonBaseStyle}"
         TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="#333" />
         <Setter Property="Background" Value="#FFF" />
@@ -678,7 +682,7 @@
 
     <Style
         x:Key="RSApp.Styles.MenuButtonStyle"
-        BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+        BasedOn="{StaticResource RSApp.Styles.ButtonBaseStyle}"
         TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Padding" Value="5,3,5,3" />
@@ -709,7 +713,7 @@
 
     <Style
         x:Key="RSApp.Styles.AccessButtonStyle"
-        BasedOn="{StaticResource RSApp.Styles.ButtonBase}"
+        BasedOn="{StaticResource RSApp.Styles.ButtonBaseStyle}"
         TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>

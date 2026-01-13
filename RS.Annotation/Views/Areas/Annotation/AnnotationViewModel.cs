@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using TagModel = RS.Annotation.Models.TagModel;
 
 namespace RS.Annotation.Views.Areas
 {
