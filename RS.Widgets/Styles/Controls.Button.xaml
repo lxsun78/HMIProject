@@ -104,19 +104,22 @@
                                 x:Name="PART_Content"
                                 Grid.Column="1"
                                 Margin="3,0,0,0"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Content="{TemplateBinding Content}"
                                 FontSize="{TemplateBinding FontSize}" />
+
+                            <Path
+                                Width="{TemplateBinding rs:ControlsHelper.IconWidth}"
+                                Height="{TemplateBinding rs:ControlsHelper.IconHeight}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{TemplateBinding rs:ControlsHelper.IconData}"
+                                Fill="{TemplateBinding rs:ControlsHelper.IconColor}"
+                                Stretch="Fill" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Cursor" Value="Hand" />
-                            <Setter Property="Background" Value="#eee" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Opacity" Value="0.8" />
-                        </Trigger>
                         <Trigger SourceName="PART_Icon" Property="Data" Value="{x:Null}">
                             <Setter TargetName="PART_Content" Property="Margin" Value="0,0,0,0" />
                             <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
@@ -125,6 +128,15 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Background" Value="#eee" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Opacity" Value="0.8" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style

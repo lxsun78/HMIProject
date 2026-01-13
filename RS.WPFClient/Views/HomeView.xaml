@@ -213,11 +213,25 @@
                                                 Margin="0,2,0,5"
                                                 Background="#E6EDF5" />
 
+                                            <TextBlock Foreground="#949494" Text="切换账号" />
+
+                                            <Button
+                                                Padding="5,8,5,8"
+                                                rs:ControlsHelper.IconColor="#cdcdcd"
+                                                rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.Add}"
+                                                rs:ControlsHelper.IconHeight="20"
+                                                rs:ControlsHelper.IconWidth="20"
+                                                Command="{Binding AddAccountCommand}"
+                                                Content="添加账号"
+                                                Style="{StaticResource RSApp.Styles.IconWithDesButton}" />
+
+                                            <Separator
+                                                Height="1"
+                                                Margin="0,2,0,5"
+                                                Background="#E6EDF5" />
+
                                             <StackPanel>
-                                                <Button
-                                                    Command="{Binding AddAccountCommand}"
-                                                    Content="添加账号"
-                                                    Style="{StaticResource RSApp.Styles.IconWithDesButton}" />
+
                                                 <Button
                                                     Command="{Binding AccountSecurityCommand}"
                                                     Content="账号与安全"
@@ -309,13 +323,19 @@
                 <ColumnDefinition Width="220" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" />
+            <Grid Grid.Column="0">
+                <StackPanel>
+                    <Button Content="收件箱" />
+                </StackPanel>
+            </Grid>
             <Border
                 Grid.Column="1"
-                Margin="0,0,15,0"
+                Margin="15,0,15,0"
                 Background="#fff"
                 CornerRadius="10,10,0,0">
-                <ScrollViewer Focusable="False" />
+                <ScrollViewer Focusable="False">
+                    <ContentControl Content="{Binding ViewModelSelect}" />
+                </ScrollViewer>
             </Border>
         </Grid>
     </Grid>

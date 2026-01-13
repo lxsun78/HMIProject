@@ -66,5 +66,18 @@ namespace RS.Widgets.Controls
 
 
 
+
+
+        public bool IsShowDropDownIcon
+        {
+            get { return (bool)GetValue(IsShowDropDownIconProperty); }
+            set { SetValue(IsShowDropDownIconProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsShowDropDownIconProperty =
+            DependencyProperty.Register(nameof(IsShowDropDownIcon), typeof(bool), typeof(RSDropdown), new PropertyMetadata(false));
+
+
+
     }
 }

@@ -130,6 +130,9 @@
 	  <Compile Update="Views\RoleView.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>
+	  <Compile Update="Views\InBoxView.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
 	  <Compile Update="Views\SearchView.xaml.cs">
 	    <SubType>Code</SubType>
 	  </Compile>

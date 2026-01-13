@@ -15,7 +15,6 @@
     <converters:ClipConverter x:Key="ClipConverter" />
     <converters:BackgroundToForegroundConverter x:Key="BackgroundToForegroundConverter" />
     <Style TargetType="{x:Type rs:RSDateTimePicker}">
-
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="BorderThickness" Value="1" />

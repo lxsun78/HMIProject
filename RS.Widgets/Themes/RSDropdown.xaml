@@ -3,10 +3,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:rs="clr-namespace:RS.Widgets.Controls">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/RS.Widgets;component/Styles/Controls.Effects.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <Style TargetType="{x:Type rs:RSDropdown}">
         <Setter Property="DropdownWidth" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualWidth}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="5,3,5,3" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="#333" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="rs:ControlsHelper.CornerRadius" Value="5" />
         <Setter Property="Template">
@@ -20,7 +32,41 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding rs:ControlsHelper.CornerRadius}">
                         <Grid>
-                            <ContentPresenter />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Path
+                                x:Name="PART_Icon"
+                                Width="{TemplateBinding rs:ControlsHelper.IconWidth}"
+                                Height="{TemplateBinding rs:ControlsHelper.IconHeight}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{TemplateBinding rs:ControlsHelper.IconData}"
+                                Fill="{TemplateBinding rs:ControlsHelper.IconColor}"
+                                Stretch="Fill" />
+                            <ContentControl
+                                x:Name="PART_Content"
+                                Grid.Column="1"
+                                Margin="3,0,0,0"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                FontSize="{TemplateBinding FontSize}" />
+                            <Path
+                                x:Name="PART_DownArrow"
+                                Grid.Column="2"
+                                Width="10"
+                                Height="6"
+                                Margin="5,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{StaticResource RSApp.Icons.DownArrow}"
+                                Fill="Black"
+                                Stretch="Fill"
+                                Visibility="Collapsed" />
+
                             <rs:RSPopup
                                 x:Name="PART_Popup"
                                 AllowsTransparency="True"
@@ -49,9 +95,26 @@
                         <Trigger Property="PlacementTarget" Value="{x:Null}">
                             <Setter TargetName="PART_Popup" Property="PlacementTarget" Value="{Binding ElementName=PART_Border}" />
                         </Trigger>
+                        <Trigger SourceName="PART_Icon" Property="Data" Value="{x:Null}">
+                            <Setter TargetName="PART_Content" Property="Margin" Value="0,0,0,0" />
+                            <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                        <Trigger Property="IsShowDropDownIcon" Value="True">
+                            <Setter TargetName="PART_DownArrow" Property="Visibility" Value="Visible" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Background" Value="#EEE" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Opacity" Value="0.8" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

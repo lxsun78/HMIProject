@@ -19,62 +19,62 @@ namespace RS.WPFClient.ViewModels
     public class HomeViewModel : ViewModelBase
     {
         /// <summary>
-        /// 获取或设置搜索按钮点击时执行的命令
+        /// 用于导航到特定视图或执行导航操作的命令
         /// </summary>
-        public ICommand NavCommand { get; }
+        public ICommand NavigateCommand { get; }
 
         private DispatcherTimer DispatcherTimer;
 
         private DispatcherTimer CaretDispatcherTimer;
 
         /// <summary>
-        /// Command for adding an account
+        /// 添加账号的命令
         /// </summary>
         public ICommand AddAccountCommand { get; }
 
         /// <summary>
-        /// Command for managing account security
+        /// 管理账号安全的命令
         /// </summary>
         public ICommand AccountSecurityCommand { get; }
 
         /// <summary>
-        /// Command for opening the help center
+        /// 打开帮助中心的命令
         /// </summary>
         public ICommand HelpCenterCommand { get; }
 
         /// <summary>
-        /// Command for providing feedback
+        /// 提供反馈的命令
         /// </summary>
         public ICommand FeedbackCommand { get; }
 
         /// <summary>
-        /// Command for accessing the old email version
+        /// 访问旧版邮箱的命令
         /// </summary>
         public ICommand OldEmailCommand { get; }
 
         /// <summary>
-        /// Command for accessing the membership center
+        /// 访问会员中心的命令
         /// </summary>
         public ICommand MembershipCenterCommand { get; }
 
         /// <summary>
-        /// Command for logging out
+        /// 注销的命令
         /// </summary>
         public ICommand LogoutCommand { get; }
 
         /// <summary>
-        /// Command for opening the membership page
+        /// 打开会员页面的命令
         /// </summary>
         public ICommand OpenMembershipCommand { get; }
 
         /// <summary>
-        /// Command for copying the email address to clipboard
+        /// 复制邮箱地址到剪贴板的命令
         /// </summary>
         public ICommand CopyEmailCommand { get; }
 
         public HomeViewModel()
         {
-            this.NavCommand = new RelayCommand<NavigateModel>(Nav);
+            this.NavigateCommand = new RelayCommand<NavigateModel>(Navigate);
 
             DispatcherTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(30), DispatcherPriority.Background, (s, e) =>
             {
@@ -95,51 +95,53 @@ namespace RS.WPFClient.ViewModels
             this.LogoutCommand = new RelayCommand(Logout);
             this.OpenMembershipCommand = new RelayCommand(OpenMembership);
             this.CopyEmailCommand = new RelayCommand(CopyEmail);
+
+            this.ViewModelSelect=new InBoxViewModel();
         }
 
         private void AddAccount()
         {
-            // Logic for adding an account
+            // 添加账号的逻辑
         }
 
         private void AccountSecurity()
         {
-            // Logic for managing account security
+            // 管理账号安全的逻辑
         }
 
         private void OpenHelpCenter()
         {
-            // Logic for opening the help center
+            // 打开帮助中心的逻辑
         }
 
         private void ProvideFeedback()
         {
-            // Logic for providing feedback
+            // 提供反馈的逻辑
         }
 
         private void OpenOldEmail()
         {
-            // Logic for accessing the old email version
+            // 访问旧版邮箱的逻辑
         }
 
         private void OpenMembershipCenter()
         {
-            // Logic for accessing the membership center
+            // 访问会员中心的逻辑
         }
 
         private void Logout()
         {
-            // Logic for logging out
+            // 注销的逻辑
         }
 
         private void OpenMembership()
         {
-            // Logic for opening the membership page
+            // 打开会员页面的逻辑
         }
 
         private void CopyEmail()
         {
-            // Logic for copying the email address to clipboard
+            // 复制邮箱地址到剪贴板的逻辑
         }
 
         #region 测试
@@ -352,13 +354,12 @@ namespace RS.WPFClient.ViewModels
         }
 
 
-        private void Nav(NavigateModel? model)
+        private void Navigate(NavigateModel? model)
         {
             //this.ViewModelSelect = model?.ViewMoel;
             //先做测试
             //this.ViewModelSelect = this.ViewModelManager.GetViewModel<INotifyPropertyChanged>(model.ViewModelKey);
         }
-
         public static List<NavigateModel> GenerateMenu(int maxLevel, int menuCountPerLevel, double groupProbability = 0.2)
         {
             var menuList = new List<NavigateModel>();
@@ -605,7 +606,9 @@ namespace RS.WPFClient.ViewModels
 
 
         private INotifyPropertyChanged viewModelSelect;
-
+        /// <summary>
+        /// 当前选择视图
+        /// </summary>
         public INotifyPropertyChanged ViewModelSelect
         {
             get { return viewModelSelect; }

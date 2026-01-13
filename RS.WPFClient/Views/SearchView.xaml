@@ -63,15 +63,20 @@
                             <Grid>
                                 <rs:RSDropdown
                                     rs:ControlsHelper.CornerRadius="10,0,0,10"
+                                    rs:ControlsHelper.IconColor="{TemplateBinding rs:ControlsHelper.IconColor}"
+                                    rs:ControlsHelper.IconData="{TemplateBinding rs:ControlsHelper.IconData}"
+                                    rs:ControlsHelper.IconHeight="{TemplateBinding rs:ControlsHelper.IconHeight}"
+                                    rs:ControlsHelper.IconWidth="{TemplateBinding rs:ControlsHelper.IconWidth}"
                                     Content="{TemplateBinding SelectionBoxItem}"
                                     ContentTemplate="{TemplateBinding rs:ComboBoxHelper.SelectionBoxItemTemplate}"
                                     ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                     DropdownWidth="200"
                                     Focusable="false"
-                                    IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                    IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsShowDropDownIcon="True">
                                     <rs:RSDropdown.DropdownContent>
                                         <Grid x:Name="DropDown">
-                                            <ScrollViewer>
+                                            <ScrollViewer Margin="0,3,0,3">
                                                 <VirtualizingStackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                                             </ScrollViewer>
                                         </Grid>
@@ -277,7 +282,7 @@
                 Margin="10,6,0,6"
                 HorizontalAlignment="Left"
                 Data="{StaticResource RSApp.Icons.Search}"
-                Fill="#515151"
+                Fill="#707070"
                 Stretch="Fill">
                 <Path.Style>
                     <Style TargetType="{x:Type Path}">
@@ -294,6 +299,9 @@
             <ComboBox
                 x:Name="PART_SearchType"
                 rs:ComboBoxHelper.SelectionBoxItemTemplate="{StaticResource SearchTypeSelectDataTemplate}"
+                rs:ControlsHelper.IconData="{StaticResource RSApp.Icons.Search}"
+                rs:ControlsHelper.IconHeight="16"
+                rs:ControlsHelper.IconWidth="16"
                 IsDropDownOpen="{Binding IsSearchTypeChecked}"
                 ItemContainerStyle="{StaticResource FilterComboBoxItemStyle}"
                 ItemsSource="{Binding SearchTypeList}"
